@@ -1,0 +1,13 @@
+nav {
+    height: 100px;
+    padding: 0 60px;
+
+    gap: 50px;
+    justify-content: end;
+}
+
+button {
+    padding: 12px 20px;
+    border: 1.5px solid #000000;
+    background: none;
+}
