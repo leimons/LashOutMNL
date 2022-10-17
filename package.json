@@ -1,0 +1,22 @@
+{
+  "name": "lashoutmnl",
+  "version": "1.0.0",
+  "description": "Code repository for LashOutMNL website. This project is part of a requirement for CSSWENG (A.Y. 2022-2023).",
+  "main": "lashoutmnl.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jm55DLSU/LashOutMNL.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jm55DLSU/LashOutMNL/issues"
+  },
+  "homepage": "https://github.com/jm55DLSU/LashOutMNL#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
