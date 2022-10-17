@@ -1,6 +1,6 @@
 const controller = {
     getHomePage: function (req,res){
-        res.render ('index')
+        res.render ('index');
     }
 }
 
