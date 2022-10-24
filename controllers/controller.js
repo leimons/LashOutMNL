@@ -7,9 +7,10 @@ const controller = {
         res.render ('index');
 
         var TempProduct = {
-            Name: "Lash Curl",
-            Description: "Curl Your Lashes",
-            Price: 500
+            Name: "Lash Lift",
+            Category: "Lashes",
+            Description: "The natural lash is lifted from the roots semi-permanently. Lasts 1 to 3 months.",
+            Price: 550
         }
         var TempAppointment = {
             refNum: 100021,
