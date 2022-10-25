@@ -4,13 +4,30 @@
     <title>LashOut MNL</title>
     <link rel="stylesheet" href="styles/global.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="scripts/home.js"></script>
     <style>
         #category-services {
             margin-top: 60px;
             gap: 15px;
         }
+        #category-services > div {
+            position: relative;
+        }
         #category-services img { margin-bottom: 20px; }
         #category-services h3 { font-size: 30px; }
+
+        .category-overlay {
+            position: absolute;
+            opacity: calc(0.8 * 0.85);
+
+            padding: 15px;
+            width: 240px;
+            height: 320px;
+
+            text-align: center;
+            line-height: 160%;
+        }
 
         footer {
             position: relative;
@@ -66,31 +83,61 @@
         <div class="flex-row text-secondary900" id="category-services">
 
             <div>
-                <img src="images/lashes1.png" />
+                <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ1-description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
+                    ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
+                    aliquet ut luctus eget, auctor a nibh.
+                </div>
+
+                <img src="images/lashes1.png" id="categ1-image" />
                 <h3 class="heading-medium">Lashes</h3>
                 <i class="body-medium">starts at ₱550.00</i>
             </div>
 
             <div>
-                <img src="images/lashes2.png" />
+                <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ2-description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
+                    ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
+                    aliquet ut luctus eget, auctor a nibh.
+                </div>
+
+                <img src="images/lashes2.png" id="categ2-image" />
                 <h3 class="heading-medium">Lashes Retouch</h3>
                 <i class="body-medium">starts at ₱500.00</i>
             </div>
 
             <div>
-                <img src="images/nails1.png" />
+                <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ3-description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
+                    ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
+                    aliquet ut luctus eget, auctor a nibh.
+                </div>
+
+                <img src="images/nails1.png" id="categ3-image" />
                 <h3 class="heading-medium">Nails</h3>
                 <i class="body-medium">starts at ₱150.00</i>
             </div>
 
             <div>
-                <img src="images/brows1.png" />
+                <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ4-description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
+                    ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
+                    aliquet ut luctus eget, auctor a nibh.
+                </div>
+
+                <img src="images/brows1.png" id="categ4-image" />
                 <h3 class="heading-medium">Brows</h3>
                 <i class="body-medium">starts at ₱4,000.00</i>
             </div>
 
             <div>
-                <img src="images/brows2.png" />
+                <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ5-description">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
+                    ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
+                    aliquet ut luctus eget, auctor a nibh.
+                </div>
+
+                <img src="images/brows2.png" id="categ5-image" />
                 <h3 class="heading-medium">Brows Retouch</h3>
                 <i class="body-medium">starts at ₱1,500.00</i>
             </div>
