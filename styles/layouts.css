@@ -18,6 +18,10 @@
     flex-direction: column;
 }
 
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
 .flex {
     flex: 1;
 }
@@ -28,4 +32,8 @@
 
 .center-column {
     align-items: center;
+}
+
+.view-padding {
+    padding: 80px 50px;
 }

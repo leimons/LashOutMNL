@@ -9,13 +9,28 @@
     <style>
         #category-services {
             margin-top: 60px;
-            gap: 15px;
+            gap: 40px 15px;
         }
         #category-services > div {
             position: relative;
+            width: 240px;
         }
         #category-services img { margin-bottom: 20px; }
         #category-services h3 { font-size: 30px; }
+
+        #carousel-container > button {
+            padding: 0;
+            border: none;
+            
+            color: inherit;
+            font-size: 60px;
+
+            opacity: 0.7;
+            z-index: 2;
+        }
+        #carousel-container > button:hover { opacity: 0.9; }
+        #carousel-left { margin-right: -15px; }
+        #carousel-right { margin-left: -15px; }
 
         .category-overlay {
             position: absolute;
@@ -27,6 +42,11 @@
 
             text-align: center;
             line-height: 160%;
+        }
+
+        #appointment, #location {
+            min-height: auto;
+            height: auto;
         }
 
         .view-fullscreen > img {
@@ -43,6 +63,10 @@
             bottom: 0;
             padding: 20px 40px;
             gap: 30px;
+        }
+        footer > img {
+            width: 750px;
+            max-width: 90%;
         }
 
         #icon-ig {
@@ -65,8 +89,8 @@
             <a href="#" class="body-medium text-uppercase">Bookings</a>
         </nav>
 
-        <div class="flex flex-row center-column center-row">
-            <div style="min-width: 650px; max-width: 800px; width: 40%;">
+        <div class="flex flex-row flex-wrap view-padding center-column center-row" style="gap: 50px 10%;">
+            <div>
                 <p class="heading-medium" style="margin-bottom: 50px;">
                     Lorem ipsum <i>dolor</i> sit amet, <br>
                     consectetur <i>adipiscing</i> elit, <br>
@@ -76,15 +100,19 @@
                 <button class="label-small text-uppercase">Book Now</button>
             </div>
 
-            <img src="images/carousel1.png" height="500" /><!-- TODO: Carousel images animation -->
+            <div class="flex-row text-primary200" id="carousel-container">
+                <button id="carousel-left">◄</button>
+                <img src="images/carousel1.png" height="500" />
+                <button id="carousel-right">►</button>
+            </div>
         </div>
     </div>
 
     <!-- EXPLORE BY CATEGORY -->
-    <div class="view-fullscreen flex-column center-row center-column bg-primary50" id="explore-category">
+    <div class="view-fullscreen view-padding flex-column center-row center-column bg-primary50" id="explore-category">
         <h2 class="heading-small text-uppercase">Explore by Category</h2>
 
-        <div class="flex-row text-secondary900" id="category-services">
+        <div class="flex-row flex-wrap center-row text-secondary900" id="category-services">
 
             <div>
                 <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ1-description">
@@ -167,7 +195,7 @@
 
     <!-- FOOTER -->
     <footer class="view-fullwidth flex-column center-column center-row" style="height: 450px;">
-        <img src="images/footer_quote.png" style="max-width: 750px;" />
+        <img src="images/footer_quote.png"/>
 
         <div class="view-fullwidth flex-row center-column">
             <a href="#" class="label-small text-uppercase">Location</a>
