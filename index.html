@@ -6,172 +6,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="scripts/home.js"></script>
-    <style>
-        #category-services {
-            margin-top: 60px;
-            gap: 40px 15px;
-        }
-        #category-services > div {
-            position: relative;
-            width: 240px;
-        }
-        #category-services img { margin-bottom: 20px; }
-        #category-services h3 { font-size: 30px; }
-
-        #carousel-container > button {
-            padding: 0;
-            border: none;
-            
-            color: inherit;
-            font-size: 60px;
-
-            opacity: 0.7;
-            z-index: 2;
-        }
-        #carousel-container > button:hover { opacity: 0.9; }
-        #carousel-left { margin-right: -15px; }
-        #carousel-right { margin-left: -15px; }
-
-        .category-overlay {
-            position: absolute;
-            opacity: calc(0.8 * 0.85);
-
-            padding: 15px;
-            width: 240px;
-            height: 320px;
-
-            text-align: center;
-            line-height: 160%;
-        }
-
-        #appointment, #location {
-            min-height: auto;
-            height: auto;
-        }
-
-        .view-fullscreen > img {
-            width: 100%;
-        }
-
-        footer {
-            position: relative;
-            background-color: rgba(223, 174, 174, 0.63); /* pink100 w/ 63% opacity */
-        }
-        footer a { color: var(--pink800); }
-        footer > div {
-            position: absolute;
-            bottom: 0;
-            padding: 20px 40px;
-            gap: 30px;
-        }
-        footer > img {
-            width: 750px;
-            max-width: 90%;
-        }
-
-        #icon-ig {
-            margin-left: auto; 
-            gap: 5px; 
-            color: black;
-        }
-    </style>
+    <link rel="stylesheet" href="styles/page_index.css">
 </head>
 
 <body>
 
     <!-- HERO -->
-    <div class="view-fullscreen flex-column bg-primary100">
-        <nav class="flex-row center-column">
-            <img src="images/logo.png" id="logo" height="70" style="margin-right: auto;" />
+    <div id="hero">
+        <nav>
+            <img src="images/logo.png" height="70" />
 
-            <a href="#" class="body-medium text-uppercase">Home</a>
-            <a href="#explore-category" class="body-medium text-uppercase">Services</a>
-            <a href="#" class="body-medium text-uppercase">Bookings</a>
+            <a href="#">Home</a>
+            <a href="#explore-category">Services</a>
+            <a href="#">Bookings</a>
         </nav>
 
-        <div class="flex flex-row flex-wrap view-padding center-column center-row" style="gap: 50px 10%;">
+        <div id="content">
             <div>
-                <p class="heading-medium" style="margin-bottom: 50px;">
+                <p>
                     Lorem ipsum <i>dolor</i> sit amet, <br>
                     consectetur <i>adipiscing</i> elit, <br>
                     integer <u>sodales</u> elit finibus.
                 </p>
                 
-                <button class="label-small text-uppercase">Book Now</button>
+                <button>Book Now</button>
             </div>
 
-            <div class="flex-row text-primary200" id="carousel-container">
-                <button id="carousel-left">◄</button>
+            <div id="carousel-container">
                 <img src="images/carousel1.png" height="500" />
-                <button id="carousel-right">►</button>
             </div>
         </div>
     </div>
 
     <!-- EXPLORE BY CATEGORY -->
-    <div class="view-fullscreen view-padding flex-column center-row center-column bg-primary50" id="explore-category">
-        <h2 class="heading-small text-uppercase">Explore by Category</h2>
+    <div id="explore-category">
+        <h2>Explore by Category</h2>
 
-        <div class="flex-row flex-wrap center-row text-secondary900" id="category-services">
+        <div id="category-services">
 
             <div>
-                <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ1-description">
+                <div class="category-overlay" id="categ1-description">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
                     ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
                     aliquet ut luctus eget, auctor a nibh.
                 </div>
 
                 <img src="images/lashes1.png" id="categ1-image" />
-                <h3 class="heading-medium">Lashes</h3>
-                <i class="body-medium">starts at ₱550.00</i>
+                <h3>Lashes</h3>
+                <i>starts at ₱550.00</i>
             </div>
 
             <div>
-                <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ2-description">
+                <div class="category-overlay" id="categ2-description">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
                     ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
                     aliquet ut luctus eget, auctor a nibh.
                 </div>
 
                 <img src="images/lashes2.png" id="categ2-image" />
-                <h3 class="heading-medium">Lashes Retouch</h3>
-                <i class="body-medium">starts at ₱500.00</i>
+                <h3>Lashes Retouch</h3>
+                <i>starts at ₱500.00</i>
             </div>
 
             <div>
-                <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ3-description">
+                <div class="category-overlay" id="categ3-description">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
                     ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
                     aliquet ut luctus eget, auctor a nibh.
                 </div>
 
                 <img src="images/nails1.png" id="categ3-image" />
-                <h3 class="heading-medium">Nails</h3>
-                <i class="body-medium">starts at ₱150.00</i>
+                <h3>Nails</h3>
+                <i>starts at ₱150.00</i>
             </div>
 
             <div>
-                <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ4-description">
+                <div class="category-overlay" id="categ4-description">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
                     ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
                     aliquet ut luctus eget, auctor a nibh.
                 </div>
 
                 <img src="images/brows1.png" id="categ4-image" />
-                <h3 class="heading-medium">Brows</h3>
-                <i class="body-medium">starts at ₱4,000.00</i>
+                <h3>Brows</h3>
+                <i>starts at ₱4,000.00</i>
             </div>
 
             <div>
-                <div class="category-overlay bg-secondary100 flex-column center-row body-small" id="categ5-description">
+                <div class="category-overlay" id="categ5-description">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
                     ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
                     aliquet ut luctus eget, auctor a nibh.
                 </div>
 
                 <img src="images/brows2.png" id="categ5-image" />
-                <h3 class="heading-medium">Brows Retouch</h3>
-                <i class="body-medium">starts at ₱1,500.00</i>
+                <h3>Brows Retouch</h3>
+                <i>starts at ₱1,500.00</i>
             </div>
 
         </div>
@@ -179,35 +109,34 @@
     </div>
 
     <!-- APPOINTMENT RULES -->
-    <div class="view-fullscreen flex-column center-row center-column bg-primary100" id="appointment">
+    <div id="appointment">
         <img src="images/appointment.png" style="object-fit: contain;" />
     </div>
 
     <!-- PROTOCOLS & POLICIES -->
-    <div class="view-fullscreen bg-primary50" id="protocols">
+    <div id="protocols">
         <img src="images/protocols.png" />
     </div>
 
     <!-- LOCATION -->
-    <div class="view-fullscreen bg-primary50" id="location">
+    <div id="location">
         <img src="images/location.png" />
     </div>
 
     <!-- FOOTER -->
-    <footer class="view-fullwidth flex-column center-column center-row" style="height: 450px;">
+    <footer>
         <img src="images/footer_quote.png"/>
 
-        <div class="view-fullwidth flex-row center-column">
-            <a href="#" class="label-small text-uppercase">Location</a>
-            <a href="#" class="label-small text-uppercase">Book an Appointment</a>
-            <a href="#" class="label-small text-uppercase">Terms & Conditions</a>
+        <div>
+            <a href="#">Location</a>
+            <a href="#">Book an Appointment</a>
+            <a href="#">Terms & Conditions</a>
 
-            <a href="https://www.instagram.com/lashout.mnl/" class="label-small text-uppercase flex-row center-column" id="icon-ig">
+            <a href="https://www.instagram.com/lashout.mnl/" id="icon-ig">
                 <img src="images/icons_instagram.png" />
                 LashOut.MNL
             </a>
         </div>
-
     </footer>
 
 </body>
