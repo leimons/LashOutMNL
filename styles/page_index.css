@@ -1,10 +1,14 @@
+@import "global.css";
+
 /* || General styles */
 h2 {
     font: 600 32px 'Nunito';
     text-transform: uppercase;
 }
 
-h3 { font: 300 30px 'Lora'; }
+h3 {
+    font: 300 30px 'Lora';
+}
 
 /* || SECTION – Navbar */
 nav {
@@ -22,11 +26,22 @@ nav {
     padding: 0 60px;
     
     font: 400 20px 'Nunito';
+    text-transform: uppercase;
 }
 
-    nav > a { text-transform: uppercase; }
-
     nav > img { margin-right: auto; }
+
+/* || SECTION – Hero */
+#hero {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+
+    background-color: var(--primary100);
+}
 
 #content {
     display: flex;
@@ -44,18 +59,6 @@ nav {
         margin-bottom: 50px;
         font: 300 36px 'Lora';
     }
-
-/* || SECTION – Hero */
-#hero {
-    display: flex;
-    flex-direction: column;
-
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-
-    background-color: var(--primary100);
-}
 
 /* || SECTION – Explore by Category */
 #explore-category {

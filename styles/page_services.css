@@ -1,0 +1,91 @@
+@import "global.css";
+
+/* || General styles */
+body {
+    background-color: var(--primary100);
+}
+
+h1 {
+    width: 100%;
+    text-align: center;
+    background-color: var(--primary50);
+    padding: 20px;
+}
+
+h2 {
+    font-family: 'Nunito';
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+
+    margin-bottom: 20px;
+}
+
+h3 {
+    font: 300 18px 'Lora';
+}
+
+/* || SECTION – Navbar */
+nav {
+    position: relative;
+    left: 0;
+    top: 0;
+
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    align-items: center;
+    justify-content: end;
+
+    height: 100px;
+    padding: 0 60px;
+    
+    font: 400 20px 'Nunito';
+    text-transform: uppercase;
+}
+
+    nav > img {
+        margin-right: auto;
+    }
+
+/* || SECTION – Services */
+#services-container > div {
+    display: flex;
+    flex-direction: column;
+    /*gap: 20px;*/
+    padding: 50px;
+}
+
+.service-item {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+
+    padding-right: 20px;
+
+    border: 1.5px solid var(--primary200);
+    border-bottom: none;
+    background-color: white;
+}
+
+    .category-container .service-item:last-child {
+        border-bottom: 1.5px solid var(--primary200);
+    }
+
+    .service-item > div:nth-child(2) {
+        flex: 1;
+    }
+
+    .service-item button {
+        padding: 8px 20px;
+    }
+
+    .service-item a {
+        display: block;
+        margin-top: 8px;
+        opacity: 0.8;
+
+        font-family: 'Nunito';
+        text-align: right;
+    }
+
+
