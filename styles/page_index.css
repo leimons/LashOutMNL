@@ -87,7 +87,8 @@ nav {
     color: var(--secondary900);
 }
 
-    #category-services > div {
+    #category-services > a {
+        display: inline-block;
         position: relative;
         width: 240px;
     }

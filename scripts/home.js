@@ -5,7 +5,7 @@ $(function(){
     
     // Setup toggle show/hide on mouse in/out
     for (let i = 1; i <= 5; i++)
-        $("#categ"+i+"-image").hover(function () {
+        $(`#categ${i} > img`).hover(function () {
             $( this ).siblings(".category-overlay").show();
         })
 
