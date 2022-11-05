@@ -1,0 +1,181 @@
+@import "global.css";
+
+/* || General styles */
+h2 {
+    font: 600 32px 'Nunito';
+    text-transform: uppercase;
+}
+
+h3 {
+    font: 300 30px 'Lora';
+}
+
+/* || SECTION – Navbar */
+nav {
+    position: relative;
+    left: 0;
+    top: 0;
+
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    align-items: center;
+    justify-content: end;
+
+    height: 100px;
+    padding: 0 60px;
+    
+    font: 400 20px 'Nunito';
+    text-transform: uppercase;
+}
+
+    nav > img { margin-right: auto; }
+
+/* || SECTION – Hero */
+#hero {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+
+    background-color: var(--primary100);
+}
+
+#content {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 50px 10%;
+    
+    padding: 80px 50px;
+}
+
+    #content p {
+        margin-bottom: 50px;
+        font: 300 36px 'Lora';
+    }
+
+/* || SECTION – Explore by Category */
+#explore-category {
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 80px 50px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--primary50);
+}
+
+#category-services {
+    margin-top: 60px;
+    gap: 40px 15px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    color: var(--secondary900);
+}
+
+    #category-services > a {
+        display: inline-block;
+        position: relative;
+        width: 240px;
+    }
+
+    #category-services img { margin-bottom: 20px; }
+
+    #category-services i { font: 400 20px 'Nunito'; }
+
+.category-overlay {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 15px;
+    width: 240px;
+    height: 320px;
+
+    font: 400 15px 'Nunito';
+    text-align: center;
+    line-height: 160%;
+
+    background-color: var(--secondary100); 
+    opacity: calc(0.8 * 0.85);
+}
+
+/* || SECTION – Appointment Ryles, Protocols, Location */
+#appointment, #protocols, #location {
+    width: 100%;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--primary100);
+}
+
+.view-fullscreen > img {
+    width: 100%;
+}
+
+/* || SECTION – Footer */
+footer {
+    position: relative;
+    width: 100%;
+    height: 450px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(223, 174, 174, 0.63); /* pink100 w/ 63% opacity */
+}
+
+    footer a {
+        font: 700 16px 'Nunito';
+        color: var(--pink800);
+        line-height: 22px;
+        text-transform: uppercase;
+    }
+
+    footer > div {
+        position: absolute;
+        bottom: 0;
+        padding: 20px 40px;
+        gap: 30px;
+
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    footer > img {
+        width: 750px;
+        max-width: 90%;
+    }
+
+#icon-ig {
+    margin-left: auto; 
+    gap: 5px; 
+    color: black;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
