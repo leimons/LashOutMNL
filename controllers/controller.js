@@ -26,6 +26,10 @@ const controller = {
             res.render ('index');
         });
         // End of Code for Test
+    },
+
+    getServicesPage: function (req, res) {
+        res.render('services');
     }
 }
 
