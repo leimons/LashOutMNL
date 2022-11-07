@@ -9,6 +9,35 @@ const controller = {
             Name: "Lash Lift",
             Category: "Lashes",
             Description: "The natural lash is lifted from the roots semi-permanently. Lasts 1 to 3 months.",
+            Duration : "2 Hours",
+            Price: 550
+        }
+        var TempProduct2 = {
+            Name: "Lash Down",
+            Category: "Lashes Retouch",
+            Description: "The natural lash is lifted from the roots semi-permanently. Lasts 1 to 3 months.",
+            Duration : "2 Hours",
+            Price: 550
+        }
+        var TempProduct3 = {
+            Name: "Lash Down",
+            Category: "Brows",
+            Description: "The natural lash is lifted from the roots semi-permanently. Lasts 1 to 3 months.",
+            Duration : "2 Hours",
+            Price: 550
+        }
+        var TempProduct4 = {
+            Name: "Lash Down",
+            Category: "Brows Retouch",
+            Description: "The natural lash is lifted from the roots semi-permanently. Lasts 1 to 3 months.",
+            Duration : "2 Hours",
+            Price: 550
+        }
+        var TempProduct5 = {
+            Name: "Lash Down",
+            Category: "Nails",
+            Description: "The natural lash is lifted from the roots semi-permanently. Lasts 1 to 3 months.",
+            Duration : "2 Hours",
             Price: 550
         }
         var TempAppointment = {
@@ -20,14 +49,27 @@ const controller = {
         db.insertOne(Appointments, TempAppointment, function(){
 
         });
-        db.insertOne(Products, TempProduct, (err)=> {
-            res.render ('index');
+        
+        db.insertMany(Products, [TempProduct, TempProduct2, TempProduct3, TempProduct4, TempProduct5], (err)=> {
+            res.render("index");
         });
+
+
         // End of Code for Test
     },
 
     getServicesPage: function (req, res) {
-        res.render('services');
+        projection = "Name Category Description Duration Price"
+        
+        db.findMany(Products, {}, projection,function(result){
+            var data = result;
+            var products = [];
+            data.forEach((i) =>{
+                products.push({Name: i.Name, Category: i.Category, Description: i.Description, Duration: i.Duration, Price: i.Price})
+            })
+            console.log(products)
+            res.render('services', {serviceItem: products})
+        })
     }
 }
 
