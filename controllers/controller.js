@@ -4,8 +4,6 @@ const Appointments = require("../database/models/Appointments");
 
 const controller = {
     getHomePage: function (req,res){
-        res.render ('index');
-
         // Start of Code For Test, will be removed after*
         var TempProduct = {
             Name: "Lash Lift",
