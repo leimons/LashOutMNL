@@ -69,7 +69,7 @@ async function run(){
         Category: "Lashes Retouch",
 		Description: "Please take note that this service is only eligible for clients who had their initial set done by Lash Out MNL Beauty Lounge. If you had previous lashes from a different artist, or have an existing set that is not Classic Full Set (for ex. Hybrid Lashes, Wet Set or Volume Lashes), you will be charged with a new set price.",
     	Duration: "1 Hour",
-		Price: 
+		Price: 500
 
     });
     await Service6.save()
