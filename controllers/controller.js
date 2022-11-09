@@ -71,6 +71,12 @@ const controller = {
             console.log(products)
             res.render('services', {serviceItem: products})
         })
+    },
+
+    getInclusionsPage: function(req,res){
+        productName = req.query.Name
+        console.log(productName);
+        res.render('inclusions');
     }
 }
 
