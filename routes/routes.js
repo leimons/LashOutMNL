@@ -5,6 +5,6 @@ const app = express();
 
 app.get(`/`, controller.getHomePage);
 app.get(`/services`, controller.getServicesPage);
-app.get(`/inclusions`, controller.getInclusionsPage);
+app.get(`/inclusions/:id`, controller.getInclusionsPage);
 
 module.exports = app;

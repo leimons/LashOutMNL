@@ -74,7 +74,7 @@ const controller = {
     },
 
     getInclusionsPage: function(req,res){
-        productName = req.query.Name
+        productName = req.params.id;
         console.log(productName);
         res.render('inclusions');
     }
