@@ -16,6 +16,7 @@
     <div id="services-container">
 
         <h1>Services</h1>
+        
             <div class="category-container" id="lashes">
                 <h2>Lashes</h2>
                 {{#each serviceItem}}
@@ -23,6 +24,7 @@
                         {{> serviceItem}}
                     {{/ifCategory}}
                 {{/each}}
+            </div>
 
             <div class="category-container" id="brows">
                 <h2>Brows</h2>
@@ -31,17 +33,16 @@
                         {{> serviceItem}}
                     {{/ifCategory}}
                 {{/each}}
-        
             </div>
-                    
+                
             <div class="category-container" id="brows-retouch">
                 <h2>Brows Retouch</h2>
+                
                 {{#each serviceItem}}
                     {{#ifCategory Category "Lashes Retouch"}}
                         {{> serviceItem}}
                     {{/ifCategory}}
                 {{/each}}
-        
             </div>
                
             <div class="category-container" id="nails">
@@ -51,7 +52,6 @@
                         {{> serviceItem}}
                     {{/ifCategory}}
                 {{/each}}
-    
             </div>    
     </div>
 </body>
