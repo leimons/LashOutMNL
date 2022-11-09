@@ -27,7 +27,25 @@ const controller = {
     },
 
     getServicesPage: function (req, res) {
-        res.render('services');
+
+        projection = "Name Category Description Duration Price"
+        
+        db.findMany(Products, {}, projection,function(result){
+            var data = result;
+            var products = [];
+            data.forEach((i) =>{
+                products.push({Name: i.Name, Category: i.Category, Description: i.Description, Duration: i.Duration, Price: i.Price})
+            })
+            console.log(products)
+            res.render('services', {serviceItem: products})
+        })
+    },
+
+    getInclusionsPage: function(req,res){
+        productName = req.params.id;
+        console.log(productName);
+        res.render('inclusions');
+
     }
 }
 

@@ -1,6 +1,12 @@
 <div class="service-item">
     {{#if imgURL}}
     <img src="https://via.placeholder.com/110x110/fdf8f4/f6d7bb?text=LashOut" />
+    
+    <div class="productContainer">
+        <h3 class='nameHolder'>{{ Name }}</h3>
+        <p>{{ Price }}</p>
+        <i>{{ Duration }}</i>
+ {{!--       
     {{else}}
     <img src={{ imgURL }} />
     {{/if}}
@@ -10,8 +16,9 @@
         <p>{{ price }}</p>
         <i>{{ duration }}</i>
     </div>
+   --}}
     <div>
-        <button>Select</button>
+        <button class="selectService" value={{Name}}>Select</button>
         <a>read more</a>
     </div>
 </div>
