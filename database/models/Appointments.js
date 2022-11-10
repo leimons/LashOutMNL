@@ -4,8 +4,13 @@ const AppointmentsSchema = new mongoose.Schema({
     refNum: Number,
     ClientName: String,
     ClientInfo: String,
-    PaymentStatus: Boolean
-    //Add Date and Time
+    PaymentStatus: Boolean,
+    apMonth: Number,
+    apDay: Number,
+    apYear: Number,
+    apHour: Number,
+    apMinute: Number
+    
 });
 
 const Appointments = mongoose.model ('Appointments' , AppointmentsSchema);
