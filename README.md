@@ -16,7 +16,7 @@ The business makes use of the latest ways of doing business such as using social
 
 **Technologies and Configurations used:**
 1. NodeJS 18.12.1 LTS (https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi)
-2. MongoDB Server 6.0.2 + Compass (https://www.mongodb.com/try/download/community)
+2. MongoDB Server 6.0.2 + Compass (https://www.mongodb.com/try/download/community; Production might use MongoDB Cloud)
 3. NPM Dependencies:
 	1. The versions of the dependencies will be as is upon inclusion to the project.
 	2. Any updates will be addressed based on severity and need (esp. for performance/reliability issues and security vulnerabilities)
