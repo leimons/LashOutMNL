@@ -16,8 +16,9 @@ app.use(express.json());
 app.use (express.static('public'));
 app.use(`/api`, apiRoutes);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-    console.log(`Node running in port ${PORT}. . . .`);
+    console.log(`  Server running at port ${PORT}...`);
+    console.log(`  - Local:   http://localhost:${PORT}/ `);
 });
