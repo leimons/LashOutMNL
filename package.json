@@ -20,11 +20,21 @@
   "homepage": "https://github.com/leimons/LashOutMNL#readme",
   "dependencies": {
     "body-parser": "^1.20.1",
+    "core-js": "^3.26.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mongoose": "^6.6.7"
+    "mongoose": "^6.6.7",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
     "concurrently": "^7.5.0",
     "nodemon": "^2.0.20"
   }
