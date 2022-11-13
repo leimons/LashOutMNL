@@ -1,6 +1,12 @@
 <script>
     export default {
-        name: 'NavBar'
+        name: 'NavBar',
+        props: {
+            isHomePage: {
+                type: Boolean,
+                default: false
+            }
+        }
     }
 </script>
 
@@ -9,7 +15,8 @@
         <img src="../assets/images/logo.png" height="70" />
 
         <a href="/">Home</a>
-        <a href="#explore-category">Services</a>
+        <a v-if="isHomePage" href="#explore-category">Services</a>
+        <a v-else href="/services">Services</a>
         <a href="#">Bookings</a>
     </nav>
 </template>
@@ -24,7 +31,7 @@
         flex-direction: row;
         gap: 50px;
         align-items: center;
-        justify-content: end;
+        justify-content: flex-end;
 
         height: 100px;
         padding: 0 60px;

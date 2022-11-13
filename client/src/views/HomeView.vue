@@ -1,10 +1,12 @@
 <script>
     import NavBar from '@/components/NavBar.vue';
+    import CategoryItem from '@/components/CategoryItem.vue';
 
     export default {
         name: 'HomeView',
         components: {
-            NavBar
+            NavBar,
+            CategoryItem
         }
     }
 </script>
@@ -12,7 +14,7 @@
 <template>
     <!-- HERO -->
     <div id="hero">
-        <NavBar />
+        <NavBar isHomePage />
 
         <div id="content">
             <div>
@@ -37,84 +39,58 @@
 
         <div id="category-services">
 
-            <a href="services#lashes" id="categ1">
-                <div class="category-overlay">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
+            <CategoryItem
+                name="Lashes"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
                     ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
-                    aliquet ut luctus eget, auctor a nibh.
-                </div>
+                    aliquet ut luctus eget, auctor a nibh."
+                priceDescription="starts at ₱550.00"    
+            />
 
-                <img src="../assets/images/lashes1.png" />
-                <h3>Lashes</h3>
-                <i>starts at ₱550.00</i>
-            </a>
-
-            <a href="services#lashes-retouch" id="categ2">
-                <div class="category-overlay">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
+            <CategoryItem
+                name="Lashes Retouch"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
                     ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
-                    aliquet ut luctus eget, auctor a nibh.
-                </div>
+                    aliquet ut luctus eget, auctor a nibh."
+                priceDescription="starts at ₱550.00"    
+            />
 
-                <img src="../assets/images/lashes2.png" />
-                <h3>Lashes Retouch</h3>
-                <i>starts at ₱500.00</i>
-            </a>
-
-            <a href="services#nails" id="categ3">
-                <div class="category-overlay">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
+            <CategoryItem
+                name="Nails"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
                     ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
-                    aliquet ut luctus eget, auctor a nibh.
-                </div>
+                    aliquet ut luctus eget, auctor a nibh."
+                priceDescription="starts at ₱150.00"    
+            />
 
-                <img src="../assets/images/nails1.png" />
-                <h3>Nails</h3>
-                <i>starts at ₱150.00</i>
-            </a>
-
-            <a href="services#brows" id="categ4">
-                <div class="category-overlay">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
+            <CategoryItem
+                name="Brows"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
                     ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
-                    aliquet ut luctus eget, auctor a nibh.
-                </div>
+                    aliquet ut luctus eget, auctor a nibh."
+                priceDescription="starts at ₱4,000.00"    
+            />
 
-                <img src="../assets/images/brows1.png" />
-                <h3>Brows</h3>
-                <i>starts at ₱4,000.00</i>
-            </a>
-
-            <a href="services#brows-retouch" id="categ5">
-                <div class="category-overlay">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
+            <CategoryItem
+                name="Brows Retouch"
+                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
                     ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
-                    aliquet ut luctus eget, auctor a nibh.
-                </div>
-
-                <img src="../assets/images/brows2.png" />
-                <h3>Brows Retouch</h3>
-                <i>starts at ₱1,500.00</i>
-            </a>
+                    aliquet ut luctus eget, auctor a nibh."
+                priceDescription="starts at ₱1,500.00"    
+            />
 
         </div>
 
     </div>
 
     <!-- APPOINTMENT RULES -->
-    <div id="appointment">
-        <img src="../assets/images/appointment.png" style="object-fit: contain;" />
-    </div>
+    <img src="../assets/images/appointment.png" class="infoImg" />
 
     <!-- PROTOCOLS & POLICIES -->
-    <div id="protocols">
-        <img src="../assets/images/protocols.png" />
-    </div>
+    <img src="../assets/images/protocols.png" class="infoImg" />
 
     <!-- LOCATION -->
-    <div id="location">
-        <img src="../assets/images/location.png" />
-    </div>
+    <img src="../assets/images/location.png" class="infoImg" />
 
     <!-- FOOTER -->
     <footer>
@@ -229,20 +205,8 @@
     }
 
     /* || SECTION – Appointment Ryles, Protocols, Location */
-    #appointment, #protocols, #location {
-        width: 100%;
-        overflow: hidden;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        background-color: var(--primary100);
-    }
-
-    .view-fullscreen > img {
-        width: 100%;
+    .infoImg {
+        width: 100vw;
     }
 
     /* || SECTION – Footer */
