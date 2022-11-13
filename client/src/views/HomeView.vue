@@ -2,11 +2,30 @@
     import NavBar from '@/components/NavBar.vue';
     import CategoryItem from '@/components/CategoryItem.vue';
 
+    import axios from 'axios';
+
     export default {
         name: 'HomeView',
         components: {
             NavBar,
             CategoryItem
+        },
+
+        data() {
+            return {
+                categories: []
+            }
+        },
+
+        created() {
+            axios
+                .get(`/api/services`)
+                .then((response) => {
+                    this.categories = response.data;
+                })
+                .catch((e) => {
+                    console.log(e);
+                });
         }
     }
 </script>
@@ -40,43 +59,12 @@
         <div id="category-services">
 
             <CategoryItem
-                name="Lashes"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
-                    ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
-                    aliquet ut luctus eget, auctor a nibh."
-                priceDescription="starts at ₱550.00"    
-            />
+                v-for="category in categories"
+                :key="category.name"
 
-            <CategoryItem
-                name="Lashes Retouch"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
-                    ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
-                    aliquet ut luctus eget, auctor a nibh."
-                priceDescription="starts at ₱550.00"    
-            />
-
-            <CategoryItem
-                name="Nails"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
-                    ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
-                    aliquet ut luctus eget, auctor a nibh."
-                priceDescription="starts at ₱150.00"    
-            />
-
-            <CategoryItem
-                name="Brows"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
-                    ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
-                    aliquet ut luctus eget, auctor a nibh."
-                priceDescription="starts at ₱4,000.00"    
-            />
-
-            <CategoryItem
-                name="Brows Retouch"
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sed consectetur 
-                    ligula. Integer vel augue at nisl interdum auctor id a odio. Suspendisse lacus est, 
-                    aliquet ut luctus eget, auctor a nibh."
-                priceDescription="starts at ₱1,500.00"    
+                :name="category.name"
+                :description="category.description"
+                :priceDescription="category.priceDescription"    
             />
 
         </div>
@@ -114,10 +102,6 @@
     h2 {
         font: 600 32px 'Nunito';
         text-transform: uppercase;
-    }
-
-    h3 {
-        font: 300 30px 'Lora';
     }
 
     /* || SECTION – Hero */
@@ -174,34 +158,6 @@
         justify-content: center;
 
         color: var(--secondary900);
-    }
-
-        #category-services > a {
-            display: inline-block;
-            position: relative;
-            width: 240px;
-        }
-
-        #category-services img { margin-bottom: 20px; }
-
-        #category-services i { font: 400 20px 'Nunito'; }
-
-    .category-overlay {
-        position: absolute;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        padding: 15px;
-        width: 240px;
-        height: 320px;
-
-        font: 400 15px 'Nunito';
-        text-align: center;
-        line-height: 160%;
-
-        background-color: var(--secondary100); 
-        opacity: calc(0.8 * 0.85);
     }
 
     /* || SECTION – Appointment Ryles, Protocols, Location */
