@@ -17,7 +17,7 @@
         <a href="/">Home</a>
         <a v-if="isHomePage" href="#explore-category">Services</a>
         <a v-else href="/services">Services</a>
-        <a href="#">Bookings</a>
+        <a href="#">Bookings</a>    <!-- TODO: Update anchor link -->
     </nav>
 </template>
 

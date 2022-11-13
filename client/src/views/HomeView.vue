@@ -78,16 +78,16 @@
     <img src="../assets/images/protocols.png" class="infoImg" />
 
     <!-- LOCATION -->
-    <img src="../assets/images/location.png" class="infoImg" />
+    <img src="../assets/images/location.png" id="location" class="infoImg" />
 
     <!-- FOOTER -->
     <footer>
         <img src="../assets/images/footer_quote.png"/>
 
         <div>
-            <a href="#">Location</a>
-            <a href="#">Book an Appointment</a>
-            <a href="#">Terms & Conditions</a>
+            <a href="#location">Location</a>
+            <a href="#">Book an Appointment</a> <!-- TODO: Update anchor link -->
+            <a href="#">Terms & Conditions</a>  <!-- TODO: Update anchor link -->
 
             <a href="https://www.instagram.com/lashout.mnl/" id="icon-ig">
                 <img src="../assets/images/icons_instagram.png" />
