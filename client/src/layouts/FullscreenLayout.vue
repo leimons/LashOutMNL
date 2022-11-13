@@ -5,12 +5,22 @@
             direction: {
                 type: String,
                 default: 'row'
+            },
+            centerVertical: {
+                type: Boolean,
+                default: false
+            },
+            centerHorizontal: {
+                type: Boolean,
+                default: false
             }
         },
         computed: {
-            cssDirection() {
+            cssLayout() {
                 return {
-                    'flex-direction': this.direction
+                    'flex-direction': this.direction,
+                    'align-items': this.centerVertical ? 'center' : 'stretch',
+                    'justify-content': this.centerHorizontal ? 'center' : 'flex-start'
                 }
             }
         }
@@ -18,7 +28,7 @@
 </script>
 
 <template>
-    <div :style="cssDirection">
+    <div :style="cssLayout">
         <slot></slot>
     </div>
 </template>

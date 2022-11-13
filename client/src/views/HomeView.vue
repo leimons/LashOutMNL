@@ -34,7 +34,7 @@
 
 <template>
     <!-- HERO -->
-    <FullscreenLayout direction="column" id="hero">
+    <FullscreenLayout id="hero" direction="column">
         <NavBar isHomePage />
 
         <div id="content">
@@ -55,7 +55,7 @@
     </FullscreenLayout>
 
     <!-- EXPLORE BY CATEGORY -->
-    <FullscreenLayout direction="column" id="explore-category">
+    <FullscreenLayout id="explore-category" direction="column" centerVertical centerHorizontal>
         <h2>Explore by Category</h2>
 
         <div id="category-services">
