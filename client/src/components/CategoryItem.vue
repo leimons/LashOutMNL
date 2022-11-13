@@ -11,7 +11,8 @@
             return {
                 id: this.name.toLowerCase().replace(' ', '-'),
                 serviceURL: () => `services#${this.id}`,
-                imgURL: () => this.getImageURL(this.id)
+                imgURL: () => this.getImageURL(this.id),
+                showOverlay: false
             }
         },
 
@@ -25,10 +26,14 @@
 </script>
 
 <template>
-    <a :href="serviceURL()">
-        <div>{{ description }}</div> <!-- overlay -->
+    <a
+        :href="serviceURL()"
+        @mouseover="showOverlay = true"
+        @mouseleave="showOverlay = false"
+    >
+        <div v-if="showOverlay">{{ description }}</div>
 
-        <img :src="imgURL()" />
+        <img :src="imgURL()" style="margin-bottom: 20px;" />
         <h3>{{ name }}</h3>
         <i>{{ priceDescription }}</i>
     </a>
@@ -59,15 +64,6 @@
         width: 240px;
     }
 
-    img {
-        margin-bottom: 20px;
-    }
-
-    h3 {
-        font: 300 30px 'Lora';
-    }
-
-    i {
-        font: 400 20px 'Nunito';
-    }
+    h3 { font: 300 30px 'Lora'; }
+    i { font: 400 20px 'Nunito'; }
 </style>
