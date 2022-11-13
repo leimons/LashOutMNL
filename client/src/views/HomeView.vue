@@ -1,6 +1,7 @@
 <script>
     import NavBar from '@/components/NavBar.vue';
     import CategoryItem from '@/components/CategoryItem.vue';
+    import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
 
     import axios from 'axios';
 
@@ -8,7 +9,8 @@
         name: 'HomeView',
         components: {
             NavBar,
-            CategoryItem
+            CategoryItem,
+            FullscreenLayout
         },
 
         data() {
@@ -32,7 +34,7 @@
 
 <template>
     <!-- HERO -->
-    <div id="hero">
+    <FullscreenLayout direction="column" id="hero">
         <NavBar isHomePage />
 
         <div id="content">
@@ -50,10 +52,10 @@
                 <img src="../assets/images/carousel1.png" height="500" />
             </div>
         </div>
-    </div>
+    </FullscreenLayout>
 
     <!-- EXPLORE BY CATEGORY -->
-    <div id="explore-category">
+    <FullscreenLayout direction="column" id="explore-category">
         <h2>Explore by Category</h2>
 
         <div id="category-services">
@@ -68,8 +70,7 @@
             />
 
         </div>
-
-    </div>
+    </FullscreenLayout>
 
     <!-- APPOINTMENT RULES -->
     <img src="../assets/images/appointment.png" class="infoImg" />
@@ -106,13 +107,6 @@
 
     /* || SECTION – Hero */
     #hero {
-        display: flex;
-        flex-direction: column;
-
-        width: 100%;
-        min-height: 100vh;
-        overflow: hidden;
-
         background-color: var(--primary100);
     }
 
@@ -135,16 +129,7 @@
 
     /* || SECTION – Explore by Category */
     #explore-category {
-        width: 100%;
-        min-height: 100vh;
-        overflow: hidden;
         padding: 80px 50px;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
         background-color: var(--primary50);
     }
 

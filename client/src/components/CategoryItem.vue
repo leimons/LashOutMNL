@@ -6,20 +6,15 @@
             description: String,
             priceDescription: String,
         },
-
-        data() {
-            return {
-                id: this.name.toLowerCase().replace(' ', '-'),
-                serviceURL: () => `services#${this.id}`,
-                imgURL: () => this.getImageURL(this.id),
-                showOverlay: false
-            }
-        },
-
-        methods: {
-            getImageURL(imgName) {
+        computed: {
+            serviceURL() {
+                let id = this.name.toLowerCase().replace(' ', '-');
+                return `services#${id}`
+            },
+            imgURL() {
+                let id = this.name.toLowerCase().replace(' ', '-');
                 var images = require.context('../assets/images/', false, /\.png$/)
-                return images('./' + imgName + ".png")
+                return images('./' + id + ".png")
             }
         }
     }
@@ -27,13 +22,13 @@
 
 <template>
     <a
-        :href="serviceURL()"
+        :href="serviceURL"
         @mouseover="showOverlay = true"
         @mouseleave="showOverlay = false"
     >
         <div v-if="showOverlay">{{ description }}</div>
 
-        <img :src="imgURL()" style="margin-bottom: 20px;" />
+        <img :src="imgURL" style="margin-bottom: 20px;" />
         <h3>{{ name }}</h3>
         <i>{{ priceDescription }}</i>
     </a>
