@@ -4,23 +4,37 @@ const Appointments = require("../database/models/Appointments");
 
 const controller = {
 
+    /*
+        Returns the list of services. Has the option to select only services from a specific category
+        through the `category` query.
+    */
     getServices: function (req, res) {
         var category = req.query.category;
-
         var projection = "-_id Name Category Description Duration Price"; // "-_id" excludes id field from data
-        db.findMany(Products, {}, projection, (err, result) => {
-            res.setHeader('Content-Type', 'application/json');
+        
+        db.findMany(Products, {}, projection, (result, err) => {
+            if (err) {
+                res.status(400);
+                return null;
+            }
+
+            var services = result;
 
             if ( category ) {
-                var filteredServices = result.filter((Category) => { return Category == category })
+                var filteredServices = services.filter((service) => { return service.Category == category })
+
+                res.setHeader('Content-Type', 'application/json');
                 res.send(filteredServices);
             } else {
-                var services = result;
+                res.setHeader('Content-Type', 'application/json');
                 res.send(services);
             }
         })
     },
 
+    /*
+        Returns the list of categories.
+    */
     getCategories: (req, res) => {
         const categories = [
             {
