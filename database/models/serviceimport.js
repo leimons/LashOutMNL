@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-mongoose.connect("mongodb://localhost/souldletestdb")
+mongoose.connect("mongodb://localhost:27017/LashOutMNL")
 
 const Product = require('database/models/Products')
 
