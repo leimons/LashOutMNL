@@ -43,9 +43,14 @@ app.get(`/categories`, (req, res) => {
     res.json(categories);
 })
 
+/*
+    URL Path: `/api/services`
+    Returns list of services as JSON
+*/
 app.get(`/services`, async (req, res) => {
     const projection = "-_id Name Category Description Duration Price"; // "-_id" excludes id field from data
     const services = db.findMany(Products, {}, projection, function(result) {
+        res.setHeader('Content-Type', 'application/json');
         res.send(result);
     });
 })
