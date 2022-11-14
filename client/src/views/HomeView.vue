@@ -21,7 +21,7 @@
 
         created() {
             axios
-                .get(`/api/services`)
+                .get(`/api/categories`)
                 .then((response) => {
                     this.categories = response.data;
                 })

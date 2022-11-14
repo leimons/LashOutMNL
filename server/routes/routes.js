@@ -3,11 +3,14 @@ const controller = require(`../controllers/controller.js`);
 
 const app = express();
 
+const Products = require("../database/models/Products");
+const db = require("../database/models/db");
+
 /*
-    URL Path: `/api/services`
+    URL Path: `/api/categories`
     Returns list of categories as JSON
 */
-app.get(`/services`, (req, res) => {
+app.get(`/categories`, (req, res) => {
     const categories = [
         {
             name: "Lashes",
@@ -38,6 +41,13 @@ app.get(`/services`, (req, res) => {
 
     res.setHeader('Content-Type', 'application/json');
     res.json(categories);
+})
+
+app.get(`/services`, async (req, res) => {
+    const projection = "-_id Name Category Description Duration Price"; // "-_id" excludes id field from data
+    const services = db.findMany(Products, {}, projection, function(result) {
+        res.send(result);
+    });
 })
 
 module.exports = app;
