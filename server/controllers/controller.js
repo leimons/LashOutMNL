@@ -33,37 +33,52 @@ const controller = {
     },
 
     /*
-        Returns the list of categories.
+        Returns the list of categories. Price descriptions are automatically updated based on the 
+        prices in the database.
     */
-    getCategories: (req, res) => {
-        const categories = [
+    getCategories: async (req, res) => {
+        var categories = [
             {
                 name: "Lashes",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", /* TODO: Update description */
-                priceDescription: "starts at ₱550.00"
             },
             {
                 name: "Lashes Retouch",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", /* TODO: Update description */
-                priceDescription: "starts at ₱500.00"
             },
             {
                 name: "Nails",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", /* TODO: Update description */
-                priceDescription: "starts at ₱150.00"
             },
             {
                 name: "Brows",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", /* TODO: Update description */
-                priceDescription: "starts at ₱4,000.00"
             },
             {
                 name: "Brows Retouch",
                 description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", /* TODO: Update description */
-                priceDescription: "starts at ₱1,500.00"
             }
         ]
-    
+
+        /*
+            Find lowest price for each category then add to `priceDescription`.
+            Automatically adjusts price displayed when promos/discounts are active.
+        */
+        var services = await Products.find({}, "-_id Category Price"); // "-_id" excludes id field from result
+        
+        for (var category of categories) {
+            let categoryServices = services.filter(service => service.Category == category.name);
+            let categoryPrices = categoryServices.map(service => service.Price);
+            let minPrice = Math.min(...categoryPrices);
+
+            const options = { // for formatting price
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2 
+            }
+
+            category.priceDescription = `starts at ₱${ Number(minPrice).toLocaleString('en', options) }`;
+        }
+
         res.setHeader('Content-Type', 'application/json');
         res.json(categories);
     },
