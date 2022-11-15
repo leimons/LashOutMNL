@@ -36,9 +36,6 @@
 <style scoped>
     div {
         display: flex;
-        align-items: center; /* vertical */
-        justify-content: center; /* horizontal */
-
         width: 100%;
         min-height: 100vh;
     }

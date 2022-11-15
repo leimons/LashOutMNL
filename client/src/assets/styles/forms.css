@@ -1,0 +1,32 @@
+button {
+    padding: 12px 20px;
+    border: 1.25pt solid #000000;
+    background: none;
+
+    text-transform: uppercase;
+
+    font-family: 'Nunito';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+}
+
+button.small {
+    padding: 8px 15px;
+}
+
+button.hover:hover {
+    background-color: var(--primary100);
+}
+
+button.hover:active {
+    background-color: var(--primary200);
+}
+
+input {
+    font: 300 16px 'Nunito';
+    padding: 10px 15px;
+    border: 1pt solid black;
+    border-radius: 5pt;
+    background-color: var(--primary50);
+}
