@@ -1,10 +1,36 @@
 <script>
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
+    import axios from 'axios';
 
     export default {
         name: 'AdminLogin',
         components: {
             FullscreenLayout
+        },
+        data() {
+            return {
+                username: '',
+                password: '',
+                errorMsg: ''
+            }
+        },
+        methods: {
+            login() {
+                const URL = 'https://eog7rm5iwehhpsq.m.pipedream.net'; /* temporary URL. TODO: Replace with URL to API */
+                let params = {
+                    username: this.username,
+                    password: this.password
+                };
+
+                axios
+                    .post(URL, params)
+                    .then((response) => {
+                        console.log(response)
+                    })
+                    .catch((e) => {
+                        this.errorMsg = Error(e).message;
+                    });
+            }
         }
     }
 </script>
@@ -18,17 +44,18 @@
         <div id="card">
             <div>
                 <label for="username">Username:</label>
-                <input type="text" id="username" />
+                <input type="text" id="username" v-model="username" />
             </div>
 
             <div>
                 <label for="password">Password:</label>
-                <input type="password" id="username" />
+                <input type="password" id="password" v-model="password" />
             </div>
 
             <div>
-                <small class="text-primary900">&nbsp;</small>
-                <button class="small hover">Login</button>
+                <small class="text-primary900" v-if="!errorMsg">&nbsp;</small>
+                <small class="text-primary900" v-if="errorMsg">{{ errorMsg }}</small>
+                <button class="small hover" @click="login">Login</button>
             </div>
         </div>
     </FullscreenLayout>
