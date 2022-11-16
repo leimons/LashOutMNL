@@ -1,36 +1,15 @@
 <script>
     import NavClient from '@/components/NavClient.vue';
-    import CategoryItem from '@/components/CategoryItem.vue';
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
     import FooterClient from '@/components/FooterClient.vue';
-
-    import axios from 'axios';
 
     export default {
         name: 'HomeView',
         title: 'LashOut MNL | Home',
         components: {
             NavClient,
-            CategoryItem,
             FullscreenLayout,
             FooterClient
-        },
-
-        data() {
-            return {
-                categories: []
-            }
-        },
-
-        created() {
-            axios
-                .get(`/api/categories`)
-                .then((response) => {
-                    this.categories = response.data;
-                })
-                .catch((e) => {
-                    console.log(e);
-                });
         }
     }
 </script>
@@ -52,25 +31,43 @@
             </div>
 
             <div id="carousel-container">
-                <img src="../assets/images/carousel1.png" height="500" />
+                <img src="../assets/images/carousel.gif" height="500" />
             </div>
         </div>
     </FullscreenLayout>
 
     <!-- EXPLORE BY CATEGORY -->
     <FullscreenLayout id="explore-category" direction="column" centerVertical centerHorizontal>
-        <h2>Explore by Category</h2>
+        <h1>Explore our <u>services</u></h1>
 
         <div id="category-services">
 
-            <CategoryItem
-                v-for="category in categories"
-                :key="category.name"
+            <a class="category" href="services#lashes">
+                <img src="@/assets/images/category_lashes.png" />
 
-                :name="category.name"
-                :description="category.description"
-                :priceDescription="category.priceDescription"    
-            />
+                <div>
+                    <h2>Lashes</h2>
+                    <u>read more</u> &#8594;
+                </div>
+            </a>
+
+            <a class="category" href="services#brows">
+                <img src="@/assets/images/category_brows.png" />
+                
+                <div>
+                    <h2>Brows</h2>
+                    <u>read more</u> &#8594;
+                </div>
+            </a>
+
+            <a class="category" href="services#nails">
+                <img src="@/assets/images/category_nails.png" />
+                
+                <div>
+                    <h2>Nails</h2>
+                    <u>read more</u> &#8594;
+                </div>
+            </a>
 
         </div>
     </FullscreenLayout>
@@ -90,9 +87,12 @@
 
 <style scoped>
     /* || General styles */
+    h1 {
+        font: 400 40px 'Lora';
+    }
+
     h2 {
-        font: 600 32px 'Nunito';
-        text-transform: uppercase;
+        font: 600 32px 'Lora';
     }
 
     /* || SECTION – Hero */
@@ -135,56 +135,28 @@
         color: var(--secondary900);
     }
 
+    .category {
+        position: relative;
+        max-height: 70vh;
+        width: 27vw;
+        text-shadow: 0px 0px 8px var(--primary100);
+    }
+
+        .category > div {
+            position: absolute;
+            left: 25px;
+            bottom: 25px;
+        }
+
+        .category > img {
+            max-height: 600px;
+            max-width: 380px;
+            width: 100%;
+            opacity: 0.95;
+        }
+
     /* || SECTION – Appointment Ryles, Protocols, Location */
     .infoImg {
         width: 100vw;
-    }
-
-    /* || SECTION – Footer */
-    footer {
-        position: relative;
-        width: 100%;
-        height: 450px;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        background-color: rgba(223, 174, 174, 0.63); /* pink100 w/ 63% opacity */
-    }
-
-        footer a {
-            font: 700 16px 'Nunito';
-            color: var(--pink800);
-            line-height: 22px;
-            text-transform: uppercase;
-        }
-
-        footer > div {
-            position: absolute;
-            bottom: 0;
-            padding: 20px 40px;
-            gap: 30px;
-
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
-        footer > img {
-            width: 750px;
-            max-width: 90%;
-        }
-
-    #icon-ig {
-        margin-left: auto; 
-        gap: 5px; 
-        color: black;
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
     }
 </style>
