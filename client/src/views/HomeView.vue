@@ -1,7 +1,8 @@
 <script>
-    import NavBar from '@/components/NavBar.vue';
+    import NavClient from '@/components/NavClient.vue';
     import CategoryItem from '@/components/CategoryItem.vue';
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
+    import FooterClient from '@/components/FooterClient.vue';
 
     import axios from 'axios';
 
@@ -9,9 +10,10 @@
         name: 'HomeView',
         title: 'LashOut MNL | Home',
         components: {
-            NavBar,
+            NavClient,
             CategoryItem,
-            FullscreenLayout
+            FullscreenLayout,
+            FooterClient
         },
 
         data() {
@@ -36,7 +38,7 @@
 <template>
     <!-- HERO -->
     <FullscreenLayout id="hero" direction="column">
-        <NavBar isHomePage />
+        <NavClient isHomePage />
 
         <div id="content">
             <div>
@@ -83,20 +85,7 @@
     <img src="../assets/images/location.png" id="location" class="infoImg" />
 
     <!-- FOOTER -->
-    <footer>
-        <img src="../assets/images/footer_quote.png"/>
-
-        <div>
-            <a href="#location">Location</a>
-            <a href="#">Book an Appointment</a> <!-- TODO: Update anchor link -->
-            <a href="#">Terms & Conditions</a>  <!-- TODO: Update anchor link -->
-
-            <a href="https://www.instagram.com/lashout.mnl/" id="icon-ig">
-                <img src="../assets/images/icons_instagram.png" />
-                LashOut.MNL
-            </a>
-        </div>
-    </footer>
+    <FooterClient />
 </template>
 
 <style scoped>

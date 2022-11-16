@@ -1,6 +1,6 @@
 <script>
     export default {
-        name: 'NavBar',
+        name: 'NavClient',
         props: {
             isHomePage: {
                 type: Boolean,
