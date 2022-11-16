@@ -29,7 +29,7 @@ const controller = {
                 res.setHeader('Content-Type', 'application/json');
                 res.send(services);
             }
-        })
+        }) 
     },
 
     /*
@@ -81,6 +81,13 @@ const controller = {
 
         res.setHeader('Content-Type', 'application/json');
         res.json(categories);
+    },
+
+    addAppointment: function (req,res){
+        var product = req.body.product
+        db.insertOne(Appointments, {Product: product},function(){     
+        });
+        res.status(201).send();
     },
 
     getInclusionsPage: function(req,res){

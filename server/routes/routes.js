@@ -15,4 +15,6 @@ app.get(`/categories`, controller.getCategories)
 */
 app.get(`/services`, controller.getServices);
 
+app.post(`/addAppointment`, controller.addAppointment);
+
 module.exports = app;

@@ -1,6 +1,7 @@
 const express = require(`express`);
 const bodyParser = require(`body-parser`);
 const apiRoutes = require (`./routes/routes.js`);
+const cors = require('cors');
 
 const db = require(`./database/models/db`);
 const mongoose = require ('mongoose');
@@ -10,8 +11,10 @@ mongoose.connect('mongodb://localhost/LashOutMNL',
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
+
 // parse incoming requests with JSON payloads
 app.use(express.json());
+app.use(cors());
 
 app.use (express.static('public'));
 app.use(`/api`, apiRoutes);

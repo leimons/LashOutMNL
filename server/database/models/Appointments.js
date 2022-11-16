@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 
 const AppointmentsSchema = new mongoose.Schema({
+    SessionID: Number,
     refNum: Number,
     ClientName: String,
     ClientInfo: String,
-    PaymentStatus: Boolean
+    PaymentStatus: Boolean,
+    Product: String,
+    Inclusions: [String]
     //Add Date and Time
 });
 
