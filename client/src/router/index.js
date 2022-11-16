@@ -10,6 +10,21 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: () => import('@/views/AdminLogin.vue')
+  },
+  {
+    path: '/services/lashes',
+    name: 'lashes',
+    component: () => import('@/views/services/LashesView.vue')
+  },
+  {
+    path: '/services/brows',
+    name: 'brows',
+    component: () => import('@/views/services/BrowsView.vue')
+  },
+  {
+    path: '/services/nails',
+    name: 'nails',
+    component: () => import('@/views/services/NailsView.vue')
   }
 ]
 

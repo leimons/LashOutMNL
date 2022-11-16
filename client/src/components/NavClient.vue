@@ -23,7 +23,7 @@
 
 <style scoped>
     nav {
-        position: relative;
+        position: absolute;
         left: 0;
         top: 0;
 
@@ -34,6 +34,7 @@
         justify-content: flex-end;
 
         height: 100px;
+        width: 100%;
         padding: 0 60px;
         
         font: 400 20px 'Nunito';
