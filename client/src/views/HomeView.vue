@@ -7,6 +7,7 @@
 
     export default {
         name: 'HomeView',
+        title: 'LashOut MNL | Home',
         components: {
             NavBar,
             CategoryItem,
