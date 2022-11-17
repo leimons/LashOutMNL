@@ -12,6 +12,70 @@
             FooterClient,
             CenterLayout,
             ServiceCard
+        },
+        data() {
+            return { /* mock data. TODO: replace with data from API call */
+                subcategories: [
+                    {
+                        name: "Brow Shading",
+                        services: [
+                            {
+                                Service: "Microblading",
+                                Category: "Brows",
+                                Subcategory: "Brow Shading",
+                                Duration: "3 hr",
+                                Price: 4000,
+                                Description: `Microblading is a form of semi-permanent tattoo for eyebrows which uses individually drawn thin and crisp lines that resembles hair strokes to give the illusion of realistic, natural (yet full) looking brows. Although it’s not as deep as a traditional tattoo, it is still classed as a ‘tattoo’ as pigment is implanted under the skin’s surface.
+
+                                Inclusions: 1 Session, 1 Free Retouch (valid until 45th day of initial treatment)
+                                Effect: Natural looking hair-like strokes, Light finish to bold brow look
+                                Perfect for: Thin to no brows at all, Not to dense but not too sparse brows, Clients who want more natural style, Clients who don’t always wear makeup but want their brows to be always in shape`,
+                                OnSale: false,
+                                SalePrice: 0
+                            },
+                            {
+                                Service: "PhiShading",
+                                Category: "Brows",
+                                Subcategory: "Brow Shading",
+                                Duration: "3 hr",
+                                Price: 5000,
+                                Description: `PhiShading is a technique that involves a combination of Microblading and brow shading together. This technique creates more denser, fuller looking brows that appear to be powdered, but with hair strokes (Microblading). This treatment is recommended for people with oily skin and is ideal for people who have no natural eyebrows. This technique involves filling in or thickening of areas with a soft or darker color which varies in transparency.
+
+                                Inclusions: 1 Session, 1 Free Retouch (valid until 45th day of initial treatment)
+                                Effect: Gradient effect, Well-defined brow
+                                Perfect for: Oily skin, All types of brow growth, With old tattoo, Clients who are tired of fillings brows regularly with makeup`,
+                                OnSale: false,
+                                SalePrice: 0
+                            },
+                        ]
+                    },
+                    {
+                        name: "Brow Retouch",
+                        services: [
+                            {
+                                Service: "Brows Retouch (45 days healed)",
+                                Category: "Brows",
+                                Subcategory: "Brow Retouch",
+                                Duration: "1 hr",
+                                Price: 0,
+                                Description: "",
+                                OnSale: false,
+                                SalePrice: 0
+                            },
+                            {
+                                Service: "Brows Retouch (> 45 days healed)",
+                                Category: "Brows",
+                                Subcategory: "Brow Retouch",
+                                Duration: "1 hr",
+                                Price: 1500,
+                                Description: "",
+                                OnSale: false,
+                                SalePrice: 0
+                            },
+                        ]
+                    }
+                ]
+            }
         }
     }
 </script>
@@ -28,25 +92,21 @@
         </p>
     </CenterLayout>
 
-    <div class="subcategory text-secondary900">
+    <div class="subcategory text-secondary900" v-for="subcategory in subcategories" :key="subcategory.name">
         <div class="subcategory-heading">
-            <h1>Brow Shading</h1>
+            <h1>{{ subcategory.name }}</h1>
         </div>
 
         <div class="service-container">
-            <ServiceCard />
-            <ServiceCard />
-        </div>
-    </div>
+            <ServiceCard
+                v-for="service in subcategory.services"
+                :key="service.Service"
 
-    <div class="subcategory text-secondary900">
-        <div class="subcategory-heading">
-            <h1>Brows Retouch</h1>
-        </div>
-
-        <div class="service-container">
-            <ServiceCard />
-            <ServiceCard />
+                :service="service.Service"
+                :duration="service.Duration"
+                :price="service.Price"
+                :description="service.Description"
+            />
         </div>
     </div>
 

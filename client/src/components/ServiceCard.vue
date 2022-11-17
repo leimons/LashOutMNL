@@ -1,9 +1,42 @@
 <script>
     export default {
         name: 'ServiceCard',
-        data() {
-            return {
-                image: "https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut"
+        props: {
+            service: {
+                type: String,
+                default: ''
+            },
+            duration: {
+                type: String,
+                default: ''
+            },
+            price: {
+                type: Number,
+                default: 0
+            },
+            description: {
+                type: String,
+                default: ''
+            },
+            imageURL: {
+                type: String,
+                default: "https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" // placeholder image
+            },
+            onSale: {
+                type: Boolean,
+                default: false
+            },
+            salePrice: {
+                type: Number,
+                default: 0
+            }
+        },
+        computed: {
+            formattedPrice() {
+                return Number(this.price).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'PHP',
+                })
             }
         }
     }
@@ -11,20 +44,17 @@
 
 <template>
     <div class="service-card">
-        <img :src="image" />
+        <img :src="imageURL" />
 
         <div class="service-content">
             <div class="service-heading">
-                <h3>Service Name</h3>
-                <p>₱ 000.00</p>
+                <h3>{{ service }}</h3>
+                <p>{{ formattedPrice }}</p>
             </div>
 
             <p class="service-description">
-                <i>2 hrs.</i>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute 
-                irure dolor in reprehenderit in voluptate velit esse cillum 
-                dolore eu fugiat nulla pariatur.
+                <i>{{ duration }}.</i>
+                {{ description }}
             </p>
         </div>
     </div>

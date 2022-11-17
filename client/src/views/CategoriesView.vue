@@ -23,7 +23,7 @@
 
             <div id="category-services">
 
-                <a class="category" href="services/lashes">
+                <a class="category" href="/services/lashes">
                     <img src="@/assets/images/category_lashes.png" />
 
                     <div>
@@ -32,7 +32,7 @@
                     </div>
                 </a>
 
-                <a class="category" href="services/brows">
+                <a class="category" href="/services/brows">
                     <img src="@/assets/images/category_brows.png" />
                     
                     <div>
@@ -41,7 +41,7 @@
                     </div>
                 </a>
 
-                <a class="category" href="services/nails">
+                <a class="category" href="/services/nails">
                     <img src="@/assets/images/category_nails.png" />
                     
                     <div>
