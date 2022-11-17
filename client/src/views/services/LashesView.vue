@@ -3,6 +3,7 @@
     import FooterClient from '@/components/FooterClient.vue';
     import CenterLayout from '@/layouts/CenterLayout.vue';
     import ServiceCard from '@/components/ServiceCard.vue';
+    import ScrollButton from '@/components/ScrollButton.vue';
 
     export default {
         name: 'LashesView',
@@ -11,14 +12,13 @@
             NavClient,
             FooterClient,
             CenterLayout,
-            ServiceCard
+            ServiceCard,
+            ScrollButton
         },
 
         data() {
-            return { 
-                scrollTimer: 0,
-                scrollY: 0,
-                subcategories: [ /* mock data. TODO: replace with data from API call */
+            return { /* mock data. TODO: replace with data from API call */
+                subcategories: [ 
                     {
                         name: "Lash Set",
                         services: [
@@ -132,23 +132,6 @@
                     }
                 ]
             }
-        },
-        created () {
-            window.addEventListener('scroll', this.handleScroll);
-        },
-        unmounted () {
-            window.removeEventListener('scroll', this.handleScroll);
-        },
-        methods: {
-            handleScroll () {
-                if (this.scrollTimer) return;
-
-                this.scrollTimer = setTimeout(() => {
-                    this.scrollY = window.scrollY;
-                    clearTimeout(this.scrollTimer);
-                    this.scrollTimer = 0;
-                }, 200);
-            }
         }
     }
 </script>
@@ -183,13 +166,9 @@
         </div>
     </div>
 
-    <button
-        id="explore-services"
-        v-show="scrollY > 400"
-        @click="() => { this.$router.push('/services') }"
-    >
+    <ScrollButton threshold="400" @click="() => { this.$router.push('/services') }">
         &#8592; Explore other services
-    </button>
+    </ScrollButton>
 
     <FooterClient />
 </template>
@@ -247,14 +226,4 @@
         .service-container > div:last-child:nth-child(3n - 2) {
             grid-column: span 3;
         }
-
-    #explore-services {
-        position: fixed;
-        left: 20px;
-        top: 20px;
-        z-index: 5;
-        opacity: 0.8;
-
-        background-color: var(--primary100);
-    }
 </style>

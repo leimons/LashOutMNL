@@ -3,6 +3,7 @@
     import FooterClient from '@/components/FooterClient.vue';
     import CenterLayout from '@/layouts/CenterLayout.vue';
     import ServiceCard from '@/components/ServiceCard.vue';
+    import ScrollButton from '@/components/ScrollButton.vue';
 
     export default {
         name: 'BrowsView',
@@ -11,7 +12,8 @@
             NavClient,
             FooterClient,
             CenterLayout,
-            ServiceCard
+            ServiceCard,
+            ScrollButton
         },
         data() {
             return { /* mock data. TODO: replace with data from API call */
@@ -109,6 +111,10 @@
             />
         </div>
     </div>
+
+    <ScrollButton threshold="400" @click="() => { this.$router.push('/services') }">
+        &#8592; Explore other services
+    </ScrollButton>
 
     <FooterClient />
 </template>
