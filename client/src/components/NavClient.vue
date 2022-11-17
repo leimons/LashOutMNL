@@ -12,7 +12,7 @@
 
 <template>
     <nav>
-        <img src="../assets/images/logo.png" height="70" />
+        <a href="/"><img src="../assets/images/logo.png" height="70" /></a>
 
         <a href="/">Home</a>
         <a v-if="isHomePage" href="#explore-category">Services</a>
@@ -41,7 +41,7 @@
         text-transform: uppercase;
     }
 
-    img {
+    a:first-child {
         margin-right: auto;
     }
 </style>
