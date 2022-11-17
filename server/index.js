@@ -4,7 +4,7 @@ const apiRoutes = require (`./routes/routes.js`);
 
 const db = require(`./database/models/db`);
 const mongoose = require ('mongoose');
-mongoose.connect('mongodb://localhost/LashOutMNL',
+mongoose.connect('mongodb://127.0.0.1/LashOutMNL',
 {useNewURLParser: true, useUnifiedTopology: true});
 
 const app = express();
@@ -20,5 +20,5 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`  Server running at port ${PORT}...`);
-    console.log(`  - Local:   http://localhost:${PORT}/ `);
+    console.log(`  - Local:   http://127.0.0.1:${PORT}/ `);
 });

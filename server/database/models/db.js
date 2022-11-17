@@ -6,7 +6,7 @@ Insert Schemas here
 var Products = require(`./Products`);
 
 
-const url = 'mongodb://localhost:27017/LashOutMNL';
+const url = 'mongodb://127.0.0.1:27017/LashOutMNL';
 
 const options = {
     useUnifiedTopology: true,
