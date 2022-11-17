@@ -6,7 +6,7 @@
     import axios from 'axios';
 
     export default {
-        name: 'HomeView',
+        name: 'ServiceView',
         components: {
             NavBar,
             FullscreenLayout
@@ -30,8 +30,8 @@
         },
 
         methods:{
-            async addAppointment() {
-                await dbFunctions.addAppointment("Lash Lift");
+            async addAppointment(value) {
+                await dbFunctions.addAppointment(value);
             }
         }
     }
@@ -47,7 +47,7 @@
           v-bind:key="service._id" 
         >
             <p class="service">{{ service.Name }}</p>
-            <button v-on:click="addAppointment"> Select </button>
+            <button v-on:click="addAppointment(service.Name)"> Select </button>
         </div>
     </FullscreenLayout>
 </template>

@@ -85,6 +85,13 @@ const controller = {
 
     addAppointment: function (req,res){
         var product = req.body.product
+        var val = Math.floor(1000 + Math.random() * 9000);
+        db.findMany(Appointments, {refnum: val} , 'refnum',function(result){
+            while (result != undefined){
+                val = Math.floor(1000 + Math.random() * 9000);
+            }
+        });
+        console.log(val)
         db.insertOne(Appointments, {Product: product},function(){     
         });
         res.status(201).send();
