@@ -1,6 +1,6 @@
 <script>
     export default {
-        name: 'NavBar',
+        name: 'NavClient',
         props: {
             isHomePage: {
                 type: Boolean,
@@ -12,7 +12,7 @@
 
 <template>
     <nav>
-        <img src="../assets/images/logo.png" height="70" />
+        <a href="/"><img src="../assets/images/logo.png" height="70" /></a>
 
         <a href="/">Home</a>
         <a v-if="isHomePage" href="#explore-category">Services</a>
@@ -23,7 +23,7 @@
 
 <style scoped>
     nav {
-        position: relative;
+        position: absolute;
         left: 0;
         top: 0;
 
@@ -34,13 +34,14 @@
         justify-content: flex-end;
 
         height: 100px;
+        width: 100%;
         padding: 0 60px;
         
         font: 400 20px 'Nunito';
         text-transform: uppercase;
     }
 
-    img {
+    a:first-child {
         margin-right: auto;
     }
 </style>
