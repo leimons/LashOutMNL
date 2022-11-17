@@ -235,6 +235,8 @@
                 :duration="service.Duration"
                 :price="service.Price"
                 :description="service.Description"
+                :onSale="service.OnSale"
+                :salePrice="service.SalePrice"
             />
         </div>
     </div>

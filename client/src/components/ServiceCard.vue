@@ -37,6 +37,12 @@
                     style: 'currency',
                     currency: 'PHP',
                 })
+            },
+            formattedSalePrice() {
+                return Number(this.salePrice).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'PHP',
+                })
             }
         }
     }
@@ -49,7 +55,11 @@
         <div class="service-content">
             <div class="service-heading">
                 <h3>{{ service }}</h3>
-                <p>{{ formattedPrice }}</p>
+                <p v-if="!onSale">{{ formattedPrice }}</p>
+                <p v-else>
+                    <s>{{ formattedPrice }}</s><br />
+                    {{ formattedSalePrice }}
+                </p>
             </div>
 
             <p class="service-description">
@@ -85,6 +95,10 @@
             margin-left: auto;
             width: 140px;
             text-align: right;
+        }
+
+        .service-heading s {
+            opacity: 0.33;
         }
 
     .service-description {
