@@ -17,4 +17,8 @@ app.get(`/services`, controller.getServices);
 
 app.post(`/addAppointment`, controller.addAppointment);
 
+app.post(`/addInclusions`, controller.addInclusions);
+
+app.post(`/addClientDetails`, controller.addClientDetails);
+
 module.exports = app;
