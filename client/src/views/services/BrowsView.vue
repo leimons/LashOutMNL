@@ -87,10 +87,10 @@
 
     <CenterLayout id="category-header">
         <h1>Up your <u><i>Brows Game</i></u></h1>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        <p style="width: 680px;">
+            Brows are one of the first things people notice about your face, and you want them to be 
+            the best they can be. We offer two different types of brows: microblading and phi shading, 
+            and both are totally painless. Talk to us about which option is right for you!
         </p>
     </CenterLayout>
 
@@ -128,6 +128,7 @@
     
     #category-header {
         height: 300px;
+        text-align: center;
     }
 
         #category-header > h1 {
@@ -135,13 +136,7 @@
             margin-bottom: 20px;
         
             font-weight: 500;
-            text-align: center;
         }
-
-    p {
-        width: 600px;
-        text-align: center;
-    }
 
     .subcategory-heading {
         width: 100%;

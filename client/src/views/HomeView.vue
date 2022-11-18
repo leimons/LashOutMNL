@@ -22,9 +22,7 @@
         <div id="content">
             <div>
                 <p>
-                    Lorem ipsum <i>dolor</i> sit amet, <br>
-                    consectetur <i>adipiscing</i> elit, <br>
-                    integer <u>sodales</u> elit finibus.
+                    Step in, relax and let our beauticians make you <i>look</i> and <i>feel</i> great.
                 </p>
                 
                 <button>Book Now</button>
@@ -113,6 +111,7 @@
     }
 
         #content p {
+            width: 480px;
             margin-bottom: 50px;
             font: 300 36px 'Lora';
         }

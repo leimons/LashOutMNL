@@ -141,10 +141,10 @@
 
     <CenterLayout id="category-header">
         <h1>For your <u><i>Flawless Lashes</i></u></h1>
-        <p> <!-- TODO: Add category description -->
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        <p style="width: 680px;">
+            Become a stylish woman with our range of beautiful, professional quality lashes.<br />
+            With a simple yet stylish design and high-quality materials, our lashes are carefully 
+            crafted to ensure that you have the perfect amount of volume, length and curl.
         </p>
     </CenterLayout>
 
@@ -182,6 +182,7 @@
     
     #category-header {
         height: 300px;
+        text-align: center;
     }
 
         #category-header > h1 {
@@ -189,13 +190,7 @@
             margin-bottom: 20px;
         
             font-weight: 500;
-            text-align: center;
         }
-
-    p {
-        width: 600px;
-        text-align: center;
-    }
 
     .subcategory-heading {
         width: 100%;

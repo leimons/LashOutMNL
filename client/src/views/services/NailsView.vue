@@ -214,10 +214,10 @@
 
     <CenterLayout id="category-header">
         <h1>Picture Perfect <u><i>Nails</i></u></h1>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-            nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        <p style="width: 680px;">
+            You deserve a relaxing and rejuvenating experience, and we are equipped to provide all 
+            of the polish, tools, and techniques you need. Our friendly staff provides excellent 
+            customer service and our relaxing environment creates a comfortable space just for you.
         </p>
     </CenterLayout>
 
@@ -255,6 +255,7 @@
     
     #category-header {
         height: 300px;
+        text-align: center;
     }
 
         #category-header > h1 {
@@ -262,13 +263,7 @@
             margin-bottom: 20px;
         
             font-weight: 500;
-            text-align: center;
         }
-
-    p {
-        width: 600px;
-        text-align: center;
-    }
 
     .subcategory-heading {
         width: 100%;
