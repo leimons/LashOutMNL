@@ -30,6 +30,11 @@ const routes = [
     path: '/services/nails',
     name: 'nails',
     component: () => import('@/views/services/NailsView.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'pageNotFound',
+    component: () => import('@/views/error/PageNotFound.vue')
   }
 ]
 
