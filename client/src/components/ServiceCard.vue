@@ -2,69 +2,32 @@
     export default {
         name: 'ServiceCard',
         props: {
-            service: {
-                type: String,
-                default: ''
-            },
-            duration: {
-                type: String,
-                default: ''
-            },
-            price: {
-                type: Number,
-                default: 0
-            },
-            description: {
-                type: String,
-                default: ''
-            },
-            imageURL: {
-                type: String,
-                default: "https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" // placeholder image
-            },
-            onSale: {
-                type: Boolean,
-                default: false
-            },
-            salePrice: {
-                type: Number,
-                default: 0
-            }
+            content: Object
         },
-        computed: {
-            formattedPrice() {
-                return Number(this.price).toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'PHP',
-                })
-            },
-            formattedSalePrice() {
-                return Number(this.salePrice).toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'PHP',
-                })
-            }
+        methods: {
+            formatPrice: (num) =>
+                Number(num).toLocaleString('en-US', {style: 'currency', currency: 'PHP'}),
         }
     }
 </script>
 
 <template>
     <div class="service-card">
-        <img :src="imageURL" />
+        <img src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" /> <!-- placeholder image, TODO: replace with actual service image -->
 
         <div class="service-content">
             <div class="service-heading">
-                <h3>{{ service }}</h3>
-                <p v-if="!onSale">{{ formattedPrice }}</p>
+                <h3>{{ content.Name }}</h3>
+                <p v-if="!content.OnSale">{{ formatPrice(content.Price) }}</p>
                 <p v-else>
-                    <s>{{ formattedPrice }}</s><br />
-                    {{ formattedSalePrice }}
+                    <s>{{ formatPrice(content.Price) }}</s><br />
+                    {{ formatPrice(content.SalePrice) }}
                 </p>
             </div>
 
             <p class="service-description">
-                <i>{{ duration }}.</i>
-                {{ description }}
+                <i>{{ content.Duration }}.</i>
+                {{ content.Description }}
             </p>
         </div>
     </div>

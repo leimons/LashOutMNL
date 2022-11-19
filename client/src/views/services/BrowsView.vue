@@ -4,6 +4,9 @@
     import CenterLayout from '@/layouts/CenterLayout.vue';
     import ServiceCard from '@/components/ServiceCard.vue';
     import ScrollButton from '@/components/ScrollButton.vue';
+    import ServiceGridLayout from '@/layouts/ServiceGridLayout.vue';
+
+    import axios from 'axios';
 
     export default {
         name: 'BrowsView',
@@ -13,71 +16,34 @@
             FooterClient,
             CenterLayout,
             ServiceCard,
-            ScrollButton
+            ScrollButton,
+            ServiceGridLayout
         },
         data() {
-            return { /* mock data. TODO: replace with data from API call */
-                subcategories: [
-                    {
-                        name: "Brow Shading",
-                        services: [
-                            {
-                                Service: "Microblading",
-                                Category: "Brows",
-                                Subcategory: "Brow Shading",
-                                Duration: "3 hr",
-                                Price: 4000,
-                                Description: `Microblading is a form of semi-permanent tattoo for eyebrows which uses individually drawn thin and crisp lines that resembles hair strokes to give the illusion of realistic, natural (yet full) looking brows. Although it’s not as deep as a traditional tattoo, it is still classed as a ‘tattoo’ as pigment is implanted under the skin’s surface.
-
-                                Inclusions: 1 Session, 1 Free Retouch (valid until 45th day of initial treatment)
-                                Effect: Natural looking hair-like strokes, Light finish to bold brow look
-                                Perfect for: Thin to no brows at all, Not to dense but not too sparse brows, Clients who want more natural style, Clients who don’t always wear makeup but want their brows to be always in shape`,
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "PhiShading",
-                                Category: "Brows",
-                                Subcategory: "Brow Shading",
-                                Duration: "3 hr",
-                                Price: 5000,
-                                Description: `PhiShading is a technique that involves a combination of Microblading and brow shading together. This technique creates more denser, fuller looking brows that appear to be powdered, but with hair strokes (Microblading). This treatment is recommended for people with oily skin and is ideal for people who have no natural eyebrows. This technique involves filling in or thickening of areas with a soft or darker color which varies in transparency.
-
-                                Inclusions: 1 Session, 1 Free Retouch (valid until 45th day of initial treatment)
-                                Effect: Gradient effect, Well-defined brow
-                                Perfect for: Oily skin, All types of brow growth, With old tattoo, Clients who are tired of fillings brows regularly with makeup`,
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    },
-                    {
-                        name: "Brow Retouch",
-                        services: [
-                            {
-                                Service: "Brows Retouch (45 days healed)",
-                                Category: "Brows",
-                                Subcategory: "Brow Retouch",
-                                Duration: "1 hr",
-                                Price: 0,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Brows Retouch (> 45 days healed)",
-                                Category: "Brows",
-                                Subcategory: "Brow Retouch",
-                                Duration: "1 hr",
-                                Price: 1500,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    }
-                ]
+            return {
+                apiData: []
             }
+        },
+        mounted() {
+            axios
+                .get('/api/services', { params: {category: 'Brows'} })
+                .then((response) => {
+                    this.apiData = response.data
+                });
+        },
+        computed: {
+            subcategories() {
+                var subcategories_list = this.apiData
+                    .map(service => service.Subcategory)        // Get list of subcategories
+                    .filter((v, i, a) => a.indexOf(v) === i);   // Keep unique values only
+
+                return subcategories_list.map(subcategory => {
+                    return {
+                        name: subcategory,
+                        services: this.apiData.filter(service => service.Subcategory == subcategory)
+                    }
+                })
+            }      
         }
     }
 </script>
@@ -87,35 +53,31 @@
 
     <CenterLayout id="category-header">
         <h1>Up your <u><i>Brows Game</i></u></h1>
-        <p style="width: 680px;">
+        <p>
             Brows are one of the first things people notice about your face, and you want them to be 
             the best they can be. We offer two different types of brows: microblading and phi shading, 
             and both are totally painless. Talk to us about which option is right for you!
         </p>
     </CenterLayout>
 
-    <div class="subcategory text-secondary900" v-for="subcategory in subcategories" :key="subcategory.name">
-        <div class="subcategory-heading">
-            <h1>{{ subcategory.name }}</h1>
-        </div>
+    <ServiceGridLayout :heading="subcategory.name" v-for="subcategory in subcategories" :key="subcategory.name">
+        <ServiceCard v-for="service in subcategory.services" :key="service.Name" :content="service" />
+    </ServiceGridLayout>
 
-        <div class="service-container">
-            <ServiceCard
-                v-for="service in subcategory.services"
-                :key="service.Service"
-
-                :service="service.Service"
-                :duration="service.Duration"
-                :price="service.Price"
-                :description="service.Description"
-                :onSale="service.OnSale"
-                :salePrice="service.SalePrice"
-            />
-        </div>
-    </div>
-
-    <ScrollButton threshold="400" @click="() => { this.$router.push('/services') }">
+    <ScrollButton
+        :threshold=800 
+        style="top: 20px; left: 20px;" 
+        @click="() => { this.$router.push('/services') }"
+    >
         &#8592; Explore other services
+    </ScrollButton>
+
+    <ScrollButton
+        :threshold=800 
+        style="top: 20px; right: 20px;" 
+        @click="() => { this.$router.push('/book') }"
+    >
+        Proceed to booking &#8594;
     </ScrollButton>
 
     <FooterClient />
@@ -138,35 +100,8 @@
             font-weight: 500;
         }
 
-    .subcategory-heading {
-        width: 100%;
-        padding: 5px 50px;
-        border-bottom: 1pt solid var(--secondary900);
-    }
-
-    .subcategory {
-        margin-bottom: 20px;
-    }
-
-    .subcategory > div > h1 {
-        width: 100%;
-        max-width: 1130px;
-        margin-inline: auto;
-        font-weight: 400;
-    }
-
-    .service-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 350px);
-        grid-gap: 40px;
-
-        padding: 30px;
-        margin-inline: auto;
-        justify-content: center;
-        max-width: 1250px;
-    }
-
-        .service-container > div:last-child:nth-child(3n - 2) {
-            grid-column: span 3;
+        #category-header > p {
+            width: 90%;
+            max-width: 680px;
         }
 </style>

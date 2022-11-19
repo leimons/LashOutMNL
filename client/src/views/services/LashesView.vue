@@ -4,6 +4,9 @@
     import CenterLayout from '@/layouts/CenterLayout.vue';
     import ServiceCard from '@/components/ServiceCard.vue';
     import ScrollButton from '@/components/ScrollButton.vue';
+    import ServiceGridLayout from '@/layouts/ServiceGridLayout.vue';
+
+    import axios from 'axios';
 
     export default {
         name: 'LashesView',
@@ -13,125 +16,34 @@
             FooterClient,
             CenterLayout,
             ServiceCard,
-            ScrollButton
+            ScrollButton,
+            ServiceGridLayout
         },
-
         data() {
-            return { /* mock data. TODO: replace with data from API call */
-                subcategories: [ 
-                    {
-                        name: "Lash Set",
-                        services: [
-                            {
-                                Service: "Classic Full Set - Junior Lash Tech",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "2 hr",
-                                Price: 450,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Classic Full Set",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "2 hr",
-                                Price: 800,
-                                Description: "Fully covered lash line with 1:1 eyelash extension-to-natural lashes ratio. Lasts 2 to 6 weeks. Follows the natural shape of your eye.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Hybrid Lashes",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "2 hr",
-                                Price: 1200,
-                                Description: "A combination of Classic and Volume lashes.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Wet Mascara Set",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "2 hr",
-                                Price: 1300,
-                                Description: "The Wet Mascara appears similar to Classic Full Set, but they are thicker and bolder looking because of the wider appearance of the lash bundles. ",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Volume Lashes",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "2 hr",
-                                Price: 1400,
-                                Description: "This set has a fully covered lash line with 3:1 or 4:1 eyelash extension-to-natural lashes ratio. Lasts 2 to 6 weeks.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Kim K Lash Set",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "3.5 hr",
-                                Price: 1400,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    },
-
-                    {
-                        name: "Lash Retouch",
-                        services: [
-                            {
-                                Service: "Classic Full Set Retouch",
-                                Category: "Lashes",
-                                Subcategory: "Lash Retouch",
-                                Duration: "1 hr",
-                                Price: 500,
-                                Description: "Please take note that this service is only eligible for clients who had their initial set done by Lash Out MNL Beauty Lounge. If you had previous lashes from a different artist, or have an existing set that is not Classic Full Set (for ex. Hybrid Lashes, Wet Set or Volume Lashes), you will be charged with a new set price.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Hybrid Lashes Retouch",
-                                Category: "Lashes",
-                                Subcategory: "Lash Retouch",
-                                Duration: "1 hr",
-                                Price: 600,
-                                Description: "Please take note that this service is only eligible for clients who had their initial set done by Lash Out MNL Beauty Lounge. If you had previous lashes from a different artist, or have an existing set that is not Hybrid Lashes (for ex. Classic Full Set, Wet Set or Volume Lashes), you will be charged with a new set price.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Wet Mascara Set Retouch",
-                                Category: "Lashes",
-                                Subcategory: "Lash Retouch",
-                                Duration: "1 hr",
-                                Price: 680,
-                                Description: "Please take note that this service is only eligible for clients who had their initial set done by Lash Out MNL Beauty Lounge. If you had previous lashes from a different artist, or have an existing set that is not Wet Mascara Set (for ex. Classic Full Set, Hybrid Lashes, or Volume Lashes), you will be charged with a new set price.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Volume Lashes Retouch",
-                                Category: "Lashes",
-                                Subcategory: "Lash Retouch",
-                                Duration: "2 hr",
-                                Price: 700,
-                                Description: "Please take note that this service is only eligible for clients who had their initial set done by Lash Out MNL Beauty Lounge. If you had previous lashes from a different artist, or have an existing set that is not Volume Lashes (for ex. Classic Full Set, Hybrid Lashes, or Wet Mascara Set), you will be charged with a new set price.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    }
-                ]
+            return {
+                apiData: []
             }
+        },
+        mounted() {
+            axios
+                .get('/api/services', { params: {category: 'Lashes'} })
+                .then((response) => {
+                    this.apiData = response.data
+                });
+        },
+        computed: {
+            subcategories() {
+                var subcategories_list = this.apiData
+                    .map(service => service.Subcategory)        // Get list of subcategories
+                    .filter((v, i, a) => a.indexOf(v) === i);   // Keep unique values only
+
+                return subcategories_list.map(subcategory => {
+                    return {
+                        name: subcategory,
+                        services: this.apiData.filter(service => service.Subcategory == subcategory)
+                    }
+                })
+            }      
         }
     }
 </script>
@@ -148,28 +60,24 @@
         </p>
     </CenterLayout>
 
-    <div class="subcategory text-secondary900" v-for="subcategory in subcategories" :key="subcategory.name">
-        <div class="subcategory-heading">
-            <h1>{{ subcategory.name }}</h1>
-        </div>
+    <ServiceGridLayout :heading="subcategory.name" v-for="subcategory in subcategories" :key="subcategory.name">
+        <ServiceCard v-for="service in subcategory.services" :key="service.Name" :content="service" />
+    </ServiceGridLayout>
 
-        <div class="service-container">
-            <ServiceCard
-                v-for="service in subcategory.services"
-                :key="service.Service"
-
-                :service="service.Service"
-                :duration="service.Duration"
-                :price="service.Price"
-                :description="service.Description"
-                :onSale="service.OnSale"
-                :salePrice="service.SalePrice"
-            />
-        </div>
-    </div>
-
-    <ScrollButton threshold="400" @click="() => { this.$router.push('/services') }">
+    <ScrollButton
+        :threshold=800 
+        style="top: 20px; left: 20px;" 
+        @click="() => { this.$router.push('/services') }"
+    >
         &#8592; Explore other services
+    </ScrollButton>
+
+    <ScrollButton
+        :threshold=800 
+        style="top: 20px; right: 20px;" 
+        @click="() => { this.$router.push('/book') }"
+    >
+        Proceed to booking &#8594;
     </ScrollButton>
 
     <FooterClient />
@@ -192,35 +100,8 @@
             font-weight: 500;
         }
 
-    .subcategory-heading {
-        width: 100%;
-        padding: 5px 50px;
-        border-bottom: 1pt solid var(--secondary900);
-    }
-
-    .subcategory {
-        margin-bottom: 20px;
-    }
-
-        .subcategory > div > h1 {
-            width: 100%;
-            max-width: 1130px;
-            margin-inline: auto;
-            font-weight: 400;
-        }
-
-    .service-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 350px);
-        grid-gap: 40px;
-
-        padding: 30px;
-        margin-inline: auto;
-        justify-content: center;
-        max-width: 1250px;
-    }
-
-        .service-container > div:last-child:nth-child(3n - 2) {
-            grid-column: span 3;
+        #category-header > p {
+            width: 90%;
+            max-width: 680px;
         }
 </style>
