@@ -9,13 +9,7 @@ const controller = {
     */
     getServices: function (req, res) {
         var category = req.query.category;
-        var subcategory = req.query.subcategory;
-
-        var query = {};
-        if (subcategory)
-            query = {Subcategory: subcategory}
-        else if (category)
-            query = {Category: category}
+        var query = category ? {Category: category} : {};
         
         db.findMany(Products, query, {}, (result, err) => {
             if (err) {
