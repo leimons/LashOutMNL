@@ -5,7 +5,7 @@
 
     export default {
         name: 'HomeView',
-        title: 'LashOut MNL | Home',
+        title: 'Home – LashOut MNL',
         components: {
             NavClient,
             FullscreenLayout,
@@ -25,7 +25,7 @@
                     Step in, relax and let our beauticians make you <i>look</i> and <i>feel</i> great.
                 </p>
                 
-                <button>Book Now</button>
+                <button @click="() => { this.$router.push('/book') }">Book Now</button>
             </div>
 
             <div id="carousel-container">
