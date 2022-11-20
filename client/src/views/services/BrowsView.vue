@@ -4,7 +4,6 @@
     import ServiceCard from '@/components/ServiceView/ServiceCard.vue';
     import ScrollButton from '@/components/ServiceView/ScrollButton.vue';
 
-    import CenterLayout from '@/layouts/CenterLayout.vue';
     import ServiceGridLayout from '@/layouts/ServiceGridLayout.vue';
 
     import axios from 'axios';
@@ -15,7 +14,6 @@
         components: {
             NavClient,
             FooterClient,
-            CenterLayout,
             ServiceCard,
             ScrollButton,
             ServiceGridLayout
@@ -52,14 +50,14 @@
 <template>
     <NavClient style="position: relative;" />
 
-    <CenterLayout id="category-header">
+    <div class="center-layout" id="category-header">
         <h1>Up your <u><i>Brows Game</i></u></h1>
         <p>
             Brows are one of the first things people notice about your face, and you want them to be 
             the best they can be. We offer two different types of brows: microblading and phi shading, 
             and both are totally painless. Talk to us about which option is right for you!
         </p>
-    </CenterLayout>
+    </div>
 
     <ServiceGridLayout :heading="subcategory.name" v-for="subcategory in subcategories" :key="subcategory.name">
         <ServiceCard v-for="service in subcategory.services" :key="service.Name" :content="service" />

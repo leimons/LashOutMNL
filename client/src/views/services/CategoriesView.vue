@@ -1,16 +1,13 @@
 <script>
     import NavClient from '@/components/Navigation/NavClient.vue';
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
-    import CenterLayout from '@/layouts/CenterLayout.vue';
-    
 
     export default {
         name: 'CategoriesView',
         title: 'Services – LashOut MNL',
         components: {
             NavClient,
-            FullscreenLayout,
-            CenterLayout
+            FullscreenLayout
         }
     }
 </script>
@@ -19,7 +16,7 @@
    <FullscreenLayout id="explore-category" direction="column" centerVertical centerHorizontal>
         <NavClient style="position: relative;" />
 
-        <CenterLayout style="flex: 1;">
+        <div class="center-layout" style="flex: 1;">
             <h1>Explore our <u>services</u></h1>
 
             <div id="category-services">
@@ -52,7 +49,7 @@
                 </a>
 
             </div>
-        </CenterLayout>
+        </div>
     </FullscreenLayout>
 </template>
 
@@ -91,10 +88,5 @@
             max-height: 540px;
             max-width: 342px;
             width: 100%;
-            opacity: 0.8;
-        }
-
-        .category > img:hover {
-            opacity: 1.0;
         }
 </style>

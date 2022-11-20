@@ -4,7 +4,6 @@
     import ServiceCard from '@/components/ServiceView/ServiceCard.vue';
     import ScrollButton from '@/components/ServiceView/ScrollButton.vue';
 
-    import CenterLayout from '@/layouts/CenterLayout.vue';
     import ServiceGridLayout from '@/layouts/ServiceGridLayout.vue';
 
     import axios from 'axios';
@@ -15,7 +14,6 @@
         components: {
             NavClient,
             FooterClient,
-            CenterLayout,
             ServiceCard,
             ScrollButton,
             ServiceGridLayout
@@ -52,14 +50,14 @@
 <template>
     <NavClient style="position: relative;" />
 
-    <CenterLayout id="category-header">
+    <div class="center-layout" id="category-header">
         <h1>Picture Perfect <u><i>Nails</i></u></h1>
         <p style="width: 680px;">
             You deserve a relaxing and rejuvenating experience, and we are equipped to provide all 
             of the polish, tools, and techniques you need. Our friendly staff provides excellent 
             customer service and our relaxing environment creates a comfortable space just for you.
         </p>
-    </CenterLayout>
+    </div>
 
     <ServiceGridLayout :heading="subcategory.name" v-for="subcategory in subcategories" :key="subcategory.name">
         <ServiceCard v-for="service in subcategory.services" :key="service.Name" :content="service" />
