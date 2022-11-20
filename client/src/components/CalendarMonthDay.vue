@@ -48,6 +48,7 @@ export default {
   background-color: #fff;
   color: var(--grey-800);
   padding: 5px;
+  border: solid 2px black;
 }
 
 .calendar-day > span {
@@ -70,7 +71,7 @@ export default {
 }
 
 .calendar-day-today > span {
-  color: #fff;
+  color: black;
   border-radius: 9999px;
   background-color: var(--grey-800);
 }
