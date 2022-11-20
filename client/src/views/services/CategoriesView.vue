@@ -1,7 +1,8 @@
 <script>
-    import NavClient from '@/components/NavClient.vue';
+    import NavClient from '@/components/Navigation/NavClient.vue';
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
     import CenterLayout from '@/layouts/CenterLayout.vue';
+    
 
     export default {
         name: 'CategoriesView',

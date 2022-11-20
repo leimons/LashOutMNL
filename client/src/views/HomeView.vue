@@ -1,7 +1,7 @@
 <script>
-    import NavClient from '@/components/NavClient.vue';
+    import NavClient from '@/components/Navigation/NavClient.vue';
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
-    import FooterClient from '@/components/FooterClient.vue';
+    import FooterClient from '@/components/Navigation/FooterClient.vue';
 
     export default {
         name: 'HomeView',

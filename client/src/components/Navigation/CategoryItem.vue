@@ -18,7 +18,7 @@
             },
             imgURL() {
                 let id = this.name.toLowerCase().replace(' ', '-');
-                var images = require.context('../assets/images/', false, /\.png$/)
+                var images = require.context('@/assets/images/', false, /\.png$/)
                 return images('./' + id + ".png")
             }
         }

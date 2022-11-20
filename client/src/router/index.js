@@ -9,12 +9,12 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
-    component: () => import('@/views/AdminLogin.vue')
+    component: () => import('@/views/admin/AdminLogin.vue')
   },
   {
     path: '/services',
     name: 'services',
-    component: () => import('@/views/CategoriesView.vue')
+    component: () => import('@/views/services/CategoriesView.vue')
   },
   {
     path: '/services/lashes',
