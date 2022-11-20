@@ -18,7 +18,7 @@
         },
         data() {
             return {
-                service: []
+                subcategories: []
             }
         },
 
@@ -47,7 +47,7 @@
         </p>
     </CenterLayout>
 
-    <div class="subcategory text-secondary900" v-for="subcategory in subcategories" :key="subcategory.SubCategory">
+    <div class="subcategory text-secondary900" v-for="subcategory in subcategories" :key="subcategory.name">
         <div class="subcategory-heading">
             <h1>{{ subcategory.name }}</h1>
         </div>

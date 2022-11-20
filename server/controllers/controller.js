@@ -11,21 +11,6 @@ const controller = {
     getServices: function (req, res) {
         var id = req.params.id
         var category = req.query.category;
-        var SampleData = {
-            name: "Lash Set",
-            Category: "Lashes",
-            services:[{
-                Service: "Classic Full Set - Junior Lash Tech",
-                Subcategory: "Lash Set",
-                Duration: "2 hr",
-                Price: 450,
-                Description: "",
-                OnSale: false,
-                SalePrice: 0
-            }]
-        }
-       // db.insertOne(Products, SampleData, function(){
-       // })
         var projection = "-_id name Category services"; // "-_id" excludes id field from data
         db.findMany(Products, {Category: id}, projection, (result, err) => {
             if (err) {
