@@ -4,6 +4,7 @@
     import CenterLayout from '@/layouts/CenterLayout.vue';
     import ServiceCard from '@/components/ServiceCard.vue';
     import ScrollButton from '@/components/ScrollButton.vue';
+    import axios from 'axios'
 
     export default {
         name: 'NailsView',
@@ -17,194 +18,19 @@
         },
         data() {
             return {
-                subcategories: [
-                    {
-                        name: "Regular",
-                        services: [
-                            {
-                                Service: "Regular Manicure",
-                                Category: "Nails",
-                                Subcategory: "Regular",
-                                Duration: "30 min",
-                                Price: 150,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Regular Pedicure",
-                                Category: "Nails",
-                                Subcategory: "Regular",
-                                Duration: "30 min",
-                                Price: 200,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Regular Manicure-Pedicure Set",
-                                Category: "Nails",
-                                Subcategory: "Regular",
-                                Duration: "1 hr",
-                                Price: 300,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    },
-                    {
-                        name: "Gel",
-                        services: [
-                            {
-                                Service: "Gel Manicure",
-                                Category: "Nails",
-                                Subcategory: "Gel",
-                                Duration: "40 min",
-                                Price: 450,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Gel Pedicure",
-                                Category: "Nails",
-                                Subcategory: "Gel",
-                                Duration: "40 min",
-                                Price: 500,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Gel Manicure-Pedicure Set",
-                                Category: "Nails",
-                                Subcategory: "Gel",
-                                Duration: "1.5 hr",
-                                Price: 800,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    },
-                    {
-                        name: "Hard Gel",
-                        services: [
-                            {
-                                Service: "Hard Gel Manicure",
-                                Category: "Nails",
-                                Subcategory: "Hard Gel",
-                                Duration: "2 hr",
-                                Price: 600,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Hard Gel Manicure with Nail Polish",
-                                Category: "Nails",
-                                Subcategory: "Hard Gel",
-                                Duration: "2 hr",
-                                Price: 750,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    },
-                    {
-                        name: "Nail Extensions",
-                        services: [
-                            {
-                                Service: "Nail Extensions (Soft Gel, Polygel, Hardgel)",
-                                Category: "Nails",
-                                Subcategory: "Nail Extensions",
-                                Duration: "2 hr",
-                                Price: 1200,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Nail Extensions Manicure and Regular Pedicure",
-                                Category: "Nails",
-                                Subcategory: "Nail Extensions",
-                                Duration: "2 hr",
-                                Price: 1350,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Nail Extensions Manicure and Gel Pedicure",
-                                Category: "Nails",
-                                Subcategory: "Nail Extensions",
-                                Duration: "2 hr",
-                                Price: 1500,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    },
-                    {
-                        name: "Other Nail Services",
-                        services: [
-                            {
-                                Service: "Regular Manicure - Gel Pedicure",
-                                Category: "Nails",
-                                Subcategory: "Other Nail Services",
-                                Duration: "1 hr",
-                                Price: 600,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Gel Manicure and Regular Pedicure",
-                                Category: "Nails",
-                                Subcategory: "Other Nail Services",
-                                Duration: "1 hr",
-                                Price: 600,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Hard Gel Manicure and Gel Pedicure",
-                                Category: "Nails",
-                                Subcategory: "Other Nail Services",
-                                Duration: "1 hr",
-                                Price: 1050,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Hard Gel Manicure with Nail Polish and Regular Pedicure",
-                                Category: "Nails",
-                                Subcategory: "Other Nail Services",
-                                Duration: "1 hr",
-                                Price: 900,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Hard Gel Manicure with Nail Polish and Gel Pedicure",
-                                Category: "Nails",
-                                Subcategory: "Other Nail Services",
-                                Duration: "1 hr",
-                                Price: 1200,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    }
-                ]
+                subcategories:[]
             }
+        },
+
+        created(){
+          axios
+            .get(`/api/services/Nails`)
+            .then((response)=>{
+                this.subcategories = response.data
+            })
+            .catch((e) => {
+                console.log(e)
+            })
         }
     }
 </script>

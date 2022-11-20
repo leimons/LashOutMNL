@@ -24,7 +24,7 @@
 
         created(){
           axios
-            .get(`/api/services/brows`)
+            .get(`/api/services/Brows`)
             .then((response)=>{
                 this.subcategories = response.data
             })

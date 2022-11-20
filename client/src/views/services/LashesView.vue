@@ -4,6 +4,7 @@
     import CenterLayout from '@/layouts/CenterLayout.vue';
     import ServiceCard from '@/components/ServiceCard.vue';
     import ScrollButton from '@/components/ScrollButton.vue';
+    import axios from 'axios'
 
     export default {
         name: 'LashesView',
@@ -18,120 +19,19 @@
 
         data() {
             return { /* mock data. TODO: replace with data from API call */
-                subcategories: [ 
-                    {
-                        name: "Lash Set",
-                        services: [
-                            {
-                                Service: "Classic Full Set - Junior Lash Tech",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "2 hr",
-                                Price: 450,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Classic Full Set",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "2 hr",
-                                Price: 800,
-                                Description: "Fully covered lash line with 1:1 eyelash extension-to-natural lashes ratio. Lasts 2 to 6 weeks. Follows the natural shape of your eye.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Hybrid Lashes",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "2 hr",
-                                Price: 1200,
-                                Description: "A combination of Classic and Volume lashes.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Wet Mascara Set",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "2 hr",
-                                Price: 1300,
-                                Description: "The Wet Mascara appears similar to Classic Full Set, but they are thicker and bolder looking because of the wider appearance of the lash bundles. ",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Volume Lashes",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "2 hr",
-                                Price: 1400,
-                                Description: "This set has a fully covered lash line with 3:1 or 4:1 eyelash extension-to-natural lashes ratio. Lasts 2 to 6 weeks.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Kim K Lash Set",
-                                Category: "Lashes",
-                                Subcategory: "Lash Set",
-                                Duration: "3.5 hr",
-                                Price: 1400,
-                                Description: "",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    },
-
-                    {
-                        name: "Lash Retouch",
-                        services: [
-                            {
-                                Service: "Classic Full Set Retouch",
-                                Category: "Lashes",
-                                Subcategory: "Lash Retouch",
-                                Duration: "1 hr",
-                                Price: 500,
-                                Description: "Please take note that this service is only eligible for clients who had their initial set done by Lash Out MNL Beauty Lounge. If you had previous lashes from a different artist, or have an existing set that is not Classic Full Set (for ex. Hybrid Lashes, Wet Set or Volume Lashes), you will be charged with a new set price.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Hybrid Lashes Retouch",
-                                Category: "Lashes",
-                                Subcategory: "Lash Retouch",
-                                Duration: "1 hr",
-                                Price: 600,
-                                Description: "Please take note that this service is only eligible for clients who had their initial set done by Lash Out MNL Beauty Lounge. If you had previous lashes from a different artist, or have an existing set that is not Hybrid Lashes (for ex. Classic Full Set, Wet Set or Volume Lashes), you will be charged with a new set price.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Wet Mascara Set Retouch",
-                                Category: "Lashes",
-                                Subcategory: "Lash Retouch",
-                                Duration: "1 hr",
-                                Price: 680,
-                                Description: "Please take note that this service is only eligible for clients who had their initial set done by Lash Out MNL Beauty Lounge. If you had previous lashes from a different artist, or have an existing set that is not Wet Mascara Set (for ex. Classic Full Set, Hybrid Lashes, or Volume Lashes), you will be charged with a new set price.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                            {
-                                Service: "Volume Lashes Retouch",
-                                Category: "Lashes",
-                                Subcategory: "Lash Retouch",
-                                Duration: "2 hr",
-                                Price: 700,
-                                Description: "Please take note that this service is only eligible for clients who had their initial set done by Lash Out MNL Beauty Lounge. If you had previous lashes from a different artist, or have an existing set that is not Volume Lashes (for ex. Classic Full Set, Hybrid Lashes, or Wet Mascara Set), you will be charged with a new set price.",
-                                OnSale: false,
-                                SalePrice: 0
-                            },
-                        ]
-                    }
-                ]
+                subcategories:[]
             }
+        },
+
+        created(){
+          axios
+            .get(`/api/services/Lashes`)
+            .then((response)=>{
+                this.subcategories = response.data
+            })
+            .catch((e) => {
+                console.log(e)
+            })
         }
     }
 </script>

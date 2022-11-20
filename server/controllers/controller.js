@@ -8,11 +8,12 @@ const controller = {
         Returns the list of services. Has the option to select only services from a specific category
         through the `category` query.
     */
-    getServicesBrows: function (req, res) {
+    getServices: function (req, res) {
+        var id = req.params.id
+        console.log(id)
         var category = req.query.category;
-        var projection = "-_id Name Category Description Duration Price"; // "-_id" excludes id field from data
-        
-        db.findMany(Products, {Category: "Brows", Category: "Brows Retouch"}, projection, (result, err) => {
+        var projection = "-_id Service Category Subcategory Duration Price Description OnSale SalePrice"; // "-_id" excludes id field from data
+        db.findMany(Products, {Category: id}, projection, (result, err) => {
             if (err) {
                 res.status(400);
                 return null;
