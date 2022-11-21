@@ -70,6 +70,7 @@
                 :description="service.Description"
                 :onSale="service.OnSale"
                 :salePrice="service.SalePrice"
+                @click="chooseService(service.Service, service.Price)"
             />
         </div>
     </div>

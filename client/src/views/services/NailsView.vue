@@ -4,6 +4,7 @@
     import CenterLayout from '@/layouts/CenterLayout.vue';
     import ServiceCard from '@/components/ServiceCard.vue';
     import ScrollButton from '@/components/ScrollButton.vue';
+    import dbFunctions from '@/dbFunctions.js';
     import axios from 'axios'
 
     export default {
@@ -31,6 +32,12 @@
             .catch((e) => {
                 console.log(e)
             })
+        },
+
+        methods: {
+            chooseService (value, price){
+                dbFunctions.addAppointment (value, price);
+            }
         }
     }
 </script>
@@ -63,6 +70,7 @@
                 :description="service.Description"
                 :onSale="service.OnSale"
                 :salePrice="service.SalePrice"
+                @click="chooseService(service.Service, service.Price)"
             />
         </div>
     </div>
