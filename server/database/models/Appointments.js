@@ -7,7 +7,8 @@ const AppointmentsSchema = new mongoose.Schema({
     ClientInfo: String,
     PaymentStatus: Boolean,
     Product: String,
-    Inclusions: [String]
+    Inclusions: [String],
+    AmountDue: Number
     //Add Date and Time
 });
 

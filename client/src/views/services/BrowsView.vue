@@ -5,6 +5,7 @@
     import ServiceCard from '@/components/ServiceCard.vue';
     import ScrollButton from '@/components/ScrollButton.vue';
     import axios from 'axios'
+    import dbFunctions from '@/dbFunctions.js';
 
     export default {
         name: 'BrowsView',
@@ -31,6 +32,12 @@
             .catch((e) => {
                 console.log(e)
             })
+        },
+
+        methods: {
+            chooseService (value, price){
+                dbFunctions.addAppointment (value, price);
+            }
         }
     }
 </script>
