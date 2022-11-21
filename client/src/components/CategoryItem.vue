@@ -6,6 +6,11 @@
             description: String,
             priceDescription: String,
         },
+        data() {
+            return {
+                showOverlay: false,
+            }
+        },
         computed: {
             serviceURL() {
                 let id = this.name.toLowerCase().replace(' ', '-');

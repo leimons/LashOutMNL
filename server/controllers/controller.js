@@ -11,10 +11,10 @@ const controller = {
         through the `category` query.
     */
     getServices: function (req, res) {
+        var id = req.params.id
         var category = req.query.category;
-        var projection = "-_id Name Category Description Duration Price"; // "-_id" excludes id field from data
-        
-        db.findMany(Products, {}, projection, (result, err) => {
+        var projection = "-_id name Category services"; // "-_id" excludes id field from data
+        db.findMany(Products, {Category: id}, projection, (result, err) => {
             if (err) {
                 res.status(400);
                 return null;

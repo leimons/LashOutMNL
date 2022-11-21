@@ -1,16 +1,20 @@
 <script>
     export default {
-        name: 'FullscreenLayout',
+        name: 'CenterLayout',
         props: {
             direction: {
                 type: String,
+                default: 'column'
+            },
+            center: {
+                type: String,
                 default: 'row'
             },
-            centerVertical: {
+            vertical: {
                 type: Boolean,
                 default: false
             },
-            centerHorizontal: {
+            horizontal: {
                 type: Boolean,
                 default: false
             }
@@ -19,8 +23,8 @@
             cssLayout() {
                 return {
                     'flex-direction': this.direction,
-                    'align-items': this.centerVertical ? 'center' : 'stretch',
-                    'justify-content': this.centerHorizontal ? 'center' : 'flex-start'
+                    'align-items': (this.center || this.vertical) ? 'center' : 'stretch',
+                    'justify-content': (this.center || this.horizontal) ? 'center' : 'flex-start'
                 }
             }
         }
@@ -37,6 +41,5 @@
     div {
         display: flex;
         width: 100%;
-        min-height: 100vh;
     }
 </style>

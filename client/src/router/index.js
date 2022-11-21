@@ -4,17 +4,40 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('../views/HomeView.vue')
+    component: () => import('@/views/HomeView.vue')
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/AboutView.vue')
+
+    path: '/admin',
+    name: 'admin',
+    component: () => import('@/views/AdminLogin.vue')
   },
   {
     path: '/services',
     name: 'services',
-    component: () => import ('../views/ServiceView.vue')
+    component: () => import('@/views/CategoriesView.vue')
+  },
+    component: () => import('@/views/CategoriesView.vue')
+  },
+  {
+    path: '/services/lashes',
+    name: 'lashes',
+    component: () => import('@/views/services/LashesView.vue')
+  },
+  {
+    path: '/services/brows',
+    name: 'brows',
+    component: () => import('@/views/services/BrowsView.vue')
+  },
+  {
+    path: '/services/nails',
+    name: 'nails',
+    component: () => import('@/views/services/NailsView.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'pageNotFound',
+    component: () => import('@/views/error/PageNotFound.vue')
   },
   {
     path: '/calendar',
