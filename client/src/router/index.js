@@ -6,18 +6,21 @@ const routes = [
     name: 'home',
     component: () => import('@/views/HomeView.vue')
   },
+
+  // ADMIN PAGES
   {
 
     path: '/admin',
     name: 'admin',
     component: () => import('@/views/AdminLogin.vue')
   },
+
+  // SERVICE PAGES
   {
     path: '/services',
     name: 'services',
     component: () => import('@/views/CategoriesView.vue')
   },
-    
   {
     path: '/services/lashes',
     name: 'lashes',
@@ -33,11 +36,22 @@ const routes = [
     name: 'nails',
     component: () => import('@/views/services/NailsView.vue')
   },
+
+  // BOOKING PAGES
+  {
+    path: '/book',
+    name: 'book',
+    component: () => import('@/views/booking/CategoriesView.vue')
+  },
+
+  // ERROR PAGE
   {
     path: '/:pathMatch(.*)*',
     name: 'pageNotFound',
     component: () => import('@/views/error/PageNotFound.vue')
   },
+
+  // PLACEHOLDER PAGES
   {
     path: '/calendar',
     name: 'calendar',
