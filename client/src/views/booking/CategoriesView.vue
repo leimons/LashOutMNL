@@ -1,60 +1,114 @@
 <script>
     import NavClient from '@/components/NavClient.vue';
+    import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
     import FooterClient from '@/components/FooterClient.vue';
+    import CollapsibleItem from '@/components/custom/Collapsible.vue';
+
+    import axios from 'axios';
 
     export default {
         name: 'BookingCategories',
         title: 'Services – LashOut MNL',
         components: {
             NavClient,
-            FooterClient
+            FullscreenLayout,
+            FooterClient,
+            CollapsibleItem
+        },
+
+        data() {
+            return {
+                categories: [
+                    {
+                        name: 'Lashes',
+                        title: 'Lash Services',
+                        subcategories: []
+                    },
+                    {
+                        name: 'Brows',
+                        title: 'Brow Services',
+                        subcategories: []
+                    },
+                    {
+                        name: 'Nails',
+                        title: 'Nail Services',
+                        subcategories: []
+                    },
+                ]
+            }
+        },
+
+        created() {
+            this.categories.forEach((category, index) => {
+                axios
+                    .get(`/api/services/${category.name}`)
+                    .then((response) => {
+                        var subcategories = response.data;
+                        subcategories = subcategories.map((subc) => {
+                            return {name: subc.name, services: subc.services};
+                        });
+
+                        this.categories[index] = {...this.categories[index], subcategories};
+                    })
+            })
+        },
+
+        methods: {
+            formatPrice: (num) => {
+                return Number(num).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'PHP',
+                })
+            }
         }
     }
 </script>
 
 <template>
-    <NavClient style="position: relative;" />
+    <FullscreenLayout direction="column">
 
-    <div id="container">
-        <div id="heading">
-            <h1>You <i>deserve</i> to be <u>pampered</u></h1>
-            <h3>only here at Lash Out MNL Beauty Lounge</h3>
-            <p>*Each service is booked separately.</p>
-        </div>
+        <NavClient style="position: relative; width: 100%" />
 
-        <div class="category" href="/services">
-            <img src="https://via.placeholder.com/400x280/cccccc/fdf8f4?text=LashOut" /> <!-- Placeholder image -->
-
-            <div>
-                <h2>Lash Services</h2>
-                <a href="/book/lashes">
-                    <u>book now</u> &#8594;
-                </a>
+        <div id="container">
+            <div id="heading">
+                <h1>You <i>deserve</i> to be <u>pampered</u></h1>
+                <h3>only here at Lash Out MNL Beauty Lounge</h3>
+                <p>*Each service is booked separately.</p>
             </div>
+
+            <CollapsibleItem v-for="category in categories" :key="category.name" :title="category.title">
+                <div class="subcategory text-secondary900" v-for="subcategory in category.subcategories" :key="subcategory.name">
+                    <div class="subcategory-heading">
+                        <h2 style="font-size: 28px;">{{ subcategory.name }}</h2>
+                    </div>
+
+                    <div class="service-container">
+
+                        <div class="service-item" v-for="service in subcategory.services" :key="service._id">
+                            <img src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" />
+                            
+                            <div class="service-heading">
+                                <h3>{{ service.Service }}</h3>
+                                <p v-if="!service.OnSale">{{ formatPrice(service.Price) }}</p>
+                                <p v-else>
+                                    <s>{{ formatPrice(service.Price) }}</s>
+                                    &nbsp;  {{ formatPrice(service.SalePrice) }}
+                                </p>
+                            </div>
+
+                            <div class="service-actions">
+                                <a v-if="service.Description">Read more</a>
+                                <button class="small">Select</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </CollapsibleItem>
+            
         </div>
 
-        <div class="category">
-            <img src="https://via.placeholder.com/400x280/cccccc/fdf8f4?text=LashOut" /> <!-- Placeholder image -->
-
-            <div>
-                <h2>Brow Services</h2>
-                <a href="/book/brows">
-                    <u>book now</u> &#8594;
-                </a>
-            </div>
-        </div>
-
-        <div class="category">
-            <img src="https://via.placeholder.com/400x280/cccccc/fdf8f4?text=LashOut" /> <!-- Placeholder image -->
-
-            <div>
-                <h2>Nail Services</h2>
-                <a href="/book/nails">
-                    <u>book now</u> &#8594;
-                </a>
-            </div>
-        </div>
-    </div>
+    </FullscreenLayout>
 
     <FooterClient />
 </template>
@@ -67,11 +121,15 @@
     #container {
         display: flex;
         flex-direction: column;
-        align-items: center;
         gap: 30px;
         padding: 50px;
     }
 
+        #container > * {
+            width: 100%;
+        }
+
+    /* || SECTION – Heading */
     #heading {
         display: flex;
         flex-direction: column;
@@ -84,56 +142,99 @@
         text-align: center;
     }
 
-    p {
-        position: absolute;
-        right: 20px;
-        bottom: 20px;
-        font-style: italic;
-    }
+        #heading > p {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            font-style: italic;
+        }
 
-    h1 {
-        font: 400 48px 'Lora';
-    }
+        #heading > h1 {
+            font: 400 48px 'Lora';
+        }
+
+        #heading > h3 {
+            font: 300 24px 'Lora';
+        }
 
     h2 {
         font: 300 36px 'Lora';
         font-style: italic;
     }
 
-    h3 {
-        font: 300 24px 'Lora';
+    /* || SECTION – Subcategory View */
+
+    .subcategory-heading {
+        width: 100%;
+        padding: 5px 20px;
+        border-bottom: 1pt solid var(--secondary900);
     }
 
-    .category {
-        display: flex;
+    .subcategory {
+        margin-bottom: 20px;
+    }
+
+        .subcategory > div > h1 {
+            width: 100%;
+            max-width: 1130px;
+            margin-inline: auto;
+            font-weight: 400;
+        }
+
+    .service-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 350px) !important;
+        grid-gap: 40px;
+
+        padding: 30px;
+        margin-inline: auto;
+        justify-content: center;
         width: 100%;
-        align-items: center;
-        flex-wrap: wrap;
+        max-width: 1250px;
+    }
+        .service-container > .service-item:last-child:nth-child(3n-2) {
+            grid-column: span 1;
+        }
 
-        height: min-content;
-        overflow: hidden;
+    /* || SECTION – Service Card */
+    .service-item {
+        display: flex;
+        flex-direction: column;
+        width: 350px;
+        height: 380px;
 
-        border: 1.2pt solid var(--secondary900);
         background-color: var(--primary50);
     }
 
-    .category > div {
-        text-align: right;
-        margin-left: auto;
-
-        padding: 50px;
+    .service-heading {
+        flex: 1;
+        padding: 10px 20px;
     }
 
-    @media screen and (max-width: 900px) {
-        .category {
-            width: 400px;
+        .service-heading s {
+            opacity: 0.33;
         }
 
-        .category > div {
-            width: inherit;
-            text-align: center;
-            border: 1px solid pink;
+        .service-heading p {
+            line-height: 28px;
         }
+
+    .service-actions {
+        display: flex;
+        align-items: center;
+        padding: 0 20px 20px 20px;
+    }
+
+        .service-actions > a {
+            font-family: 'Nunito';
+            font-style: italic;
+        }
+
+        .service-actions > button {
+            margin-left: auto;
+        }
+
+    @media screen and (max-width: 900px) {
 
         h1 {
             line-height: 48px;
