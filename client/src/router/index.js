@@ -19,7 +19,7 @@ const routes = [
   {
     path: '/services',
     name: 'services',
-    component: () => import('@/views/CategoriesView.vue')
+    component: () => import('@/views/services/CategoriesView.vue')
   },
   {
     path: '/services/lashes',

@@ -1,6 +1,6 @@
 <script>
-    import NavClient from '@/components/NavClient.vue';
-    import FooterClient from '@/components/FooterClient.vue';
+    import NavClient from '@/components/Navigation/NavClient.vue';
+    import FooterClient from '@/components/Navigation/FooterClient.vue';
     import CenterLayout from '@/layouts/CenterLayout.vue';
     import ServiceCard from '@/components/ServiceCard.vue';
     import ScrollButton from '@/components/ScrollButton.vue';

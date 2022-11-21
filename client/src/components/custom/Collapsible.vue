@@ -41,7 +41,7 @@
         text-align: left;
         text-transform: none;
 
-        background-color: var(--primary100);
+        background-color: var(--primary50);
         border-color: var(--secondary900);
         color: var(--secondary900);
     }

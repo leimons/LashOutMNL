@@ -1,7 +1,7 @@
 <script>
-    import NavClient from '@/components/NavClient.vue';
+    import NavClient from '@/components/Navigation/NavClient.vue';
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
-    import FooterClient from '@/components/FooterClient.vue';
+    import FooterClient from '@/components/Navigation/FooterClient.vue';
     import CollapsibleItem from '@/components/custom/Collapsible.vue';
 
     import axios from 'axios';

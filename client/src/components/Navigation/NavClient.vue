@@ -12,7 +12,7 @@
 
 <template>
     <nav>
-        <a href="/"><img src="../assets/images/logo.png" height="70" /></a>
+        <a href="/"><img src="@/assets/images/logo.png" height="70" /></a>
 
         <a href="/">Home</a>
         <a v-if="isHomePage" href="#explore-category">Services</a>

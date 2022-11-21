@@ -1,10 +1,10 @@
 
 <script>
 import dayjs from "dayjs"
-import CalendarDateIndicator from "@/components/CalendarDateIndicator.vue";
-import CalendarDateSelector from "@/components/CalendarDateSelector.vue";
-import CalendarWeekDays from "@/components/CalendarWeekDays.vue";
-import CalendarMonthDay from "@/components/CalendarMonthDay.vue";
+import CalendarDateIndicator from "@/components/Calendar/CalendarDateIndicator.vue";
+import CalendarDateSelector from "@/components/Calendar/CalendarDateSelector.vue";
+import CalendarWeekDays from "@/components/Calendar/CalendarWeekDays.vue";
+import CalendarMonthDay from "@/components/Calendar/CalendarMonthDay.vue";
 import weekday from "dayjs/plugin/weekday"
 import weekOfYear from "dayjs/plugin/weekOfYear";
 
