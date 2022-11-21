@@ -2,6 +2,8 @@ const db = require("../database/models/db");
 const Products = require("../database/models/Products");
 const Appointments = require("../database/models/Appointments");
 
+let refnum = '0';
+
 const controller = {
 
     /*
@@ -29,7 +31,7 @@ const controller = {
                 res.setHeader('Content-Type', 'application/json');
                 res.send(services);
             }
-        })
+        }) 
     },
 
     /*
@@ -81,6 +83,35 @@ const controller = {
 
         res.setHeader('Content-Type', 'application/json');
         res.json(categories);
+    },
+
+    addAppointment: function (req,res){
+        var product = req.body.product
+        var val = Math.floor(1000 + Math.random() * 9000);
+        db.findMany(Appointments, {refnum: val} , 'refnum',function(result){
+            /*while (result != undefined){
+                val = Math.floor(1000 + Math.random() * 9000);
+             } */
+        });
+        refnum = val;
+        console.log(refnum)
+        db.insertOne(Appointments, {Product: product, refNum: refnum},function(){     
+        });
+        res.status(201).send();
+    },
+
+    addInclusions: function(req,res){
+        /*query the array of inclusions */
+        db.updateOne(Appointments, refnum, /*inclusion: inclusions,*/function(){ 
+        });
+
+    },
+
+    addClientDetails: function(req,res){
+        /* query client details */
+        /* create object of details fit for db */
+        db.updateOne(Appointments, refnum , /*object: object, */ function(){
+        });
     },
 
     getInclusionsPage: function(req,res){

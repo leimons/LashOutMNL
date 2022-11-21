@@ -7,6 +7,7 @@ const routes = [
     component: () => import('@/views/HomeView.vue')
   },
   {
+
     path: '/admin',
     name: 'admin',
     component: () => import('@/views/AdminLogin.vue')
@@ -14,6 +15,8 @@ const routes = [
   {
     path: '/services',
     name: 'services',
+    component: () => import('@/views/CategoriesView.vue')
+  },
     component: () => import('@/views/CategoriesView.vue')
   },
   {
@@ -35,6 +38,11 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'pageNotFound',
     component: () => import('@/views/error/PageNotFound.vue')
+  },
+  {
+    path: '/calendar',
+    name: 'calendar',
+    component: () => import ('../views/CalendarView.vue')
   }
 ]
 

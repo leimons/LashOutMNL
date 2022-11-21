@@ -17,4 +17,10 @@ app.get(`/services/:id`, controller.getServices);
 //app.get(`/services/lashes`, controller.getServicesLashes);
 //app.get(`/services/nails`, controller.getServicesNails);
 
+app.post(`/addAppointment`, controller.addAppointment);
+
+app.post(`/addInclusions`, controller.addInclusions);
+
+app.post(`/addClientDetails`, controller.addClientDetails);
+
 module.exports = app;
