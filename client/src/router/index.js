@@ -17,8 +17,7 @@ const routes = [
     name: 'services',
     component: () => import('@/views/CategoriesView.vue')
   },
-    component: () => import('@/views/CategoriesView.vue')
-  },
+    
   {
     path: '/services/lashes',
     name: 'lashes',
