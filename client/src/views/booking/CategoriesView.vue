@@ -204,7 +204,10 @@
             <p><b>Duration</b>: {{ overlay.service.Duration }}</p>
             <p style="flex: 1; overflow: scroll;">{{ overlay.service.Description }}</p>
 
-            <button :class="overlayBtnStyle">
+            <button
+                :class="overlayBtnStyle"
+                @click="() => { addToCart(overlay.service, this.$refs[overlay.service._id][0].$refs['selectBtn']); }"
+            >
                 {{ cart.service._id == overlay.service._id ? "Selected" : "Select" }} 
             </button>
         </div>

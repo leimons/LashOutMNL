@@ -4,6 +4,15 @@
         props: {
             data: Object
         },
+        data() {
+            return {
+                btnRef: null
+            }
+        },
+        created() {
+            //console.log('yuh',this.$refs.selectBtn);
+            this.btnRef = this.$refs.selectBtn;
+        },
         methods: {
             formatPrice(num) {
                 return Number(num).toLocaleString('en-US', {
