@@ -3,6 +3,7 @@
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
     import FooterClient from '@/components/Navigation/FooterClient.vue';
     import CollapsibleItem from '@/components/custom/Collapsible.vue';
+    import BookingServiceCard from '@/components/Booking/ServiceCard.vue';
 
     import axios from 'axios';
 
@@ -13,11 +14,13 @@
             NavClient,
             FullscreenLayout,
             FooterClient,
-            CollapsibleItem
+            CollapsibleItem,
+            BookingServiceCard
         },
 
         data() {
             return {
+                isMounted: false,
                 categories: [
                     {
                         name: 'Lashes',
@@ -35,6 +38,11 @@
                         subcategories: []
                     },
                 ],
+                cart: {
+                    service: {},    // service info
+                    ref: null,
+                    inclusions: []
+                },
                 overlay: {
                     show: false,
                     service: {
@@ -54,14 +62,17 @@
                 axios
                     .get(`/api/services/${category.name}`)
                     .then((response) => {
-                        var subcategories = response.data;
-                        subcategories = subcategories.map((subc) => {
+                        var subcategories = response.data.map((subc) => {
                             return {name: subc.name, services: subc.services};
                         });
 
                         this.categories[index] = {...this.categories[index], subcategories};
                     })
             })
+        },
+
+        mounted() {
+            this.isMounted = true;
         },
 
         methods: {
@@ -75,8 +86,39 @@
                 this.overlay = {...this.overlay, show: !this.overlay.show};
             },
             showOverlay(serviceData) {
-                this.overlay = {...this.overlay, service: {...serviceData, Name: serviceData.Service}}
+                this.overlay = {...this.overlay, service: serviceData}
                 this.toggleOverlay();
+            },
+            addToCart(service, ref) {
+                this.cart.service = service;
+
+                console.log(ref.classList.value)
+
+                function selectItem(ref) {
+                    ref.innerHTML = "Selected";
+                    ref.classList.value = ref.classList.value + ' dark';
+                }
+
+                function deselectItem(ref) {
+                    ref.innerHTML = "Select";
+                    ref.classList.value = ref.classList.value.replace(' dark','');
+                }
+                
+                
+                if ( this.cart.ref ) {    // Check if cart is not empty
+                    deselectItem(this.cart.ref)
+
+                    if (this.cart.ref == ref)   // deselect current item
+                        this.cart = {...this.cart, ref: null};
+                    else {
+                        selectItem(ref);        // select new item
+                        this.cart = {...this.cart, ref};
+                    }
+                } else {
+                    selectItem(ref);    // select new item
+                    this.cart = {...this.cart, ref};
+                }
+
             }
         },
 
@@ -93,6 +135,8 @@
 <template>
     <FullscreenLayout direction="column">
 
+        {{ cart }}
+
         <NavClient style="position: relative; width: 100%" />
 
         <div id="container">
@@ -102,34 +146,37 @@
                 <p>*Each service is booked separately.</p>
             </div>
 
-            <CollapsibleItem v-for="category in categories" :key="category.name" :title="category.title">
-                <div class="subcategory text-secondary900" v-for="subcategory in category.subcategories" :key="subcategory.name">
+            <!-- Category View -->
+            <CollapsibleItem
+                v-for="category in categories" 
+                :key="category.name" 
+                :title="category.title"
+            >
+
+                <!-- Subcategory View -->
+                <div
+                    class="subcategory text-secondary900" 
+                    v-for="subcategory in category.subcategories" 
+                    :key="subcategory.name"
+                >
                     <div class="subcategory-heading">
                         <h2 style="font-size: 28px;">{{ subcategory.name }}</h2>
                     </div>
 
+                    <!-- Service Items -->
                     <div class="service-container">
+                        <BookingServiceCard
+                            v-for="service in subcategory.services"
+                            :key="service._id"
+                            :ref="service._id"
 
-                        <div class="service-item" v-for="service in subcategory.services" :key="service._id">
-                            <img src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" />
-                            
-                            <div class="service-heading">
-                                <h3>{{ service.Service }}</h3>
-                                <p v-if="!service.OnSale">{{ formatPrice(service.Price) }}</p>
-                                <p v-else>
-                                    <s>{{ formatPrice(service.Price) }}</s>
-                                    &nbsp;  {{ formatPrice(service.SalePrice) }}
-                                </p>
-                            </div>
-
-                            <div class="service-actions">
-                                <a v-if="service.Description" @click="showOverlay(service)">Read more</a>
-                                <button class="small">Select</button>
-                            </div>
-                        </div>
-
+                            :data="service"
+                            @show-overlay="showOverlay"
+                            @add-to-cart="addToCart"
+                        />
                     </div>
                 </div>
+
             </CollapsibleItem>
             
         </div>
@@ -142,7 +189,7 @@
             <i style="opacity: 0.5;">{{ overlay.service.Category }} > {{ overlay.service.Subcategory }}</i>
 
             <div>
-                <h2 style="margin-bottom: 8px;">{{ overlay.service.Name }}</h2>
+                <h2 style="margin-bottom: 8px;">{{ overlay.service.Service }}</h2>
 
                 <p v-if="!overlay.service.OnSale">{{ formatPrice(overlay.service.Price) }}</p>
                 <p v-else>
@@ -151,14 +198,10 @@
                 </p>
             </div>
 
-            <img src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" />
+            <img src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" /> <!-- Placeholder image. TODO: Replace with service image -->
 
             <p><b>Duration</b>: {{ overlay.service.Duration }}</p>
-
-            <p style="flex: 1; overflow: scroll;">
-                <b>Description</b>:<br />
-                {{ overlay.service.Description }}
-            </p>
+            <p style="flex: 1; overflow: scroll;">{{ overlay.service.Description }}</p>
 
             <button class="text-secondary900" style="margin-top: auto;">Select</button>
         </div>
@@ -175,7 +218,7 @@
     #container {
         display: flex;
         flex-direction: column;
-        gap: 30px;
+        gap: 10px;
         padding: 50px;
     }
 
@@ -246,53 +289,14 @@
         width: 100%;
         max-width: 1250px;
     }
-        .service-container > .service-item:last-child:nth-child(3n-2) {
+        .service-container .service-item:last-child:nth-child(3n-2) {
             grid-column: span 1;
-        }
-
-    /* || SECTION – Service Card */
-    .service-item {
-        display: flex;
-        flex-direction: column;
-        width: 350px;
-        height: 380px;
-
-        background-color: var(--primary50);
-    }
-
-    .service-heading {
-        flex: 1;
-        padding: 10px 20px;
-    }
-
-        .service-heading s {
-            opacity: 0.33;
-        }
-
-        .service-heading p {
-            line-height: 28px;
-        }
-
-    .service-actions {
-        display: flex;
-        align-items: center;
-        padding: 0 20px 20px 20px;
-    }
-
-        .service-actions > a {
-            font-family: 'Nunito';
-            font-style: italic;
-            cursor: pointer;
-        }
-
-        .service-actions > button {
-            margin-left: auto;
         }
     
     /* || SECTION – Service Overlay */
     #overlay-container {
         position: fixed;
-        left: 0;
+        left: -1.2pt;
         top: 0;
         z-index: 5;
 
