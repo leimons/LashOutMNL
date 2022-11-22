@@ -20,7 +20,6 @@
 
         data() {
             return {
-                isMounted: false,
                 categories: [
                     {
                         name: 'Lashes',
@@ -69,10 +68,6 @@
                         this.categories[index] = {...this.categories[index], subcategories};
                     })
             })
-        },
-
-        mounted() {
-            this.isMounted = true;
         },
 
         methods: {
@@ -266,7 +261,6 @@
     }
 
     /* || SECTION – Subcategory View */
-
     .subcategory-heading {
         width: 100%;
         padding: 5px 20px;
