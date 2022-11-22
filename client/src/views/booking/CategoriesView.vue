@@ -90,11 +90,7 @@
                 this.toggleOverlay();
             },
             addToCart(service, ref) {
-                this.cart.service = service;
-
-                console.log(ref.classList.value)
-
-                function selectItem(ref) {
+                function selectItem (ref) {
                     ref.innerHTML = "Selected";
                     ref.classList.value = ref.classList.value + ' dark';
                 }
@@ -109,14 +105,14 @@
                     deselectItem(this.cart.ref)
 
                     if (this.cart.ref == ref)   // deselect current item
-                        this.cart = {...this.cart, ref: null};
+                        this.cart = {...this.cart, service: {}, ref: null};
                     else {
                         selectItem(ref);        // select new item
-                        this.cart = {...this.cart, ref};
+                        this.cart = {...this.cart, service, ref};
                     }
                 } else {
                     selectItem(ref);    // select new item
-                    this.cart = {...this.cart, ref};
+                    this.cart = {...this.cart, service, ref};
                 }
 
             }
@@ -127,6 +123,11 @@
                 return {
                     width: this.overlay.show ? '400px' : '0'
                 }
+            },
+            overlayBtnStyle() {
+                return this.cart.service._id == this.overlay.service._id
+                    ? "text-secondary900 dark"
+                    : "text-secondary900";
             }
         }
     }
@@ -203,7 +204,9 @@
             <p><b>Duration</b>: {{ overlay.service.Duration }}</p>
             <p style="flex: 1; overflow: scroll;">{{ overlay.service.Description }}</p>
 
-            <button class="text-secondary900" style="margin-top: auto;">Select</button>
+            <button :class="overlayBtnStyle">
+                {{ cart.service._id == overlay.service._id ? "Selected" : "Select" }} 
+            </button>
         </div>
     </div>
 
@@ -333,5 +336,9 @@
 
             font-size: 30px;
             border: none;
+        }
+
+        #service-overlay > button.text-secondary900 {
+            margin-top: auto;
         }
 </style>
