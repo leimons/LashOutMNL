@@ -34,7 +34,18 @@
                         title: 'Nail Services',
                         subcategories: []
                     },
-                ]
+                ],
+                overlay: {
+                    show: false,
+                    service: {
+                        Name: '',
+                        Category: '',
+                        Subcategory: '',
+                        Price: 0,
+                        Duration: '',
+                        Description: ''
+                    }
+                }
             }
         },
 
@@ -54,11 +65,26 @@
         },
 
         methods: {
-            formatPrice: (num) => {
+            formatPrice(num) {
                 return Number(num).toLocaleString('en-US', {
                     style: 'currency',
                     currency: 'PHP',
                 })
+            },
+            toggleOverlay() {
+                this.overlay = {...this.overlay, show: !this.overlay.show};
+            },
+            showOverlay(serviceData) {
+                this.overlay = {...this.overlay, service: {...serviceData, Name: serviceData.Service}}
+                this.toggleOverlay();
+            }
+        },
+
+        computed: {
+            overlayStyle() {
+                return {
+                    width: this.overlay.show ? '400px' : '0'
+                }
             }
         }
     }
@@ -97,7 +123,7 @@
                             </div>
 
                             <div class="service-actions">
-                                <a v-if="service.Description">Read more</a>
+                                <a v-if="service.Description" @click="showOverlay(service)">Read more</a>
                                 <button class="small">Select</button>
                             </div>
                         </div>
@@ -109,6 +135,34 @@
         </div>
 
     </FullscreenLayout>
+
+    <div id="overlay-container" :style="overlayStyle">
+        <div id="service-overlay">
+            <button id="close" @click="toggleOverlay">×</button>
+            <i style="opacity: 0.5;">{{ overlay.service.Category }} > {{ overlay.service.Subcategory }}</i>
+
+            <div>
+                <h2 style="margin-bottom: 8px;">{{ overlay.service.Name }}</h2>
+
+                <p v-if="!overlay.service.OnSale">{{ formatPrice(overlay.service.Price) }}</p>
+                <p v-else>
+                    <s>{{ formatPrice(overlay.service.Price) }}</s>
+                    &nbsp;  {{ formatPrice(overlay.service.SalePrice) }}
+                </p>
+            </div>
+
+            <img src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" />
+
+            <p><b>Duration</b>: {{ overlay.service.Duration }}</p>
+
+            <p style="flex: 1; overflow: scroll;">
+                <b>Description</b>:<br />
+                {{ overlay.service.Description }}
+            </p>
+
+            <button class="text-secondary900" style="margin-top: auto;">Select</button>
+        </div>
+    </div>
 
     <FooterClient />
 </template>
@@ -228,17 +282,52 @@
         .service-actions > a {
             font-family: 'Nunito';
             font-style: italic;
+            cursor: pointer;
         }
 
         .service-actions > button {
             margin-left: auto;
         }
+    
+    /* || SECTION – Service Overlay */
+    #overlay-container {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 5;
 
-    @media screen and (max-width: 900px) {
+        height: 100vh;
+        width: 400px;
+        overflow-x: hidden;
+        transition: width 0.2s ease-out;
 
-        h1 {
-            line-height: 48px;
-            margin-bottom: 30px;
-        }
+        background-color: var(--primary50);
+        color: var(--secondary900);
+        border-right: 1.2pt solid var(--secondary900);
     }
+
+    #service-overlay {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-inline: auto;
+
+        width: 400px;
+        height: 100%;
+        padding: 20px;
+    }
+
+        #service-overlay p {
+            text-align: justify;
+        }
+
+        #service-overlay #close {
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 6;
+
+            font-size: 30px;
+            border: none;
+        }
 </style>
