@@ -12,7 +12,7 @@
             }
         },
 
-    /*    created(){
+        created(){
             axios
                 .get(`/api/getInclusions`)
                 .then((response)=>{
@@ -21,7 +21,8 @@
                 .catch((e) => {
                     console.log(e)
                 })
-        }*/
+        },
+        
 
         methods: {
             chooseInclusions(){
