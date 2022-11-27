@@ -9,8 +9,8 @@
     import axios from 'axios';
 
     export default {
-        name: 'LashesView',
-        title: 'Lashes – LashOut MNL',
+        name: 'BrowsView',
+        title: 'Brows – LashOut MNL',
         components: {
             NavClient,
             FooterClient,
@@ -33,7 +33,7 @@
 
         created(){
             axios
-                .get(`/api/services/Lashes`)
+                .get(`/api/services/Brows`)
                 .then((response)=>{
                     this.subcategories = response.data
                 })
@@ -87,18 +87,18 @@
         v-show="showCart && this.cart.services.length > 0">
     </div>
     <MyCart
-        category="Lashes" 
+        category="Brows" 
         :services="this.cart.services" 
         v-show="showCart && this.cart.services.length > 0"
         @hide-cart="() => { this.showCart = false; }"
     />
 
     <CenterLayout id="category-header">
-        <h1>For your <u><i>Flawless Lashes</i></u></h1>
+        <h1>Up your <u><i>Brows Game</i></u></h1>
         <p style="width: 680px;">
-            Become a stylish woman with our range of beautiful, professional quality lashes.<br />
-            With a simple yet stylish design and high-quality materials, our lashes are carefully 
-            crafted to ensure that you have the perfect amount of volume, length and curl.
+            Brows are one of the first things people notice about your face, and you want them to be 
+            the best they can be. We offer two different types of brows: microblading and phi shading, 
+            and both are totally painless. Talk to us about which option is right for you!
         </p>
     </CenterLayout>
 

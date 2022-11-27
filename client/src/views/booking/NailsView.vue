@@ -9,8 +9,8 @@
     import axios from 'axios';
 
     export default {
-        name: 'LashesView',
-        title: 'Lashes – LashOut MNL',
+        name: 'NailsView',
+        title: 'Nails – LashOut MNL',
         components: {
             NavClient,
             FooterClient,
@@ -33,7 +33,7 @@
 
         created(){
             axios
-                .get(`/api/services/Lashes`)
+                .get(`/api/services/Nails`)
                 .then((response)=>{
                     this.subcategories = response.data
                 })
@@ -87,18 +87,18 @@
         v-show="showCart && this.cart.services.length > 0">
     </div>
     <MyCart
-        category="Lashes" 
+        category="Nails" 
         :services="this.cart.services" 
         v-show="showCart && this.cart.services.length > 0"
         @hide-cart="() => { this.showCart = false; }"
     />
 
     <CenterLayout id="category-header">
-        <h1>For your <u><i>Flawless Lashes</i></u></h1>
+        <h1>Picture Perfect <u><i>Nails</i></u></h1>
         <p style="width: 680px;">
-            Become a stylish woman with our range of beautiful, professional quality lashes.<br />
-            With a simple yet stylish design and high-quality materials, our lashes are carefully 
-            crafted to ensure that you have the perfect amount of volume, length and curl.
+            You deserve a relaxing and rejuvenating experience, and we are equipped to provide all 
+            of the polish, tools, and techniques you need. Our friendly staff provides excellent 
+            customer service and our relaxing environment creates a comfortable space just for you.
         </p>
     </CenterLayout>
 
