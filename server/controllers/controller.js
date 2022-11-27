@@ -1,6 +1,7 @@
 const db = require("../database/models/db");
 const Products = require("../database/models/Products");
 const Appointments = require("../database/models/Appointments");
+const Inclusions = require("../database/models/Inclusions");
 
 let refnum = '0';
 
@@ -45,10 +46,10 @@ const controller = {
     },
 
     addInclusions: function(req,res){
-        /*query the array of inclusions */
-        db.updateOne(Appointments, refnum, /*inclusion: inclusions,*/function(){ 
-        });
-
+        var Inclusions = req.body.Inclusions
+        db.updateOne(Appointments, {refNum: refnum}, {Inclusions: Inclusions}, function(){
+        })
+        res.status(201).send();
     },
 
     addClientDetails: function(req,res){
@@ -59,10 +60,62 @@ const controller = {
     },
 
     getInclusionsPage: function(req,res){
-        productName = req.params.id;
+        productName = req.params.UID;
         console.log(productName);
-        //res.render('inclusions');
-    }
+        db.findMany(Inclusions,{}, "Name mainProduct Description Price", function(result){
+            var data = result;
+            var Inclusions = [];
+            data.forEach((i)=>{
+                if (i.mainProduct.includes(productName)){
+                    Inclusions.push({Name: i.Name, Description: i.Description, Price: i.Price})
+                }
+            })
+        })
+        res.push(Inclusions)
+    },
+
+    getOrderSummary: function(req, res){
+        var projection = "Product Inclusions AmountDue"
+        var Order
+        db.findOne(Appointments, {refNum: refnum}, projection, function(result){
+            Order = {
+                Product: result.Product,
+                Inclusions: result.Inclusions,
+                AmountDue: result.AmountDue
+            }
+        })
+        res.send(Order)
+    },
+
+    getAppointments: function(req,res){
+        var projection = "ClientName ClientInfo Product Inclusions AmountDue"
+        var appointment
+        db.findOne(Appointments, {refNum: refnum}, projection, function(result){
+            appointment = {
+                ClientName: result.ClientName,
+                ClientInfo: result.ClientInfo,
+                Product: result.Product,
+                Inclusions: result.Inclusions,
+                AmountDue: result.AmountDue
+            }
+        })
+        res.send (appointment)
+    },
+
+    getAllAppointments: function(req,res){
+        var projection = "ClientName ClientInfo refNum PaymentStatus Product Inclusions AmountDue"
+        var appointment
+        db.findMany(Appointments,{}, projection, function(result){
+            appointment = {
+                ClientName: result.ClientName,
+                ClientInfo: result.ClientInfo,
+                Product: result.Product,
+                Inclusions: result.Inclusions,
+                AmountDue: result.AmountDue
+            }
+        })
+        res.send (appointment)
+    },
 }
 
 module.exports = controller;

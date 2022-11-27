@@ -11,8 +11,16 @@ app.get(`/services/:category`, controller.getServices);
 
 app.post(`/addAppointment`, controller.addAppointment);
 
+app.get(`/getInclusions/:UID`, controller.getInclusionsPage);
+
 app.post(`/addInclusions`, controller.addInclusions);
 
 app.post(`/addClientDetails`, controller.addClientDetails);
+
+app.get(`/getOrderSummary`, controller.getOrderSummary);
+
+app.get(`/getAppointment`, controller.getAppointment);
+
+app.get(`/getAllAppointments`, controller.getAllAppointment)
 
 module.exports = app;
