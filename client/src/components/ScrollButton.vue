@@ -5,36 +5,16 @@
             threshold: {
                 type: Number,
                 default: 20
-            },
-            position: {
-                /*
-                    Position of sticky button on screen.
-                    Options: 'topLeft', 'topRight', 'bottomLeft', 'bottomRight'
-                */
-                type: String,
-                default: 'topLeft'
             }
         },
         data() {
             return {
                 scrollTimer: 0,
-                scrollY: 0,
-                buttonStyle: {}
+                scrollY: 0
             }
         },
         created () {
             window.addEventListener('scroll', this.handleScroll);
-
-            if (this.position.includes('top'))
-                this.buttonStyle['top'] = '20px';
-            else if (this.position.includes('bottom'))
-                this.buttonStyle['bottom'] = '20px';
-            
-            if (this.position.includes('Left'))
-                this.buttonStyle['left'] = '20px';
-            else  if (this.position.includes('Right'))
-                this.buttonStyle['right'] = '20px';
-
         },
         unmounted () {
             window.removeEventListener('scroll', this.handleScroll);

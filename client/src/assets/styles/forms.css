@@ -15,6 +15,14 @@ button.small {
     padding: 8px 15px;
 }
 
+button.dark {
+    background-color: var(--secondary900);
+    border-color: var(--secondary900);
+    color: white;
+    opacity: 0.9;
+    transition: background-color 0.25s;
+}
+
 button.hover:hover {
     background-color: var(--primary100);
 }
