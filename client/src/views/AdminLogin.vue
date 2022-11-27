@@ -9,7 +9,6 @@
         },
         data() {
             return {
-                username: '',
                 password: '',
                 errorMsg: ''
             }
@@ -18,7 +17,6 @@
             login() {
                 const URL = 'https://eog7rm5iwehhpsq.m.pipedream.net'; /* temporary URL. TODO: Replace with URL to API */
                 let params = {
-                    username: this.username,
                     password: this.password
                 };
 
@@ -42,11 +40,6 @@
         </nav>
 
         <div id="card">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" v-model="username" />
-            </div>
-
             <div>
                 <label for="password">Password:</label>
                 <input type="password" id="password" v-model="password" />
@@ -78,7 +71,7 @@
         align-items: center;
         gap: 20px;
 
-        height: 350px;
+        height: 250px;
         width: 460px;
         padding: 50px;
         border: 1pt solid black;
