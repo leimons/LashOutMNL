@@ -49,7 +49,7 @@ const controller = {
         var Inclusions = req.body.Inclusions //UID of Inclusion
         var InclusionCost = 0
         Inclusions.forEach((i)=>{
-            db.findOne (Inclusions, {UID: i.UID}, "Price", function(result){
+            db.findOne (Inclusions, {UID: i}, "Price", function(result){
                 InclusionCost = InclusionCost + result
             })
         })
@@ -66,7 +66,7 @@ const controller = {
     },
 
     getInclusionsPage: function(req,res){
-        productName = req.params.UID;
+        productName = req.params.mainProduct;
         console.log(productName);
         var inclusions = []
         db.findMany(Inclusions,{}, "Name mainProduct Description Price", function(result){

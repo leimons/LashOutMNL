@@ -7,7 +7,7 @@
 
         data() {
             return {
-                Inclusions: ["Inclusion1", "Inclusion2"],
+                Inclusions: [],
                 chosenInclusions: []
             }
         },

@@ -8,6 +8,12 @@ class Appointment {
             AmountDue: price
         });
     }
+    static addInclusions (inclusion) {
+        var url = "http://localhost:3000/api/addInclusions"
+        return axios.post(url, {
+            Inclusions: inclusion
+        })
+    }
 }
 
 export default Appointment;
