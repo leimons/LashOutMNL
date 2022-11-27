@@ -5,31 +5,25 @@
 </script>
 
 <template>
-    <div style="display: flex;">
-        <nav>
-            <img src="@/assets/images/logo.png" height="50" />
+    <nav>
+        <img src="@/assets/images/logo.png" height="50" />
 
-            <a>Appointments</a>
-            <a>Services</a>
-            <a>Calendar</a>
-            <a>Promos</a>
+        <a>Appointments</a>     <!-- TODO: Add link to appointments page -->
+        <a href="/admin/services">Services</a>
+        <a>Calendar</a>         <!-- TODO: Add link to bookings page -->
+        <a>Promos</a>           <!-- TODO: Add link to promos page -->
 
-            <button class="small bg-primary200">Log out</button>
-        </nav>
+        <button class="small bg-primary200">Log out</button>
+    </nav>
 
-        <div style="overflow: scroll;">
-            <slot></slot>
-        </div>
+    <div id="admin-content">
+        <slot></slot>
     </div>
-
 </template>
 
 <style>
-    body {
-        overflow: hidden;
-    }
-    
     nav {
+        position: fixed;
         display: flex;
         flex-direction: column;
         gap: 4px;
@@ -44,6 +38,7 @@
         border-right: 1pt solid black;
         z-index: 0;
     }
+
         nav > img {
             margin-bottom: 40px;
         }
@@ -57,4 +52,11 @@
             margin-top: auto;
             opacity: 0.8;
         }
+
+    #admin-content {
+        width: calc(100% - 200px);
+
+        overflow: scroll;
+        margin-left: 200px;
+    }
 </style>

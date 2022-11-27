@@ -15,8 +15,18 @@ const routes = [
   },
   {
     path: '/admin/home',
-    name: 'dashboard',
+    name: 'adminDashboard',
     component: () => import('@/views/admin/AdminDashboard.vue')
+  },
+  {
+    path: '/admin/services',
+    name: 'adminServices',
+    component: () => import('@/views/admin/AdminServices.vue')
+  },
+  {
+    path: '/admin/services/:id',
+    name: 'adminService',
+    component: () => import('@/views/admin/AdminService.vue')
   },
 
   // SERVICE PAGES

@@ -2,6 +2,7 @@ const db = require("../database/models/db");
 const Products = require("../database/models/Products");
 const Appointments = require("../database/models/Appointments");
 const Inclusions = require("../database/models/Inclusions");
+const dv = require("dayjs/locale/dv");
 
 let refnum = '0';
 
@@ -12,21 +13,41 @@ const controller = {
         through the `category` query.
     */
     getServices: async function (req, res) {
-        var category = req.params.category;
+        if ( req.params.category ) {
+            var category = req.params.category;
 
-        var result = await Products.aggregate([
-            { $match: { Category: category } },
-            {
-                "$group": {
-                    _id: "$Subcategory", // Group by subcategory
-                    "name" :{ $last: '$Subcategory' }, 
-                    "category" :{ $last: '$Category' }, 
-                    services: { $push: "$$ROOT" }
+            var result = await Products.aggregate([
+                { $match: { Category: category } },
+                {
+                    "$group": {
+                        _id: "$Subcategory", // Group by subcategory
+                        "name" :{ $last: '$Subcategory' }, 
+                        "category" :{ $last: '$Category' }, 
+                        services: { $push: "$$ROOT" }
+                    }
                 }
-            }
-        ]);
+            ]);
 
-        res.json(result);
+            res.json(result);
+        } 
+        else {
+            var { category, subcategory, id } = req.query;
+
+            if (category)   // Find by category
+                db.findMany(Products, {Category: category}, {}, (result) => {
+                    res.json(result);
+                });
+            else if (subcategory)   // Find by subcategory
+                db.findMany(Products, {Subcategory: subcategory}, {}, (result) => {
+                    res.json(result);
+                });
+            else if (id)
+                db.findOne(Products, {_id: id}, {}, (result) => {
+                    res.json(result);
+                });
+            else
+                res.json([]);
+        }
     },
 
     addAppointment: function (req,res){
