@@ -22,9 +22,8 @@
             return {
                 subcategories: [],
                 cart: {
-                    service: {},    // service info
-                    ref: null,
-                    inclusions: []
+                    services: [],
+                    refs: []
                 }
             }
         },
@@ -51,20 +50,25 @@
                     ref.innerHTML = "Select";
                     ref.classList.value = ref.classList.value.replace('dark', 'light');
                 }
-                
-                
-                if ( this.cart.ref ) {    // Check if cart is not empty
-                    deselectItem(this.cart.ref)
+            
 
-                    if (this.cart.ref == ref)   // deselect current item
-                        this.cart = {...this.cart, service: {}, ref: null};
-                    else {
-                        selectItem(ref);        // select new item
-                        this.cart = {...this.cart, service, ref};
-                    }
+                let isSelected = this.cart.refs.includes(ref);
+                console.log(isSelected);
+                
+                if (isSelected) {
+                    deselectItem(ref);
+                    this.cart = {
+                        ...this.cart,
+                        services: this.cart.services.filter(v => v !== service), 
+                        refs: this.cart.refs.filter(v => v !== ref)
+                    };
                 } else {
-                    selectItem(ref);    // select new item
-                    this.cart = {...this.cart, service, ref};
+                    selectItem(ref);
+                    this.cart = {
+                        ...this.cart,
+                        services: [...this.cart.services, service], 
+                        refs: [...this.cart.refs, ref]
+                    };
                 }
 
             }

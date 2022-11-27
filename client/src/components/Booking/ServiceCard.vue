@@ -20,9 +20,6 @@
                     currency: 'PHP',
                 })
             },
-            showOverlay() {
-                this.$emit('show-overlay', this.data)
-            },
             addToCart() {
                 this.$emit('add-to-cart', this.data, this.$refs.selectBtn)
             }
