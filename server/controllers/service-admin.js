@@ -40,9 +40,11 @@ const sv_controller = {
 		var s_subcategory = req.query.Subcategory;
 		var s_description = req.query.Description;
 		var s_duration = req.query.Duration;
-		var s_price = req.query.price;
-        console.log("updating: "+req.query.Service);
-        db.updateOne({UID: req.query.UID},{$set:{Service:s_name}}, {$set:{Category:s_category}},{$set:{Subcategory:s_subcategory}, {$set:{Description:s_description}}, {$set:{Duration:s_duration}} , {$set:{Price:s_price}});
+		var s_price = req.query.Price;
+		var s_onsale = req.query.OnSale;
+		var s_saleprice = req.query.SalePrice;
+        	console.log("updating: "+req.query.Service);
+        	db.updateOne({UID: req.query.UID},{$set:{Service:s_name}}, {$set:{Category:s_category}},{$set:{Subcategory:s_subcategory}, {$set:{Description:s_description}}, {$set:{Duration:s_duration}} , {$set:{Price:s_price}}, {$set:{OnSale: s_onsale}}, {$set:{SalePrice:s_saleprice});
 		console.log(s_name + " updated");
 	}
 
