@@ -68,16 +68,17 @@ const controller = {
     getInclusionsPage: function(req,res){
         productName = req.params.UID;
         console.log(productName);
+        var inclusions = []
         db.findMany(Inclusions,{}, "Name mainProduct Description Price", function(result){
             var data = result;
-            var Inclusions = [];
             data.forEach((i)=>{
                 if (i.mainProduct.includes(productName)){
-                    Inclusions.push({Name: i.Name, Description: i.Description, Price: i.Price})
+                    inclusions.push({Name: i.Name, Description: i.Description, Price: i.Price})
                 }
             })
+            res.status(201).send(inclusions)
         })
-        res.push(Inclusions)
+        
     },
 
     getOrderSummary: function(req, res){
