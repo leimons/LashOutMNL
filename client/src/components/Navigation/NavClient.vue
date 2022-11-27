@@ -40,6 +40,17 @@
         font: 400 20px 'Nunito';
     }
 
+    a {
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+
+    a:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 3pt;
+        text-decoration-color: var(--primary200);
+    }
+
     a:first-child {
         margin-right: auto;
     }

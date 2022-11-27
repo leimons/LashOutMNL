@@ -43,6 +43,11 @@ const routes = [
     name: 'book',
     component: () => import('@/views/booking/CategoriesView.vue')
   },
+  {
+    path: '/book/lashes',
+    name: 'bookLashes',
+    component: () => import('@/views/booking/LashesView.vue')
+  },
 
   // ERROR PAGE
   {
