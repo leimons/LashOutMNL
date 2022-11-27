@@ -18,7 +18,7 @@
    <FullscreenLayout direction="column" centerVertical centerHorizontal>
         <NavClient style="position: relative;" />
 
-        <CenterLayout style="flex: 1;">
+        <CenterLayout style="flex: 1; padding: 50px;">
             <div id="heading">
                 <h1>You <i>deserve</i> to be <u>pampered</u></h1>
                 <h3>only here at Lash Out MNL Beauty Lounge</h3>
@@ -115,7 +115,6 @@
         gap: 30px;
 
         margin-top: 40px;
-        padding: 50px;
 
         color: var(--secondary900);
     }
