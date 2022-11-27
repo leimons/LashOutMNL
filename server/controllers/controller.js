@@ -46,8 +46,14 @@ const controller = {
     },
 
     addInclusions: function(req,res){
-        var Inclusions = req.body.Inclusions
-        db.updateOne(Appointments, {refNum: refnum}, {Inclusions: Inclusions}, function(){
+        var Inclusions = req.body.Inclusions //UID of Inclusion
+        var InclusionCost = 0
+        Inclusions.forEach((i)=>{
+            db.findOne (Inclusions, {UID: i.UID}, "Price", function(result){
+                InclusionCost = InclusionCost + result
+            })
+        })
+        db.updateOne(Appointments, {refNum: refnum}, {Inclusions: Inclusions, AmountDue: AmountDue+InclusionCost}, function(){
         })
         res.status(201).send();
     },
