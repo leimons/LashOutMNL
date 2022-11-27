@@ -2,7 +2,7 @@
     import NavClient from '@/components/Navigation/NavClient.vue';
     import FooterClient from '@/components/Navigation/FooterClient.vue';
     import CenterLayout from '@/layouts/CenterLayout.vue';
-    import ServiceCard from '@/components/ServiceCard.vue';
+    import ServiceCard from '@/components/Booking/ServiceCard.vue';
     import ScrollButton from '@/components/ScrollButton.vue';
     import dbFunctions from '@/dbFunctions.js';
     import axios from 'axios'
@@ -64,13 +64,8 @@
                 v-for="service in subcategory.services"
                 :key="service.Service"
 
-                :service="service.Service"
-                :duration="service.Duration"
-                :price="service.Price"
-                :description="service.Description"
-                :onSale="service.OnSale"
-                :salePrice="service.SalePrice"
-                @click="chooseService(service.Service, service.Price)"
+                :data="service"
+                :for-service="true"
             />
         </div>
     </div>

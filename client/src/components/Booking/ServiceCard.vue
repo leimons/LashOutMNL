@@ -2,7 +2,11 @@
     export default {
         name: 'BookingServiceCard',
         props: {
-            data: Object
+            data: Object,
+            forService: {
+                type: Boolean,
+                default: false
+            }
         },
         data() {
             return {
@@ -43,12 +47,12 @@
             </div>
 
             <p class="service-description">
-                <i>{{ data.Duration }}.</i>
+                <i>{{ data.Duration }}.</i>{{showSelectBtn}}
                 {{ data.Description }}
             </p>
         </div>
 
-        <button class="small light" @click="addToCart" ref="selectBtn">Select</button>
+        <button class="small light" @click="addToCart" ref="selectBtn" v-if="!forService">Select</button>
     </div>
 </template>
 
