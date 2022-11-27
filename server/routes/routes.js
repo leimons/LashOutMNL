@@ -19,8 +19,8 @@ app.post(`/addClientDetails`, controller.addClientDetails);
 
 app.get(`/getOrderSummary`, controller.getOrderSummary);
 
-app.get(`/getAppointment`, controller.getAppointment);
+app.get(`/getAppointment`, controller.getAppointments);
 
-app.get(`/getAllAppointments`, controller.getAllAppointment)
+app.get(`/getAllAppointments`, controller.getAllAppointments);
 
 module.exports = app;

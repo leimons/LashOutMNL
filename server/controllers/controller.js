@@ -46,8 +46,14 @@ const controller = {
     },
 
     addInclusions: function(req,res){
-        var Inclusions = req.body.Inclusions
-        db.updateOne(Appointments, {refNum: refnum}, {Inclusions: Inclusions}, function(){
+        var Inclusions = req.body.Inclusions //UID of Inclusion
+        var InclusionCost = 0
+        Inclusions.forEach((i)=>{
+            db.findOne (Inclusions, {UID: i.UID}, "Price", function(result){
+                InclusionCost = InclusionCost + result
+            })
+        })
+        db.updateOne(Appointments, {refNum: refnum}, {Inclusions: Inclusions, AmountDue: AmountDue+InclusionCost}, function(){
         })
         res.status(201).send();
     },
@@ -62,16 +68,17 @@ const controller = {
     getInclusionsPage: function(req,res){
         productName = req.params.UID;
         console.log(productName);
+        var inclusions = []
         db.findMany(Inclusions,{}, "Name mainProduct Description Price", function(result){
             var data = result;
-            var Inclusions = [];
             data.forEach((i)=>{
                 if (i.mainProduct.includes(productName)){
-                    Inclusions.push({Name: i.Name, Description: i.Description, Price: i.Price})
+                    inclusions.push({Name: i.Name, Description: i.Description, Price: i.Price})
                 }
             })
+            res.status(201).send(inclusions)
         })
-        res.push(Inclusions)
+        
     },
 
     getOrderSummary: function(req, res){
