@@ -39,7 +39,9 @@ const controller = {
              } */
         });
         refnum = val;
-        console.log(refnum)
+        AmountDue = AmountDue.substring(1);
+        AmountDue = parseFloat(AmountDue);
+        console.log (typeof(AmountDue))
         db.insertOne(Appointments, {Product: product, refNum: refnum, AmountDue: AmountDue},function(){     
         });
         res.status(201).send();
