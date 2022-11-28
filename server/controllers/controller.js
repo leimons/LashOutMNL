@@ -66,19 +66,20 @@ const controller = {
     },
 
     getInclusionsPage: function(req,res){
-        productName = req.params.mainProduct;
-        console.log(productName);
-        var inclusions = []
-        db.findMany(Inclusions,{}, "Name mainProduct Description Price", function(result){
-            var data = result;
-            data.forEach((i)=>{
-                if (i.mainProduct.includes(productName)){
-                    inclusions.push({Name: i.Name, Description: i.Description, Price: i.Price})
-                }
+        db.findOne(Appointments, {refNum: refnum}, "Product", function(result){
+            var productName = result.Product
+            console.log("The Product is: " + productName);
+            var inclusions = []
+            db.findMany(Inclusions,{}, "Name mainProduct Description Price", function(result){
+                var data = result;
+                data.forEach((i)=>{
+                    if (i.mainProduct.includes(productName)){
+                        inclusions.push({Name: i.Name, Description: i.Description, Price: i.Price})
+                    }
+                })
+                res.status(201).send(inclusions)
             })
-            res.status(201).send(inclusions)
-        })
-        
+        })   
     },
 
     getOrderSummary: function(req, res){
