@@ -1,5 +1,7 @@
 <script>
+    import dbFunctions from '@/dbFunctions.js';
     export default {
+        
         name: 'MyCart',
         props: {
             category: String,
@@ -17,6 +19,16 @@
             },
             hideCart() {
                 this.$emit("hideCart");
+            },            
+            chooseService (value, price){
+                (JSON.parse(JSON.stringify(value)))
+                var services = (JSON.parse(JSON.stringify(value)))
+                var serviceName = []
+                for (let i = 0; i < services.length; i++){
+                    serviceName.push(services[i].Service)
+                }
+                console.log (serviceName)
+                dbFunctions.addAppointment (serviceName, price);
             }
         },
         computed: {
@@ -52,7 +64,7 @@
             <p style="grid-area: price;">{{ totalPrice }}</p>
 
             <button class="small" style="grid-area: cancel;" @click="hideCart">Cancel</button>
-            <button class="small" style="grid-area: next;">Pick a Schedule &#8594;</button>
+            <button class="small" style="grid-area: next;" @click="chooseService(this.services, totalPrice)">Pick a Schedule &#8594;</button>
         </div>
     </div>
 </template>
