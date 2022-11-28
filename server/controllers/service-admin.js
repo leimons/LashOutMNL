@@ -1,15 +1,6 @@
 const db = require('../models/db.js');
 const Product = require('../models/Products.js');
-/*
-UID: String
-Service: String,
-    Category: String,
-    Subcategory: String,
-    Duration: String,
-    Price: Number,
-    Description: String,
-    OnSale: Boolean,
-    SalePrice: Number*/
+
 const sv_controller = {
 
 /*add product
@@ -21,18 +12,18 @@ const sv_controller = {
         db.insertOne(Product, req.query, function(){});
 		console.log(req.query.Service + "added");
     },
-/*delete service
-	given the name, it deletes the service from the database 
+/*delete product
+	given the name, it deletes the product from the database 
 	modeled after CCAPDEV MCO3
 */
 	sv_delete: function (req, res) {
 		var refname = req.query.Service;
-		var refID = requ.query.UID;
+		var refID = requ.query._id;
         console.log("deleting: " + refname);
-        db.deleteOne(Service,{UID: req.query.UID}, function(){});
+        db.deleteOne(Service,{_id: refID}, function(){});
 		console.log(refname + " deleted");
     },
-/*edit service
+/*edit product
 */
 	sv_edit: function(req, res) {
 		var s_name = req.query.Service;
@@ -43,8 +34,8 @@ const sv_controller = {
 		var s_price = req.query.Price;
 		var s_onsale = req.query.OnSale;
 		var s_saleprice = req.query.SalePrice;
-        	console.log("updating: "+req.query.Service);
-        	db.updateOne({UID: req.query.UID},{$set:{Service:s_name}}, {$set:{Category:s_category}},{$set:{Subcategory:s_subcategory}, {$set:{Description:s_description}}, {$set:{Duration:s_duration}} , {$set:{Price:s_price}}, {$set:{OnSale: s_onsale}}, {$set:{SalePrice:s_saleprice});
+        console.log("updating: "+req.query.Service);
+        db.updateOne({_id: req.query._id},{$set:{Service:s_name}}, {$set:{Category:s_category}},{$set:{Subcategory:s_subcategory}, {$set:{Description:s_description}}, {$set:{Duration:s_duration}} , {$set:{Price:s_price}}, {$set:{OnSale: s_onsale}}, {$set:{SalePrice:s_saleprice});
 		console.log(s_name + " updated");
 	}
 
