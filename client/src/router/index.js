@@ -28,6 +28,11 @@ const routes = [
     name: 'adminService',
     component: () => import('@/views/admin/AdminService.vue')
   },
+  {
+    path: '/admin/services/:id/edit',
+    name: 'adminServiceEdit',
+    component: () => import('@/views/admin/AdminServiceEdit.vue')
+  },
 
   // SERVICE PAGES
   {

@@ -1,27 +1,28 @@
 <script>
     import AdminLayout from '@/layouts/AdminLayout.vue';
     import ToggleSwitch from '@/components/ToggleSwitch.vue';
-
+    
     import axios from 'axios';
 
     export default {
-        name: 'AdminServices',
-        title: `Service – LashOut MNL`,
+        name: 'AdminServicesEdit',
+        title: `Edit Service – LashOut MNL`,
         components: {
             AdminLayout,
             ToggleSwitch
         },
         data() {
             return {
-                service: {}
+                service: {},
+                edit: {}
             }
         },
         created() {
             axios
                 .get(`/api/services`, { params: {id: this.$route.params.id} })
                 .then((response) => {
-                    console.log(response.data)
                     this.service = response.data;
+                    this.edit = response.data;
 
                     if ( !this.service )
                         this.$router.push('/admin/services');   // Redirect if invalid id
@@ -34,6 +35,21 @@
                     currency: 'PHP',
                 })
             },
+            toggleSwitch() {
+                this.edit.OnSale = !this.edit.OnSale;
+            },
+            visibility(v) {
+                return { visibility: v ? 'visible' : 'hidden' }
+            }
+        },
+        computed: {
+            hasChanges() {
+                var columns = Object.keys(this.service);
+                var hasChanges = columns.some(column => this.service[column] == this.edit[column]);
+                console.log(hasChanges)
+
+                return hasChanges;
+            }
         }
     }
 </script>
@@ -50,30 +66,36 @@
 
             <div id="service-info">
                 <div>
-                    <h1>{{ service.Service }}</h1>
+                    <h1><input v-model="edit.Service" /></h1>
                     <h3>{{ service.Category }} ({{ service.Subcategory }})</h3>
                 </div>
 
-                <h2>{{ formatPrice(service.Price || 0) }}</h2>
+                <h2>₱<input type="number" step=".01" v-model="service.Price" /></h2>
 
                 <div id="info-grid">
                     <b>Duration</b>
-                    <p>{{ service.Duration }}</p>
+                    <input v-model="edit.Duration" />
 
                     <b>Description</b>
-                    <p v-if="service.Description">{{ service.Description }}</p>
-                    <p v-else><i style="opacity: 0.6;">No description.</i></p>
+                    <textarea v-model="edit.Description" style="height: 82px;"></textarea>
 
                     <b>OnSale</b>
-                    <p><ToggleSwitch disabled :on="service.OnSale" /></p>
+                    <p><ToggleSwitch @toggle="toggleSwitch" :on="this.edit.OnSale" /></p>
 
-                    <b v-if="service.OnSale">Sale Price</b>
-                    <p v-if="service.OnSale">{{ service.SalePrice }}</p>
+                    <b :style="visibility(edit.OnSale)">Sale Price</b>
+                    <p :style="visibility(edit.OnSale)">
+                        ₱<input type="number" step=".01" v-model="edit.SalePrice" />
+                    </p>
                 </div>
 
-                <button class="small grey" @click="() => { this.$router.push(`/admin/services/${service._id}/edit`) }">
-                    Edit Service
-                </button>
+                <div id="actions">
+                    <button class="small dark">
+                        Save
+                    </button>
+                    <button class="small grey" @click="() => { this.$router.push(`/admin/services/${service._id}`) }">
+                        Cancel
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -136,5 +158,40 @@
 
     p {
         text-align: justify;
+    }
+
+    input, textarea {
+        width: 100%;
+        resize: none;
+        border-radius: 0;
+        
+        font: 300 16px 'Lora';
+        color: var(--secondary900);
+        background: none;
+    }
+
+    input {
+        padding: 0;
+        border-width: 0 0 1px 0;
+    }
+
+    textarea {
+        padding: 5px;
+        border: 1px solid var(--secondary900);
+        overflow: scroll;
+    }
+
+    h1 > input, h2 > input {
+        font-size: 1em;
+        font-weight: 500;
+    }
+
+    input[type="number"] {
+        width: min-content;
+    }
+
+    #actions button {
+        float: right;
+        margin-right: 10px;
     }
 </style>

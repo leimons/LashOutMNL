@@ -1,18 +1,36 @@
 <script>
     export default {
         name: 'ToggleSwitch',
+        emits: ['toggle'],
         props: {
             disabled: {
                 type: Boolean,
                 default: false
+            },
+            on: {
+                type: Boolean,
+                default: false
             }
+        },
+        data() {
+            return {
+                checked: false
+            }
+        },
+        created() {
+            this.checked = this.on;
         }
     }
 </script>
 
 <template>
     <label class="switch">
-        <input type="checkbox" :disabled="disabled">
+        <input type="checkbox"
+            :disabled="disabled"
+            :value="on"
+            :checked="on"
+            @input="this.$emit('toggle')"
+         />
         <span class="slider round"></span>
     </label>
 </template>
