@@ -14,7 +14,8 @@
         data() {
             return {
                 service: {},
-                edit: {}
+                edit: {},
+                image: "https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" /* TODO: Replace with service image */
             }
         },
         created() {
@@ -40,6 +41,12 @@
             },
             visibility(v) {
                 return { visibility: v ? 'visible' : 'hidden' }
+            },
+            onFileChange(e) {
+                var files = e.target.files || e.dataTransfer.files;
+                if (!files.length)  return;
+
+                this.image = URL.createObjectURL(files[0]);
             }
         },
         computed: {
@@ -62,7 +69,16 @@
                 &#8592; Back to Services
             </a>
 
-            <img src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" style="height: fit-content;" />
+            <div id="image-section">
+                <div id="image-container">
+                    <img :src="image" />
+                </div>
+
+                <button class="small grey">
+                    <label for="editImg">Edit Image</label>
+                </button>
+				<input type="file" accept="image/png, image/jpg, image/jpeg" name="editImg" id="editImg" @change="onFileChange" />
+            </div>
 
             <div id="service-info">
                 <div>
@@ -121,6 +137,16 @@
             font-style: italic;
         }
 
+    /* || SECTION – Service Information */
+    #service-info {
+        display: flex; 
+        flex-direction: column; 
+        gap: 30px; 
+        flex: 1; 
+        min-width: 480px;
+    }
+
+    /* || SUBSECTION – Heading (Title, Category, Subcategory, Price) */
     h1, h2 {
         font-weight: 500;
         color: var(--secondary900);
@@ -132,21 +158,7 @@
         font-style: italic;
     }
 
-    #service-info {
-        display: flex; 
-        flex-direction: column; 
-        gap: 30px; 
-        flex: 1; 
-        min-width: 480px;
-    }
-
-    #container button {
-        margin-left: auto;
-        text-align: right;
-        justify-self: flex-end;
-        opacity: 0.8;
-    }
-
+    /* || SUBSECTION – Other information */
     #info-grid {
         display: grid;
         grid-template-columns: 20% auto;
@@ -175,23 +187,47 @@
         border-width: 0 0 1px 0;
     }
 
+        input[type="number"] {
+            width: min-content;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        h1 > input, h2 > input {
+            font-size: 1em;
+            font-weight: 500;
+        }
+
     textarea {
         padding: 5px;
         border: 1px solid var(--secondary900);
         overflow: scroll;
     }
 
-    h1 > input, h2 > input {
-        font-size: 1em;
-        font-weight: 500;
-    }
-
-    input[type="number"] {
-        width: min-content;
-    }
-
-    #actions button {
+    #actions > button {
         float: right;
         margin-right: 10px;
     }
+
+    /* || SECTION – Image */
+    #image-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #image-container {
+        width: calc(350px + 2.4pt);
+        height: calc(220px + 2.4pt);
+        border: 1.2pt solid var(--secondary900);
+        overflow: hidden;
+    }
+
+        #image-container > image {
+            max-width: 350px;
+            max-height: 220px;
+        }
 </style>
