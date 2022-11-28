@@ -86,7 +86,7 @@ async function run(){
 	
 	const Addon8 = await Product.create({
 		UID: "0008",
-		mainProduct: ["Regular Manicure","Regular Pedicure""Regular Manicure-Pedicure Set","Gel Manicure","Gel Pedicure","Gel Manicure-Pedicure Set","Hard Gel Manicure","Regular Manicure - Gel Pedicure","Gel Manicure and Regular Pedicure","Hard Gel Manicure and Gel Pedicure","Hard Gel Manicure with Nail Polish and Regular Pedicure","Hard Gel Manicure with Nail Polish and Gel Pedicure","Polygel Nail Extensions and Gel Pedicure","Polygel Nail Extensions and Regular Pedicure"],
+		mainProduct: ["Regular Manicure","Regular Pedicure","Regular Manicure-Pedicure Set","Gel Manicure","Gel Pedicure","Gel Manicure-Pedicure Set","Hard Gel Manicure","Regular Manicure - Gel Pedicure","Gel Manicure and Regular Pedicure","Hard Gel Manicure and Gel Pedicure","Hard Gel Manicure with Nail Polish and Regular Pedicure","Hard Gel Manicure with Nail Polish and Gel Pedicure","Polygel Nail Extensions and Gel Pedicure","Polygel Nail Extensions and Regular Pedicure"],
 		Name: "Gel Removal",
 		Description: "Add on for Nails Services",
     	Price: 100
@@ -97,7 +97,7 @@ async function run(){
 	
 	const Addon9 = await Product.create({
 		UID: "0009",
-		mainProduct: ["Regular Manicure","Regular Pedicure""Regular Manicure-Pedicure Set","Gel Manicure","Gel Pedicure","Gel Manicure-Pedicure Set","Hard Gel Manicure","Regular Manicure - Gel Pedicure","Gel Manicure and Regular Pedicure","Hard Gel Manicure and Gel Pedicure","Hard Gel Manicure with Nail Polish and Regular Pedicure","Hard Gel Manicure with Nail Polish and Gel Pedicure","Polygel Nail Extensions and Gel Pedicure","Polygel Nail Extensions and Regular Pedicure"],
+		mainProduct: ["Regular Manicure","Regular Pedicure","Regular Manicure-Pedicure Set","Gel Manicure","Gel Pedicure","Gel Manicure-Pedicure Set","Hard Gel Manicure","Regular Manicure - Gel Pedicure","Gel Manicure and Regular Pedicure","Hard Gel Manicure and Gel Pedicure","Hard Gel Manicure with Nail Polish and Regular Pedicure","Hard Gel Manicure with Nail Polish and Gel Pedicure","Polygel Nail Extensions and Gel Pedicure","Polygel Nail Extensions and Regular Pedicure"],
 		Name: "Nail Extensions Removal",
 		Description: "Add on for Nails Services",
     	Price: 300

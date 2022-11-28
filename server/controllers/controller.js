@@ -71,16 +71,18 @@ const controller = {
         db.findOne(Appointments, {refNum: refnum}, "Product", function(result){
             var productName = result.Product
             console.log("The Product is: " + productName);
-            var inclusions = []
-            db.findMany(Inclusions,{}, "Name mainProduct Description Price", function(result){
-                var data = result;
-                data.forEach((i)=>{
-                    if (i.mainProduct.includes(productName)){
-                        inclusions.push({Name: i.Name, Description: i.Description, Price: i.Price})
-                    }
-                })
-                res.status(201).send(inclusions)
-            })
+            db.findOne(Products, {Service: productName}, "Category", function(result){
+                var productCategory = result.Category
+                var inclusions = []
+                db.findMany(Inclusions,{Category: productCategory}, "Category Name Price", function(result){
+                    var data = result;
+                    data.forEach((i)=>{
+                        inclusions.push({Category: i.Category, Name: i.Name, Price: i.Price})
+                    })
+                    console.log(inclusions)
+                    res.status(201).send(inclusions) 
+                }) 
+            })       
         })   
     },
 
