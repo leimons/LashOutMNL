@@ -6,20 +6,20 @@ const bea_controller = {
         console.log("inserting: " + req.query.Name);
         db.insertOne(Beautician, req.query, function(){}); 
 		console.log(req.query.Name + "added");
-    },
+    	},
 	
 	bea_delete: function (req, res) {
-		var ref = req.query.UID;
-		var beauticianName = req.query.Name
+	var ref = req.query._id;
+	var beauticianName = req.query.Name
         console.log("deleting: " + beauticianName);
-        db.deleteOne(Beautician,{UID:ref}, function(){});
+        db.deleteOne(Beautician,{_id:ref}, function(){});
 		console.log("Beautician " + beauticianName + " has been removed");
-    },
+    	},
 	
 	bea_schedule_change: function(req, res) {
-		var ref = req.query.UID;
+	var ref = req.query._id;
         console.log("updating: "+req.query.Name);
-        db.updateOne({UID:ref},{Name:req.query.name});
+        db.updateOne({_id:ref},{Name:req.query.name});
 		console.log(s_name + " updated");
 	}
 } 
