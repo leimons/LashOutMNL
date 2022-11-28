@@ -8,6 +8,7 @@ const app = express();
     Returns list of services as JSON
 */
 app.get(`/services/:category`, controller.getServices);
+app.get(`/services`, controller.getServices);
 
 app.post(`/addAppointment`, controller.addAppointment);
 

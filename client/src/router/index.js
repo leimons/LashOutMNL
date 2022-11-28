@@ -9,10 +9,29 @@ const routes = [
 
   // ADMIN PAGES
   {
-
     path: '/admin',
     name: 'admin',
-    component: () => import('@/views/AdminLogin.vue')
+    component: () => import('@/views/admin/AdminLogin.vue')
+  },
+  {
+    path: '/admin/home',
+    name: 'adminDashboard',
+    component: () => import('@/views/admin/AdminDashboard.vue')
+  },
+  {
+    path: '/admin/services',
+    name: 'adminServices',
+    component: () => import('@/views/admin/AdminServices.vue')
+  },
+  {
+    path: '/admin/services/:id',
+    name: 'adminService',
+    component: () => import('@/views/admin/AdminService.vue')
+  },
+  {
+    path: '/admin/services/:id/edit',
+    name: 'adminServiceEdit',
+    component: () => import('@/views/admin/AdminServiceEdit.vue')
   },
 
   // SERVICE PAGES
