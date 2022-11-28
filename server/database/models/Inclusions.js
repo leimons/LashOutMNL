@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
 
 const InclusionsSchema = new mongoose.Schema({
-    UID: String,
-    mainProduct: [String],
+    Category: String,
     Name: String,
-    Description: String,
     Price: Number
 });
 

@@ -124,7 +124,8 @@ export default {
         },
 
         getChosenDate(date){
-            console.log(date.date)
+          var chosenDate = new Date (date.date);
+          console.log(chosenDate)
         }
     }
 };
