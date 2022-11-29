@@ -7,10 +7,12 @@ import CalendarWeekDays from "@/components/Calendar/CalendarWeekDays.vue";
 import CalendarMonthDay from "@/components/Calendar/CalendarMonthDay.vue";
 import weekday from "dayjs/plugin/weekday"
 import weekOfYear from "dayjs/plugin/weekOfYear";
-import dbFunctions from '@/dbFunctions.js';
+//import dbFunctions from '@/dbFunctions.js';
 
 dayjs.extend(weekday);
 dayjs.extend(weekOfYear);
+
+var chosenDay
 
 export default {
     name: "CalendarMonth",
@@ -125,10 +127,17 @@ export default {
         },
 
         getChosenDate(date){
-          console.log(date.date)
-          dbFunctions.addAppointmentDate(date.date)
+          chosenDay = date.date
+          console.log(chosenDay)
+          //dbFunctions.addAppointmentDate(date.date)
 
         },
+
+        getChosenTime(Time){
+          var dateString = chosenDay +" " + Time
+          var date = new Date(dateString)
+          console.log(date)
+        }
     }
 };
 </script>
