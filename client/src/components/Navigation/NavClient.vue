@@ -12,12 +12,12 @@
 
 <template>
     <nav>
-        <a href="/"><img src="../assets/images/logo.png" height="70" /></a>
+        <a href="/"><img src="@/assets/images/logo.png" height="70" /></a>
 
         <a href="/">Home</a>
         <a v-if="isHomePage" href="#explore-category">Services</a>
         <a v-else href="/services">Services</a>
-        <a href="#">Bookings</a>    <!-- TODO: Update anchor link -->
+        <button @click="() => { this.$router.push('/book') }">Book Now</button>
     </nav>
 </template>
 
@@ -38,10 +38,30 @@
         padding: 0 60px;
         
         font: 400 20px 'Nunito';
+    }
+
+    a {
+        font-weight: 500;
         text-transform: uppercase;
+    }
+
+    a:hover {
+        text-decoration: underline;
+        text-decoration-thickness: 3pt;
+        text-decoration-color: var(--primary200);
     }
 
     a:first-child {
         margin-right: auto;
+    }
+
+    @media screen and (max-width: 780px) {
+        a:nth-child(2) {
+            display: none;
+        }
+
+        nav {
+            padding: 0 4%;
+        }
     }
 </style>

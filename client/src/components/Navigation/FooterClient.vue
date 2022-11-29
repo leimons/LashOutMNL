@@ -6,15 +6,15 @@
 
 <template>
     <footer>
-        <img src="../assets/images/footer_quote.png"/>
+        <img src="@/assets/images/footer_quote.png" id="quote" />
 
         <div>
             <a href="#location">Location</a>
-            <a href="#">Book an Appointment</a> <!-- TODO: Update anchor link -->
+            <a href="/book">Book an Appointment</a>
             <a href="#">Terms & Conditions</a>  <!-- TODO: Update anchor link -->
 
             <a href="https://www.instagram.com/lashout.mnl/" id="icon-ig">
-                <img src="../assets/images/icons_instagram.png" />
+                <img src="@/assets/images/icons_instagram.png" />
                 LashOut.MNL
             </a>
         </div>
@@ -25,7 +25,9 @@
     footer {
         position: relative;
         width: 100%;
-        height: 400px;
+        height: min-content;
+        padding: 60px 0;
+        padding-bottom: 90px;
 
         display: flex;
         flex-direction: column;
@@ -34,11 +36,6 @@
 
         background-color: rgba(223, 174, 174, 0.63); /* pink100 w/ 63% opacity */
     }
-
-        footer > img {
-            width: 750px;
-            max-width: 70%;
-        }
 
     a {
         font: 700 16px 'Nunito';
@@ -57,6 +54,12 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+    }
+
+    #quote {
+        width: 55%;
+        min-width: 350px;
+        max-width: 600px;
     }
 
     #icon-ig {

@@ -1,7 +1,7 @@
 <script>
-    import NavClient from '@/components/NavClient.vue';
+    import NavClient from '@/components/Navigation/NavClient.vue';
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
-    import FooterClient from '@/components/FooterClient.vue';
+    import FooterClient from '@/components/Navigation/FooterClient.vue';
 
     export default {
         name: 'HomeView',
@@ -22,16 +22,14 @@
         <div id="content">
             <div>
                 <p>
-                    Lorem ipsum <i>dolor</i> sit amet, <br>
-                    consectetur <i>adipiscing</i> elit, <br>
-                    integer <u>sodales</u> elit finibus.
+                    Step in, relax and let our beauticians make you <i>look</i> and <i>feel</i> great.
                 </p>
                 
-                <button>Book Now</button>
+                <button @click="() => { this.$router.push('/book') }">Book Now</button>
             </div>
 
             <div id="carousel-container">
-                <img src="../assets/images/carousel.gif" height="500" />
+                <img src="@/assets/images/carousel.gif" height="" />
             </div>
         </div>
     </FullscreenLayout>
@@ -107,12 +105,13 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        gap: 50px 10%;
+        gap: 50px 5%;
         
         padding: 80px 50px;
     }
 
         #content p {
+            width: 480px;
             margin-bottom: 50px;
             font: 300 36px 'Lora';
         }
@@ -137,7 +136,7 @@
 
     .category {
         position: relative;
-        max-height: 70vh;
+        max-height: 600px;
         width: 27vw;
         text-shadow: 0px 0px 8px var(--primary100);
     }
