@@ -7,6 +7,7 @@ import CalendarWeekDays from "@/components/Calendar/CalendarWeekDays.vue";
 import CalendarMonthDay from "@/components/Calendar/CalendarMonthDay.vue";
 import weekday from "dayjs/plugin/weekday"
 import weekOfYear from "dayjs/plugin/weekOfYear";
+import dbFunctions from '@/dbFunctions.js';
 
 dayjs.extend(weekday);
 dayjs.extend(weekOfYear);
@@ -110,7 +111,7 @@ export default {
 
     data() {
        return {
-        selectedDate: dayjs()
+        selectedDate: dayjs(),
        }; 
     },
 
@@ -124,9 +125,10 @@ export default {
         },
 
         getChosenDate(date){
-          var chosenDate = new Date (date.date);
-          console.log(chosenDate)
-        }
+          console.log(date.date)
+          dbFunctions.addAppointmentDate(date.date)
+
+        },
     }
 };
 </script>
@@ -155,7 +157,8 @@ export default {
                 :is-today="day.date === today" 
                 @click="getChosenDate(day)"
             />
-        </ol>    
+        </ol>
+        <button v-on:click="getChosenTime('1:00')">1:00</button>
     </div>
 </template>
 
