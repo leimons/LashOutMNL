@@ -6,6 +6,7 @@
     import ScrollButton from '@/components/ScrollButton.vue';
     import MyCart from '@/components/Booking/MyCart.vue';
 
+    import sessionCart from '@/utils/sessionCart';
     import axios from 'axios';
 
     export default {
@@ -47,17 +48,16 @@
                 function selectItem (ref) {
                     ref.innerHTML = "Selected";
                     ref.classList.value = ref.classList.value.replace('light', 'dark');
+                    sessionCart.addItem(service);
                 }
 
                 function deselectItem(ref) {
                     ref.innerHTML = "Select";
                     ref.classList.value = ref.classList.value.replace('dark', 'light');
+                    sessionCart.removeItem(service);
                 }
-            
 
-                let isSelected = this.cart.refs.includes(ref);
-                console.log(isSelected);
-                
+                let isSelected = this.cart.refs.includes(ref);                
                 if (isSelected) {
                     deselectItem(ref);
                     this.cart = {
