@@ -128,9 +128,19 @@ export default {
         },
 
         getChosenDate(date){
-          chosenDay = date.date
-          console.log(chosenDay)
-
+          var currentDay = new Date()
+          var SelectedDate = new Date(date.date)
+          currentDay.setHours(0,0,0)
+          SelectedDate.setHours(0,0,0)
+          var timeDifference = (SelectedDate - currentDay) / 36e5
+          if (timeDifference > - 1){
+            chosenDay = SelectedDate
+            console.log("Valid date")
+          }
+          else{
+            //send invalid date message
+            console.log("Invalid Date")
+          }
         },
 
         getChosenTime(Time){
