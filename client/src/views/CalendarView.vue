@@ -7,12 +7,13 @@ import CalendarWeekDays from "@/components/Calendar/CalendarWeekDays.vue";
 import CalendarMonthDay from "@/components/Calendar/CalendarMonthDay.vue";
 import weekday from "dayjs/plugin/weekday"
 import weekOfYear from "dayjs/plugin/weekOfYear";
-//import dbFunctions from '@/dbFunctions.js';
+import dbFunctions from '@/dbFunctions.js';
 
 dayjs.extend(weekday);
 dayjs.extend(weekOfYear);
 
-var chosenDay
+var chosenDay = 0
+var date
 
 export default {
     name: "CalendarMonth",
@@ -129,14 +130,26 @@ export default {
         getChosenDate(date){
           chosenDay = date.date
           console.log(chosenDay)
-          //dbFunctions.addAppointmentDate(date.date)
 
         },
 
         getChosenTime(Time){
           var dateString = chosenDay +" " + Time
-          var date = new Date(dateString)
+          date = new Date(dateString)
           console.log(date)
+        },
+        selectDateAndTime(){
+          var currentDate = new Date()
+          console.log(currentDate)
+          var timeDifference = (date - currentDate) / 36e5
+          if (timeDifference > 2){
+            console.log ("The Time Difference is: " + timeDifference)
+            dbFunctions.addAppointmentDate(date)
+          }
+          else{
+            console.log ("Booking Time should be atleast 2 Hours from now")
+            //Error Message for Invlalid Time
+          }
         }
     }
 };
@@ -167,7 +180,15 @@ export default {
                 @click="getChosenDate(day)"
             />
         </ol>
-        <button v-on:click="getChosenTime('1:00')">1:00</button>
+        <button v-on:click="getChosenTime('8:00')">8:00 AM</button>
+        <button v-on:click="getChosenTime('10:00')">10:00 AM</button>
+        <button v-on:click="getChosenTime('13:00')">1:00 PM</button>
+        <button v-on:click="getChosenTime('15:00')">3:00 PM</button>
+        <button v-on:click="getChosenTime('17:00')">5:00 PM</button>
+        <button v-on:click="getChosenTime('19:00')">7:00 PM</button>
+    </div>
+    <div>
+      <button v-on:click="selectDateAndTime()">Book Appointment</button>
     </div>
 </template>
 
