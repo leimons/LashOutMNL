@@ -56,7 +56,6 @@
     #admin-content {
         width: calc(100% - 200px);
 
-        overflow: scroll;
         margin-left: 200px;
     }
 </style>
