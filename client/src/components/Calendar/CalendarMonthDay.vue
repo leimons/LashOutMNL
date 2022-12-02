@@ -68,6 +68,7 @@ export default {
 
 .calendar-day-today {
   padding-top: 4px;
+  background-color: grey
 }
 
 .calendar-day-today > span {

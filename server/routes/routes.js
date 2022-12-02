@@ -16,6 +16,8 @@ app.get(`/getInclusions`, controller.getInclusionsPage);
 
 app.post(`/addInclusions`, controller.addInclusions);
 
+app.post(`/addChosenDate`, controller.addChosenDate);
+
 app.post(`/addClientDetails`, controller.addClientDetails);
 
 app.get(`/getOrderSummary`, controller.getOrderSummary);

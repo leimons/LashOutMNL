@@ -81,6 +81,14 @@ const controller = {
         res.status(201).send();
     },
 
+    addChosenDate: function(req,res){
+        var Date = req.body.chosenDate
+        db.updateOne(Appointments, {refNum: refnum}, {Date: Date}, function(){
+            console.log("Added Appointment Date to DB")
+            res.status(201).send();
+        })
+    },
+
     addClientDetails: function(req,res){
         /* query client details */
         /* create object of details fit for db */

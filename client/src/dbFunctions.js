@@ -15,6 +15,12 @@ class Appointment {
             Inclusions: inclusion
         })
     }
+    static addAppointmentDate (date) {
+       var url = "http://localhost:3000/api/addChosenDate"
+       return axios.post(url, {
+            chosenDate: date
+        })
+    }
 }
 
 export default Appointment;

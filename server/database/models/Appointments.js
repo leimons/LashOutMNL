@@ -8,8 +8,8 @@ const AppointmentsSchema = new mongoose.Schema({
     PaymentStatus: Boolean,
     Product: [String],
     Inclusions: [String],
-    AmountDue: Number
-    //Add Date and Time
+    AmountDue: Number,
+    Date: String
 });
 
 const Appointments = mongoose.model ('Appointments' , AppointmentsSchema);
