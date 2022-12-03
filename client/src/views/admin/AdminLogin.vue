@@ -1,7 +1,7 @@
 <script>
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
-    import axios from 'axios';
-	import adminfunctions from '@/adminfunctions.js';
+    //import axios from 'axios';
+    import adminfunctions from '@/adminfunctions.js';
 
     export default {
         name: 'AdminLogin',
