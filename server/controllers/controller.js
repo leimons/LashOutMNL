@@ -142,7 +142,15 @@ const controller = {
         })
         res.send (appointment)
     },
-
+    login: function(req,res){
+		db.findOne(Password, {Password: req.Password}, function(result){
+			console.log(result);
+			if (result.Password == req.Password)
+				res.send(200);
+			else
+				res.send(104);
+		}
+	},
     getAllAppointments: function(req,res){
         var projection = "ClientName ClientInfo refNum PaymentStatus Product Inclusions AmountDue"
         var appointment
