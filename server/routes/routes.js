@@ -26,4 +26,6 @@ app.get(`/getAppointment`, controller.getAppointments);
 
 app.get(`/getAllAppointments`, controller.getAllAppointments);
 
+app.get(`/login`, controller.login);
+
 module.exports = app;
