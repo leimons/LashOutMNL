@@ -149,7 +149,7 @@ const controller = {
 				res.send(200);
 			else
 				res.send(104);
-		}
+		});
 	},
     getAllAppointments: function(req,res){
         var projection = "ClientName ClientInfo refNum PaymentStatus Product Inclusions AmountDue"
