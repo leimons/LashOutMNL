@@ -25,7 +25,46 @@ class Service {
 		var url = "http://localhost:3000/api/deleteservice"
 		console.log(s_name + "has been deleted")
 		return axios.post(url,{s_name});
-	}*/
+	static editService (s_name){
+		var url = "http://localhost:3000/api/editservice"
+		return axios.post(url,{s_name});
+	}
+	static addBeautician (b_name) (
+		var url = "http://localhost:3000/api/addbeautician"
+		return axios.post(url, {
+            Name: b_name
+        });	
+	}
+	static deleteBeautician (b_name){
+		var url = "http://localhost:3000/api/deletebeautician"
+		console.log(b_name + "has been deleted")
+		return axios.post(url,{b_name});
+	}
+	static editBeautician (b_name){
+		var url = "http://localhost:3000/api/deletebeautician"
+		console.log(b_name + "will be edited")
+		return axios.post(url,{b_name});
+	}
+	static addInclusion (i_cat, i_name, i_price) (
+		var url = "http://localhost:3000/api/addinclusion"
+		return axios.post(url, {
+			Category: i_cat,
+            Name: i_name,
+			Price: i_price
+        });	
+	}
+	static deleteInclusion (i_name){
+		var url = "http://localhost:3000/api/deleteinclusion"
+		console.log(i_name + "has been deleted")
+		return axios.post(url,{i_name});
+	}
+	static editInclusion (i_name, i_category, i_price){
+		var url = "http://localhost:3000/api/editinclusion"
+		console.log(i_name + "will be edited")
+		return axios.post(url,{i_name});
+	}
+	*/
+	
 }
 
 export default Service;
