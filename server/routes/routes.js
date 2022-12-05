@@ -30,9 +30,9 @@ app.get(`/getAllAppointments`, controller.getAllAppointments);
 
 app.get(`/login`, controller.login);
 
-app.post(`/addservice`, scontoller.sv_add);
-app.post(`/deleteservice`, scontoller.sv_delete);
-app.post(`/editservice`, scontoller.sv_edit);
+app.post(`/addservice`, scontroller.sv_add);
+app.post(`/deleteservice`, scontroller.sv_delete);
+app.post(`/editservice`, scontroller.sv_edit);
 
 app.post(`/addbeautician`, bcontroller.bea_add);
 app.post(`/deletebeautician`, bcontroller.bea_delete);
