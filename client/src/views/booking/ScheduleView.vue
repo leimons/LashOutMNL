@@ -66,11 +66,11 @@
             
         },
 
-        /*methods: {
-            chooseInclusions(){
+        methods: {
+            chooseInclusions(){ //get the selected inclusions
                 console.log(this.chosenInclusions)
             }
-        } */
+        }
     }
 </script>
 
@@ -109,7 +109,7 @@
                                 <input type="checkbox" :value="inclusions" v-model="chosenInclusions" :id="inclusions"/>
                                 <label :for= "inclusions">{{" "+inclusions.Name}}{{" " +inclusions.Price}}</label> 
                             </div>
-                        <!--    <button v-on:click="chooseInclusions">Confirm</button> -->
+                        <!--<button v-on:click="chooseInclusions">Confirm</button> -->
                         </div> <!-- TODO: Show inclusions per service -->
                     </template>
                 </vue-collapsible-panel>
@@ -152,8 +152,8 @@
                     </template>
                 </vue-collapsible-panel>
             </vue-collapsible-panel-group>
+          <!--  <button v-on:click="chooseInclusions">Confirm</button> -->
         </div>
-        
     </div>
 </template>
 
