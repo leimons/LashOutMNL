@@ -28,18 +28,18 @@ app.get(`/getAppointment`, controller.getAppointments);
 
 app.get(`/getAllAppointments`, controller.getAllAppointments);
 
-app.get(`/login`, controller.login);
+app.post(`/login`, controller.login);
 
 app.post(`/addservice`, scontroller.sv_add);
-app.post(`/deleteservice`, scontroller.sv_delete);
-app.post(`/editservice`, scontroller.sv_edit);
+app.delete(`/deleteservice`, scontroller.sv_delete);
+app.put(`/editservice`, scontroller.sv_edit);
 
 app.post(`/addbeautician`, bcontroller.bea_add);
-app.post(`/deletebeautician`, bcontroller.bea_delete);
-app.post(`/editbeautician`, bcontroller.bea_schedule_change);
+app.delete(`/deletebeautician`, bcontroller.bea_delete);
+app.put(`/editbeautician`, bcontroller.bea_schedule_change);
 
 app.post(`/addinclusion`, icontroller.i_add);
-app.post(`/deleteinclusion`, icontroller.i_delete);
-app.post(`/editinclusion`, icontroller.i_edit);
+app.delete(`/deleteinclusion`, icontroller.i_delete);
+app.put(`/editinclusion`, icontroller.i_edit);
 
 module.exports = app;
