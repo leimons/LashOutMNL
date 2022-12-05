@@ -1,5 +1,5 @@
 const db = require("../database/models/db");
-const Beautician = require('../models/Beauticians.js');
+const Beautician = require('../database/models/Beauticians.js');
 
 const bea_controller = {
 	bea_add: function(req, res) {
