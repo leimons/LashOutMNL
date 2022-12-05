@@ -1,7 +1,7 @@
 <script>
     import AdminLayout from '@/layouts/AdminLayout.vue';
     import ToggleSwitch from '@/components/ToggleSwitch.vue';
-    
+    import adminfunctions from '@/adminfunctions.js';
     import axios from 'axios';
 
     export default {
@@ -47,7 +47,22 @@
                 if (!files.length)  return;
 
                 this.image = URL.createObjectURL(files[0]);
-            }
+            },
+			sv_edit()
+			{
+				var s_id = this.service._id;
+				var s_name = this.edit.Service;
+				var s_category = this.edit.Category;
+				var s_subcategory = this.edit.Subcategory;
+				var s_duration = this.edit.Duration;
+				var s_price = this.edit.Price;
+				var s_description = this.edit.Description;
+				var s_onsale = this.edit.OnSale;
+				var s_saleprice = this.edit.SalePrice;
+				console.log(s_id,s_name, s_category, s_subcategory, s_duration, s_price, s_description, s_onsale, s_saleprice);
+				adminfunctions.editService(s_id,s_name, s_category, s_subcategory, s_duration, s_price, s_description, s_onsale, s_saleprice);
+			}
+			
         },
         computed: {
             hasChanges() {
@@ -105,7 +120,7 @@
                 </div>
 
                 <div id="actions">
-                    <button class="small dark">
+                    <button class="small dark" @click="sv_edit()">
                         Save
                     </button>
                     <button class="small grey" @click="() => { this.$router.push(`/admin/services/${service._id}`) }">
