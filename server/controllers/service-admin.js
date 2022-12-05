@@ -8,17 +8,17 @@ const sv_controller = {
 	modeled after CCAPDEV MCO3
 */
 	sv_add: function(req, res) {
-        console.log("inserting: " + req.query.Service);
-        db.insertOne(Product, req.query, function(){});
-		console.log(req.query.Service + "added");
+        console.log("inserting: " + req.body.Service);
+        db.insertOne(Product, req.body, function(){});
+		console.log(req.body.Service + "added");
     },
 /*delete product
 	given the name, it deletes the product from the database 
 	modeled after CCAPDEV MCO3
 */
 	sv_delete: function (req, res) {
-		var refname = req.query.Service;
-		var refID = requ.query._id;
+		var refname = req.body.Service;
+		var refID = requ.body._id;
         console.log("deleting: " + refname);
         db.deleteOne(Service,{_id: refID}, function(){});
 		console.log(refname + " deleted");
@@ -26,16 +26,19 @@ const sv_controller = {
 /*edit product
 */
 	sv_edit: function(req, res) {
-		var s_name = req.query.Service;
-		var s_category = req.query.Category;
-		var s_subcategory = req.query.Subcategory;
-		var s_description = req.query.Description;
-		var s_duration = req.query.Duration;
-		var s_price = req.query.Price;
-		var s_onsale = req.query.OnSale;
-		var s_saleprice = req.query.SalePrice;
-        console.log("updating: "+req.query.Service);
-        db.updateOne({_id: req.query._id},{$set:{Service:s_name, Category:s_category,Subcategory:s_subcategory,Description:s_description,Duration:s_duration,Price:s_price,OnSale: s_onsale,SalePrice:s_saleprice}});
+		var s_id = req.body._id;
+		var s_name = req.body.Service;
+		var s_category = req.body.Category;
+		var s_subcategory = req.body.Subcategory;
+		var s_description = req.body.Description;
+		var s_duration = req.body.Duration;
+		var s_price = req.body.Price;
+		var s_onsale = req.body.OnSale;
+		var s_saleprice = req.body.SalePrice;
+		console.log(req);
+		console.log("service-admin" + s_id+s_name+ s_category+ s_subcategory+ s_duration+ s_price+ s_description+ s_onsale+ s_saleprice);
+        console.log("updating: "+s_name);
+        Product.updateOne({_id: s_id},[{$set:{Service:s_name, Category:s_category,Subcategory:s_subcategory,Description:s_description,Duration:s_duration,Price:s_price,OnSale: s_onsale,SalePrice:s_saleprice}}]);
 		console.log(s_name + " updated");
 	}
 
