@@ -35,7 +35,7 @@ const sv_controller = {
 		var s_onsale = req.query.OnSale;
 		var s_saleprice = req.query.SalePrice;
         console.log("updating: "+req.query.Service);
-        db.updateOne({_id: req.query._id},{$set:{Service:s_name}}, {$set:{Category:s_category}},{$set:{Subcategory:s_subcategory}, {$set:{Description:s_description}}, {$set:{Duration:s_duration}} , {$set:{Price:s_price}}, {$set:{OnSale: s_onsale}}, {$set:{SalePrice:s_saleprice});
+        db.updateOne({_id: req.query._id},{$set:{Service:s_name}}, {$set:{Category:s_category}},{$set:{Subcategory:s_subcategory}}, {$set:{Description:s_description}}, {$set:{Duration:s_duration}} , {$set:{Price:s_price}}, {$set:{OnSale: s_onsale}}, {$set:{SalePrice:s_saleprice});
 		console.log(s_name + " updated");
 	}
 
