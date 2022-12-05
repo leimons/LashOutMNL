@@ -1,4 +1,4 @@
-const db = require('../models/db.js');
+const db = require("../database/models/db");
 const Inclusions = require('../models/Inclusion.js');
 
 const i_controller = {
