@@ -5,6 +5,7 @@
 
     import { formatPrice, sumDurations } from "@/utils/numbers";
     import sessionCart from '@/utils/sessionCart';
+    import axios from "axios";
 
     export default {
         name: 'ScheduleView',
@@ -18,11 +19,22 @@
             return {
                 cart: null,
                 date: new Date(),   // selected date (consider only day, month, time)
-                time: '',           // selected time
+                time: '',          // selected time
+                Inclusions: [],
+                chosenInclusions: []
             };
         },
         created() {
             this.cart = sessionCart.getItems();
+
+            axios
+              .get(`/api/getInclusions/`+ this.cart.map(service=> service.Category))
+              .then((response)=>{
+                this.Inclusions = response.data
+              })
+              .catch((e) => {
+                console.log(e)
+              })
         },
         computed: {
             day() {
@@ -50,8 +62,15 @@
             totalDuration() {
                 var durations = this.cart.map(service => service.Duration)
                 return sumDurations(durations);
+            },
+            
+        },
+
+        /*methods: {
+            chooseInclusions(){
+                console.log(this.chosenInclusions)
             }
-        }
+        } */
     }
 </script>
 
@@ -81,7 +100,17 @@
                         <b>Step 1</b>: Select Inclusions
                     </template>
                     <template #content>
-                        *Inclusions content* <!-- TODO: Show inclusions per service -->
+                        <div class="Inclusion-Container">
+                            <div class="Inclusions"
+                            v-for="(inclusions, index) in Inclusions"
+                            v-bind:item="inclusions"
+                            v-bind:key="index"
+                            >
+                                <input type="checkbox" :value="inclusions" v-model="chosenInclusions" :id="inclusions"/>
+                                <label :for= "inclusions">{{" "+inclusions.Name}}{{" " +inclusions.Price}}</label> 
+                            </div>
+                        <!--    <button v-on:click="chooseInclusions">Confirm</button> -->
+                        </div> <!-- TODO: Show inclusions per service -->
                     </template>
                 </vue-collapsible-panel>
 

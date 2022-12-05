@@ -14,7 +14,7 @@ app.get(`/services`, controller.getServices);
 
 app.post(`/addAppointment`, controller.addAppointment);
 
-app.get(`/getInclusions`, controller.getInclusionsPage);
+app.get(`/getInclusions/:category`, controller.getInclusionsPage);
 
 app.post(`/addInclusions`, controller.addInclusions);
 
