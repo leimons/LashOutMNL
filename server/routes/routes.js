@@ -1,6 +1,8 @@
 const express = require (`express`);
 const controller = require(`../controllers/controller.js`);
-
+const bcontroller = require(`../controllers/beautician-controller.js`);
+const scontroller = require(`../controllers/service-admin.js`);
+const icontroller = require(`../controllers/inclusion-controller.js`);
 const app = express();
 
 /*
@@ -12,7 +14,7 @@ app.get(`/services`, controller.getServices);
 
 app.post(`/addAppointment`, controller.addAppointment);
 
-app.get(`/getInclusions`, controller.getInclusionsPage);
+app.get(`/getInclusions/:category`, controller.getInclusionsPage);
 
 app.post(`/addInclusions`, controller.addInclusions);
 
@@ -25,5 +27,19 @@ app.get(`/getOrderSummary`, controller.getOrderSummary);
 app.get(`/getAppointment`, controller.getAppointments);
 
 app.get(`/getAllAppointments`, controller.getAllAppointments);
+
+app.post(`/login`, controller.login);
+
+app.post(`/addservice`, scontroller.sv_add);
+app.delete(`/deleteservice`, scontroller.sv_delete);
+app.put(`/editservice`, scontroller.sv_edit);
+
+app.post(`/addbeautician`, bcontroller.bea_add);
+app.delete(`/deletebeautician`, bcontroller.bea_delete);
+app.put(`/editbeautician`, bcontroller.bea_schedule_change);
+
+app.post(`/addinclusion`, icontroller.i_add);
+app.delete(`/deleteinclusion`, icontroller.i_delete);
+app.put(`/editinclusion`, icontroller.i_edit);
 
 module.exports = app;

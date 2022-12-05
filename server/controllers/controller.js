@@ -97,22 +97,16 @@ const controller = {
     },
 
     getInclusionsPage: function(req,res){
-        db.findOne(Appointments, {refNum: refnum}, "Product", function(result){
-            var productName = result.Product
-            console.log("The Product is: " + productName);
-            db.findOne(Products, {Service: productName}, "Category", function(result){
-                var productCategory = result.Category
-                var inclusions = []
-                db.findMany(Inclusions,{Category: productCategory}, "Category Name Price", function(result){
-                    var data = result;
-                    data.forEach((i)=>{
-                        inclusions.push({Category: i.Category, Name: i.Name, Price: i.Price})
-                    })
-                    console.log(inclusions)
-                    res.status(201).send(inclusions) 
-                }) 
-            })       
-        })   
+        var category = req.params.category
+        var inclusions = []
+        db.findMany(Inclusions,{Category: category}, "Category Name Price", function(result){
+            var data = result;
+            data.forEach((i)=>{
+                inclusions.push({Category: i.Category, Name: i.Name, Price: i.Price})
+                })
+            console.log(inclusions)
+            res.status(201).send(inclusions) 
+        })      
     },
 
     getOrderSummary: function(req, res){
@@ -142,7 +136,15 @@ const controller = {
         })
         res.send (appointment)
     },
-
+    login: function(req,res){
+		db.findOne(Password, {Password: req.Password}, function(result){
+			console.log(result);
+			if (result.Password == req.Password)
+				res.send(200);
+			else
+				res.send(104);
+		});
+	},
     getAllAppointments: function(req,res){
         var projection = "ClientName ClientInfo refNum PaymentStatus Product Inclusions AmountDue"
         var appointment

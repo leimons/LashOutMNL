@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const BeauticiansSchema = new mongoose.Schema({
-    UID: String, 
     Name: String,
     MondayAvailability: String,
     MondayTime: String,

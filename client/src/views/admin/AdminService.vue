@@ -2,6 +2,7 @@
     import AdminLayout from '@/layouts/AdminLayout.vue';
     import ToggleSwitch from '@/components/ToggleSwitch.vue';
 
+    import { formatPrice } from '@/utils/numbers';
     import axios from 'axios';
 
     export default {
@@ -27,14 +28,7 @@
                         this.$router.push('/admin/services');   // Redirect if invalid id
                 })
         },
-        methods: {
-            formatPrice(num) {
-                return Number(num).toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'PHP',
-                })
-            },
-        }
+        methods: { formatPrice }
     }
 </script>
 
