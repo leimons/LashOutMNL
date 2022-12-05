@@ -2,7 +2,7 @@ const express = require (`express`);
 const controller = require(`../controllers/controller.js`);
 const bcontroller = require(`../controllers/beautician-controller.js`);
 const scontroller = require(`../controllers/service-admin.js`);
-const icontroller = require(`../controllers/inclusions-controller.js`);
+const icontroller = require(`../controllers/inclusion-controller.js`);
 const app = express();
 
 /*
