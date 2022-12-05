@@ -1,5 +1,5 @@
 const db = require("../database/models/db");
-const Product = require('../models/Products.js');
+const Product = require('../database/models/Products.js');
 
 const sv_controller = {
 
