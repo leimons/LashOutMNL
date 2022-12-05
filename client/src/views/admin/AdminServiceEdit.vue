@@ -2,6 +2,7 @@
     import AdminLayout from '@/layouts/AdminLayout.vue';
     import ToggleSwitch from '@/components/ToggleSwitch.vue';
     import adminfunctions from '@/adminfunctions.js';
+    import { formatPrice } from '@/utils/numbers';
     import axios from 'axios';
 
     export default {
@@ -30,12 +31,7 @@
                 })
         },
         methods: {
-            formatPrice(num) {
-                return Number(num).toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'PHP',
-                })
-            },
+            formatPrice,
             toggleSwitch() {
                 this.edit.OnSale = !this.edit.OnSale;
             },

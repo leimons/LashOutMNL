@@ -1,4 +1,6 @@
 <script>
+    import { formatPrice } from '@/utils/numbers';
+
     export default {
         name: 'BookingServiceCard',
         props: {
@@ -14,16 +16,10 @@
             }
         },
         created() {
-            //console.log('yuh',this.$refs.selectBtn);
             this.btnRef = this.$refs.selectBtn;
         },
         methods: {
-            formatPrice(num) {
-                return Number(num).toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'PHP',
-                })
-            },
+            formatPrice,
             addToCart() {
                 this.$emit('add-to-cart', this.data, this.$refs.selectBtn)
             }

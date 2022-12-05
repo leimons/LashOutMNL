@@ -77,6 +77,11 @@ const routes = [
     name: 'bookNails',
     component: () => import('@/views/booking/NailsView.vue')
   },
+  {
+    path: '/book/schedule',
+    name: 'scheduleView',
+    component: () => import('@/views/booking/ScheduleView.vue')
+  },
 
   // ERROR PAGE
   {
