@@ -18,9 +18,10 @@ const sv_controller = {
 */
 	sv_delete: function (req, res) {
 		var refname = req.body.Service;
-		var refID = requ.body._id;
-        console.log("deleting: " + refname);
-        db.deleteOne(Service,{_id: refID}, function(){});
+		var refID = req.body._id;
+		console.log(refID+ " " + refname);
+        	console.log("deleting: " + refname);
+        	//db.deleteOne(Product,{_id: refID}, function(){});
 		console.log(refname + " deleted");
     },
 /*edit product
@@ -36,7 +37,7 @@ const sv_controller = {
 		var s_onsale = req.body.OnSale;
 		var s_saleprice = req.body.SalePrice;
         	console.log("updating: "+s_name);
-       		db.updateOne(Product,{_id: s_id},{Service:s_name, Category:s_category,Subcategory:s_subcategory,Description:s_description,Duration:s_duration,Price:s_price,OnSale: s_onsale,SalePrice:s_saleprice}, function(){});
+        	db.updateOne(Product,{_id: s_id},{Service:s_name, Category:s_category,Subcategory:s_subcategory,Description:s_description,Duration:s_duration,Price:s_price,OnSale: s_onsale,SalePrice:s_saleprice}, function(){});
 		console.log(s_name + " updated");
 	}
 
