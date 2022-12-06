@@ -1,8 +1,7 @@
 <script>
     import AdminLayout from '@/layouts/AdminLayout.vue';
     import ToggleSwitch from '@/components/ToggleSwitch.vue';
-
-    import { formatPrice } from '@/utils/numbers';
+	import adminfunctions from '@/adminfunctions.js';
     import axios from 'axios';
 
     export default {
@@ -28,8 +27,21 @@
                         this.$router.push('/admin/services');   // Redirect if invalid id
                 })
         },
-        methods: { formatPrice }
-    }
+        methods: {
+            formatPrice(num) {
+                return Number(num).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'PHP',
+                })
+            },
+			DeleteService() {
+				var s_id = this.service._id;
+				var s_name = this.service.Service;
+				console.log(s_id,s_name);
+				adminfunctions.deleteService(s_id,s_name);
+			}
+		}
+	}
 </script>
 
 <template>
@@ -41,7 +53,6 @@
             </a>
 
             <img src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" style="height: fit-content;" />
-
             <div id="service-info">
                 <div>
                     <h1>{{ service.Service }}</h1>
@@ -68,8 +79,10 @@
                 <button class="small grey" @click="() => { this.$router.push(`/admin/services/${service._id}/edit`) }">
                     Edit Service
                 </button>
+				<button class="small grey" @click="DeleteService()">
+                    Delete Service
+                </button>
             </div>
-
         </div>
     </AdminLayout>
 </template>
