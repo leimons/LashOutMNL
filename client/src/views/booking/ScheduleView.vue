@@ -3,7 +3,6 @@
     import { VueCollapsiblePanelGroup, VueCollapsiblePanel } from '@dafcoe/vue-collapsible-panel';
     import ServiceItem from '@/components/Booking/ServiceItem.vue';
 
-    import { formatPrice, sumDurations } from "@/utils/numbers";
     import sessionCart from '@/utils/sessionCart';
     import axios from "axios";
 
@@ -17,7 +16,7 @@
         },
         data () {
             return {
-                cart: null,
+                service: null,
                 date: new Date(),   // selected date (consider only day, month, time)
                 time: '',          // selected time
                 Inclusions: [],
@@ -25,16 +24,18 @@
             };
         },
         created() {
-            this.cart = sessionCart.getItems();
+            this.service = sessionCart.getItem();
+
+            console.log(sessionCart.getItem())
 
             axios
-              .get(`/api/getInclusions/`+ this.cart.map(service=> service.Category))
-              .then((response)=>{
-                this.Inclusions = response.data
-              })
-              .catch((e) => {
-                console.log(e)
-              })
+                .get(`/api/getInclusions/`+ this.service.Category)
+                .then((response)=>{
+                    this.Inclusions = response.data
+                })
+                .catch((e) => {
+                    console.log(e)
+                })
         },
         computed: {
             day() {
@@ -51,19 +52,7 @@
                 // Returns a date object with the selected date and time
                 let selected = this.day + ' ' + this.time + " GMT+0800";
                 return new Date(selected);
-            },
-            totalPrice() {
-                var sum = 0;
-                this.cart.forEach(service => {
-                    sum += service.Price;
-                })
-                return formatPrice(sum);
-            },
-            totalDuration() {
-                var durations = this.cart.map(service => service.Duration)
-                return sumDurations(durations);
-            },
-            
+            }
         },
 
         methods: {
@@ -80,15 +69,15 @@
             <a href="/"><img src="@/assets/images/logo.png" height="60" /></a>
 
             <h2>Your Order</h2>
-            <ServiceItem v-for="service in cart" :key="service.Service" :data="service" show-duration />
+            <ServiceItem :key="service.Service" :data="service" show-duration />
 
             <hr />
             <div id="order-summary">
                 <p style="grid-area: totalp;"><i>Total</i></p>
-                <p style="grid-area: price;">{{ totalPrice }}</p>
+                <p style="grid-area: price;">{{ service.Price }}</p>
 
                 <p style="grid-area: totald;"><i>Duration</i></p>
-                <p style="grid-area: duration;">{{ totalDuration }}</p>
+                <p style="grid-area: duration;">{{ service.Duration }}</p>
             </div>
         </div>
 
@@ -102,9 +91,9 @@
                     <template #content>
                         <div class="Inclusion-Container">
                             <div class="Inclusions"
-                            v-for="(inclusions, index) in Inclusions"
-                            v-bind:item="inclusions"
-                            v-bind:key="index"
+                                v-for="(inclusions, index) in Inclusions"
+                                v-bind:item="inclusions"
+                                v-bind:key="index"
                             >
                                 <input type="checkbox" :value="inclusions" v-model="chosenInclusions" :id="inclusions"/>
                                 <label :for= "inclusions">{{" "+inclusions.Name}}{{" " +inclusions.Price}}</label> 

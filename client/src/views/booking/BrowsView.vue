@@ -3,11 +3,8 @@
     import FooterClient from '@/components/Navigation/FooterClient.vue';
     import CenterLayout from '@/layouts/CenterLayout.vue';
     import BookingServiceCard from '@/components/Booking/ServiceCard.vue';
-    import ScrollButton from '@/components/ScrollButton.vue';
-    import MyCart from '@/components/Booking/MyCart.vue';
 
-    import sessionCart from '@/utils/sessionCart';
-    import axios from 'axios';
+    import bookingMixin from '@/mixins/bookingMixin';
 
     export default {
         name: 'BrowsView',
@@ -16,64 +13,12 @@
             NavClient,
             FooterClient,
             CenterLayout,
-            BookingServiceCard,
-            ScrollButton,
-            MyCart
+            BookingServiceCard
         },
-
+        mixins: [bookingMixin],
         data() {
             return {
-                subcategories: [],
-                cart: {
-                    services: [],
-                    refs: []
-                },
-                showCart: false
-            }
-        },
-
-        created(){
-            axios
-                .get(`/api/services/Brows`)
-                .then((response)=>{
-                    this.subcategories = response.data
-                })
-                .catch((e) => {
-                    console.log(e)
-                })
-        },
-
-        methods: {
-            addToCart(service, ref) {
-                function selectItem (ref) {
-                    ref.innerHTML = "Selected";
-                    ref.classList.value = ref.classList.value.replace('light', 'dark');
-                    sessionCart.addItem(service);
-                }
-
-                function deselectItem(ref) {
-                    ref.innerHTML = "Select";
-                    ref.classList.value = ref.classList.value.replace('dark', 'light');
-                    sessionCart.removeItem(service);
-                }
-            
-
-                let isSelected = this.cart.refs.includes(ref);                
-                if (isSelected) {
-                    deselectItem(ref);
-                    this.cart = {
-                        ...this.cart,
-                        services: this.cart.services.filter(v => v !== service), 
-                        refs: this.cart.refs.filter(v => v !== ref)
-                    };
-                } else {
-                    selectItem(ref);
-                    this.cart = {
-                        ...this.cart,
-                        services: [...this.cart.services, service], 
-                        refs: [...this.cart.refs, ref]
-                    };
-                }
+                category: 'Brows'
             }
         }
     }
@@ -81,18 +26,6 @@
 
 <template>
     <NavClient style="position: relative;" />
-
-    <div
-        id="overlay-dark" 
-        @wheel.prevent @touchmove.prevent @scroll.prevent
-        v-show="showCart && this.cart.services.length > 0">
-    </div>
-    <MyCart
-        category="Brows" 
-        :services="this.cart.services" 
-        v-show="showCart && this.cart.services.length > 0"
-        @hide-cart="() => { this.showCart = false; }"
-    />
 
     <CenterLayout id="category-header">
         <h1>Up your <u><i>Brows Game</i></u></h1>
@@ -121,19 +54,13 @@
     </div>
 
     <button
-        id="cart-btn" 
-        v-if="this.cart.services.length > 0" 
-        @click="() => { this.showCart = !this.showCart; }"
+        id="schedule-btn"
+        @click="this.$router.push('/book/schedule')"
+        v-show="this.cart.service"
+        v-if="this.cart.service" 
     >
-        Show Top Picks
+        Pick a Schedule &#8594;
     </button>
-
-    <ScrollButton :threshold=400 
-        @click="() => { this.$router.push('/book') }" 
-        v-else
-    >
-        &#8592; Explore other services
-    </ScrollButton>
 
     <FooterClient />
 </template>
@@ -209,19 +136,14 @@
         z-index: 3;
     }
 
-    /* || SECTION – Cart Overlay */
-    #cart-overlay {
-        z-index: 10;
-    }
-
-    #overlay-dark {
+    /* others */
+    #schedule-btn {
         position: fixed;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: black;
+        bottom: 20px;
+        right: 20px;
 
-        opacity: 0.7;
-        z-index: 4;
+        text-transform: none;
+        background-color: var(--primary50);
+        z-index: 5;
     }
 </style>
