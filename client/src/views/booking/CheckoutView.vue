@@ -7,6 +7,7 @@
 
     export default {
         name: 'CheckoutView',
+        title: 'Checkout | LashOut MNL',
         components: { MilestoneCard, DatePicker },
         mixins: [cartMixin],
         data() {
@@ -172,6 +173,34 @@
             <template #heading>
                 Personal Information
             </template>
+            <template #content>
+                <div class="flex-col" id="info-card">
+                    
+                    <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for enter information -->
+                
+                    <!-- Customer Information -->
+                    <div style="width: 100%;">
+                        <div class="flex-row">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" placeholder="John Doe" required />
+                        </div>
+                        <div class="flex-row">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="johndoe@mail.com" required />
+                        </div>
+                        <div class="flex-row">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="0912 345 6789" pattern="[0]{1}[9]{1}[0-9]{2} [0-9]{3} [0-9]{4}" required />
+                        </div>
+                    </div>
+
+                    <div class="flex-row">
+                        <button class="small grey" v-show="(currentStep == 3)" @click="prevStep">Back</button>
+                        <button class="small dark next" v-show="(currentStep == 3)" @click="nextStep">Next</button>
+                    </div>
+
+                </div>
+            </template>
         </MilestoneCard>
 
 
@@ -205,6 +234,17 @@
         gap: 10px;
     }
 
+    input[type=text], input[type=email], input[type=tel] {
+        border-radius: 0;
+        border: none;
+        border-bottom: 1.2pt solid grey;
+        background: none;
+    }
+    
+    input:placeholder-shown {
+        font-style: italic;
+    }
+
     /* SECTION || Cards */
     #cards-container {
         display: flex;
@@ -213,7 +253,7 @@
 
         max-width: 800px;
         margin-inline: auto;
-        padding-top: 50px;
+        padding: 50px 0;
     }
 
     .next {
@@ -251,5 +291,17 @@
     #alert-appointment {
         padding: 20px;
         background-color: var(--secondary100);
+    }
+
+    /* SUBSECTION || Customer information */
+    #info-card label {
+        display: inline-block;
+        width: 100px;
+        text-align: right;
+        padding-right: 15px;
+    }
+
+    #info-card input {
+        flex: 3;
     }
 </style>
