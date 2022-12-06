@@ -5,6 +5,8 @@
     import cartMixin from '@/mixins/cartMixin';
     import axios from 'axios';
 
+    const SECTION_ID = ["#inclusions-card", "#schedules-card", "#info-card"];
+
     export default {
         name: 'CheckoutView',
         title: 'Checkout | LashOut MNL',
@@ -14,6 +16,7 @@
             return {
                 currentStep: 1,
                 mounted: false,
+                scrollMargin: 0,
 
                 Inclusions: [],
 
@@ -41,9 +44,15 @@
         },
         methods: {
             prevStep() {
+                let currentSectionID = SECTION_ID[this.currentStep-2];
+                this.scrollMargin += this.$refs['container'].querySelector(currentSectionID).offsetHeight + 100;
+
                 this.currentStep--;
             },
             nextStep() {
+                let currentSectionID = SECTION_ID[this.currentStep-1];
+                this.scrollMargin -= (this.$refs['container'].querySelector(currentSectionID).offsetHeight + (100 - 17))
+
                 this.currentStep++;
             },
             completedStep() {
@@ -66,7 +75,7 @@
                         break;
                     default:    return ;
                 }
-            }
+            },
         },
         computed: {
             totalPrice() {
@@ -97,7 +106,21 @@
                 } while (date.getDay() == 1);    // check if day is Monday
 
                 return date;
-            }
+            },
+            /*scrollStyle() {
+                return {
+                    'margin-top': this.mounted ? this.scrollMargin : 0 + 'px'
+                }
+            },
+            scrollMargin() {
+                var totalHeight = 0;
+                const pad = 13;
+
+                for (var step = 1; step <= this.currentStep; step ++)
+                    totalHeight += this.getHeight(step);
+
+                return totalHeight + (this.currentStep - 1) * pad;
+            }*/
         }
     }
 </script>
@@ -105,7 +128,7 @@
 <template>
     <a href="/" id="logo"><img src="@/assets/images/logo.png" height="70" /></a>
 
-    <div id="cards-container" v-if="mounted">
+    <div id="cards-container" v-if="mounted" ref="container" @wheel.prevent @touchmove.prevent @scroll.prevent :style="{ 'margin-top': this.scrollMargin + 'px' }">
 
         <!-- Step 1: Select inclusions -->
         <MilestoneCard :step=1 :currentStep="currentStep">
@@ -287,6 +310,8 @@
         max-width: 800px;
         margin-inline: auto;
         padding: 50px 0;
+
+        transition: margin-top 0.7s;
     }
 
     .next {
