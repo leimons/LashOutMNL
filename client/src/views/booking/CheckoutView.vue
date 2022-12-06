@@ -153,6 +153,11 @@
                         </div>
                     </div>
 
+                    <p id="alert-appointment" v-show="time">
+                        <b>Your appointment is on:</b><br />
+                        {{ selectedSchedule }}
+                    </p>
+
                     <div class="flex-row">
                         <button class="small grey" v-show="(currentStep == 2)" @click="prevStep">Back</button>
                         <button class="small dark next" v-show="(currentStep == 2)" @click="nextStep">Next</button>
@@ -241,5 +246,10 @@
     /* SUBSECTION || Schedule selection */
     #schedules-card > div {
         align-items: baseline;
+    }
+
+    #alert-appointment {
+        padding: 20px;
+        background-color: var(--secondary100);
     }
 </style>
