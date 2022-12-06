@@ -1,13 +1,13 @@
 <script>
     import AppointmentCard from '@/components/Admin/AppointmentCard.vue';
-import AdminLayout from '@/layouts/AdminLayout.vue';
+    import AdminLayout from '@/layouts/AdminLayout.vue';
 
     export default {
         name: 'AdminDashboard',
-        components: {
-    AdminLayout,
-    AppointmentCard
-}
+            components: {
+        AdminLayout,
+        AppointmentCard
+        }
     }
 </script>
 
@@ -31,18 +31,14 @@ import AdminLayout from '@/layouts/AdminLayout.vue';
                 <div class="label-header">
                         <h4> BookingID </h4>
                         <h4> Name </h4>
-                        <h4> Email </h4>
                         <h4> Phone Number </h4>
                         <h4> Time </h4>
                         <h4> Date </h4>
+                        <h4> Service </h4>
                         <h4> Status </h4>
                 </div>
 
-
-                <div class="appointments">
-                    <AppointmentCard    />
-                </div>
-
+                <!-- TO DO: add appointments card -->
                 <div class="appointments">
                     <AppointmentCard    />
                 </div>
@@ -55,10 +51,11 @@ import AdminLayout from '@/layouts/AdminLayout.vue';
 <style>
     .container{
         padding: 30px;
-        padding-top: 80px;
+        padding-top: 40px;
     }
     #welcome{
         font-style: italic;
+        font-size: 40px;
     }
     .header{
         margin-top: 40px;
@@ -83,6 +80,10 @@ import AdminLayout from '@/layouts/AdminLayout.vue';
         border: none;
         font-size: 12px;
         padding: 3px 24px;
+    }
+    button:hover {
+        cursor: pointer;
+        background: #e9d9bd;
     }
     .text{
         font-size: 20px;

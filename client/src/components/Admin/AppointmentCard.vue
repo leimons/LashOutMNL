@@ -7,13 +7,13 @@
 <template>
     <div class="appointment-card">
         <div class="items">
-            <span class="details">ID</span>
+            <span class="details">BookingID</span>
             <span class="details">Name</span>
-            <span class="details">Email</span>
             <span class="details">Phone Number</span>
             <span class="details">Time</span>
             <span class="details">Date</span>
             <span class="details">Service</span>
+            <span class="details">Status</span>
         </div>
     </div>
 </template>
@@ -26,7 +26,7 @@
         margin-top: 0px;
         background-color: #F0EDE4;
         border: 1px solid black;
-        border-radius: 15px;
+        
     }
 
     .items{

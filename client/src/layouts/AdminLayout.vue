@@ -12,8 +12,7 @@
 
         <img src="@/assets/images/logo.png" height="50" />
 
-        <!-- TODO: Add link to appointments page -->
-        <a> <i class="uil uil-apps"> </i> 
+        <a href="/admin/home" > <i class="uil uil-apps"> </i> 
             Appointments 
         </a>     
 
@@ -21,16 +20,11 @@
             Services
         </a>
 
-
         <!-- TODO: Add link to bookings page -->
-        <a> <i class="uil uil-schedule"></i>
+        <a href="/admin/calendar"> <i class="uil uil-schedule"></i>
             Calendar
         </a>
         
-        <!-- TODO: Add link to promos page -->
-        <a> <i class="uil uil-pricetag-alt"></i>
-            Promos
-        </a>
         
         <div class="settings-mode"> 
             <!-- TODO: Add link to account settings page -->
@@ -74,12 +68,14 @@
     }
 
         nav > img {
+            margin-top: 20px;
             margin-bottom: 40px;
         }
 
         nav > a {
             padding: 12px 5px;
             cursor: pointer;
+            font-weight: bold;
         }
 
         nav > button {
@@ -93,6 +89,7 @@
             margin-top: 360px;
             padding: 5px;
             padding-top: 10px;
+            font-weight: bold;
         }
         
         .settings-mode li {
