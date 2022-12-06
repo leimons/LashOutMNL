@@ -19,6 +19,11 @@
 
                 date: new Date(),  // selected date (consider only day, month, time)
                 time: '',          // selected time
+                customer: {
+                    name: '',
+                    email: '',
+                    contact: ''
+                }
             }
         },
         mounted() {
@@ -40,6 +45,27 @@
             },
             nextStep() {
                 this.currentStep++;
+            },
+            completedStep() {
+                switch (this.currentStep) {
+                    case 1: // Select inclusions
+                        return true;    // No requirements
+                    case 2: // Select schedule
+                        return !(
+                            this.selectedSchedule.toDateString() == new Date().toDateString()    // No same day booking
+                            || this.selectedSchedule.getDay() == 1   // Closed on Mondays
+                            || this.time == ''   // Must have selected time
+                        );
+                    case 3: // Customer information
+                        return !(
+                            !this.customer.name ||
+                            !this.customer.email ||
+                            !this.customer.contact
+                        );
+                    case 4: // Payment confirmation
+                        break;
+                    default:    return ;
+                }
             }
         },
         computed: {
@@ -77,6 +103,8 @@
 </script>
 
 <template>
+    <a href="/" id="logo"><img src="@/assets/images/logo.png" height="70" /></a>
+
     <div id="cards-container" v-if="mounted">
 
         <!-- Step 1: Select inclusions -->
@@ -161,7 +189,7 @@
 
                     <div class="flex-row">
                         <button class="small grey" v-show="(currentStep == 2)" @click="prevStep">Back</button>
-                        <button class="small dark next" v-show="(currentStep == 2)" @click="nextStep">Next</button>
+                        <button class="small dark next" v-show="(currentStep == 2) && completedStep(2)" @click="nextStep">Next</button>
                     </div>
                 </div>
             </template>
@@ -182,21 +210,21 @@
                     <div style="width: 100%;">
                         <div class="flex-row">
                             <label for="name">Name</label>
-                            <input type="text" id="name" placeholder="John Doe" required />
+                            <input type="text" id="name" v-model="customer.name" required />
                         </div>
                         <div class="flex-row">
                             <label for="email">Email</label>
-                            <input type="email" id="email" placeholder="johndoe@mail.com" required />
+                            <input type="email" id="email" v-model="customer.email" required />
                         </div>
                         <div class="flex-row">
                             <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" placeholder="0912 345 6789" pattern="[0]{1}[9]{1}[0-9]{2} [0-9]{3} [0-9]{4}" required />
+                            <input type="tel" id="phone" name="phone" v-model="customer.contact" required />
                         </div>
                     </div>
 
                     <div class="flex-row">
                         <button class="small grey" v-show="(currentStep == 3)" @click="prevStep">Back</button>
-                        <button class="small dark next" v-show="(currentStep == 3)" @click="nextStep">Next</button>
+                        <button class="small dark next" v-show="(currentStep == 3)  && completedStep(3)" @click="nextStep">Next</button>
                     </div>
 
                 </div>
@@ -230,9 +258,7 @@
         flex-direction: column;
     }
 
-    .small-gap {
-        gap: 10px;
-    }
+    .small-gap { gap: 10px; }
 
     input[type=text], input[type=email], input[type=tel] {
         border-radius: 0;
@@ -241,8 +267,15 @@
         background: none;
     }
     
-    input:placeholder-shown {
-        font-style: italic;
+        input:placeholder-shown { font-style: italic; }
+
+    label { flex: 1; }
+
+    #logo {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        opacity: 0.85;
     }
 
     /* SECTION || Cards */
@@ -273,10 +306,6 @@
         border-radius: 6px;
         padding: 8px 12px;
     }
-
-        label {
-            flex: 1;
-        }
 
     #inclusions-card p, #inclusions-card h3 {
         font-family: 'Lora';

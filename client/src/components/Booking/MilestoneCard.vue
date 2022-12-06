@@ -66,7 +66,7 @@
             <h2><slot name="heading">Heading</slot></h2>
         </div>
         
-        <div class="card-content" ref="content">
+        <div class="card-content" ref="content" v-show="focused">
             <slot name="content">Content here.</slot>
         </div>
     </div>

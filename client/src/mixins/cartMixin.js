@@ -62,7 +62,6 @@ export default {
         _inclusions: function () {
             // Update cart in session storage on value change
             sessionCart.setInclusions(this.cart.inclusions);
-            console.log('yup nagbago')
         },
     }
 }
