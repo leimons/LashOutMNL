@@ -24,7 +24,7 @@
         },
         methods: {
             nextStep() {
-                this.$router.push('/book/checkout')
+                this.$router.push('/book/checkout/#')
             }
         }
     }
