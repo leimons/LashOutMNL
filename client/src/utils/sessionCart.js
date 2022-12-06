@@ -20,8 +20,13 @@ const sessionCart = {
     },
 
     removeItem: function() {
-        let currentCart = sessionStorage.cart;
+        let currentCart = JSON.parse(sessionStorage.cart);
         sessionStorage.setItem('cart', JSON.stringify({...currentCart, service: null}));
+    },
+
+    setInclusions: function(inclusions) {
+        let currentCart = JSON.parse(sessionStorage.cart);
+        sessionStorage.setItem('cart', JSON.stringify({...currentCart, inclusions}));
     },
 
     clear: () => {

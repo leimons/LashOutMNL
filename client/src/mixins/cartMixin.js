@@ -52,5 +52,17 @@ export default {
                 this.ref = ref;
             }
         }
+    },
+    computed: {
+        _inclusions: function () {
+            return this.cart.inclusions;
+        }
+    },
+    watch: {
+        _inclusions: function () {
+            // Update cart in session storage on value change
+            sessionCart.setInclusions(this.cart.inclusions);
+            console.log('yup nagbago')
+        },
     }
 }

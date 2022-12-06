@@ -27,12 +27,12 @@
             showAlert() {
                 alert('test')
             },
-            disableComponents(val=true) {
+            disableComponents() {
                 const tags = ["input", "button", "textarea", "select"];
                 tags.forEach(tagName => {
                     var nodes = this.$refs['content'].getElementsByTagName(tagName);
                     for (let i = 0; i < nodes.length; i++) {
-                        nodes[i].disabled = val;
+                        nodes[i].disabled = this.disabled;
                     }
                 });
             }
@@ -49,7 +49,7 @@
             classes() {
                 return {
                     'card': true,
-                    'disabled': this.disabled || this.currentStep < this.step,
+                    'disabled': this.disabled || this.currentStep != this.step,
                     'focused': this.focused,
                     'error': this.error
                 }
@@ -76,6 +76,7 @@
         background-color: white;
         padding: 20px;
         box-shadow: rgba(99, 99, 99, 0.05) 0px 2px 8px 0px;
+        height: auto;
     }
 
         .card.disabled  {
