@@ -55,8 +55,8 @@
 				var s_description = this.edit.Description;
 				var s_onsale = this.edit.OnSale;
 				var s_saleprice = this.edit.SalePrice;
-				console.log(s_id,s_name, s_category, s_subcategory, s_duration, s_price, s_description, s_onsale, s_saleprice);
 				adminfunctions.editService(s_id,s_name, s_category, s_subcategory, s_duration, s_price, s_description, s_onsale, s_saleprice);
+				this.$router.push('/admin/services');
 			}
 			
         },
