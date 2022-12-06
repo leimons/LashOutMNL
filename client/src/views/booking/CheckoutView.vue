@@ -26,7 +26,8 @@
                     name: '',
                     email: '',
                     contact: ''
-                }
+                },
+                proofOfPayment: null
             }
         },
         mounted() {
@@ -72,10 +73,17 @@
                             !this.customer.contact
                         );
                     case 4: // Payment confirmation
-                        break;
+                        return !(
+                            this.proofOfPayment == null
+                        )
                     default:    return ;
                 }
             },
+            onFileChange(e) {
+                var files = e.target.files || e.dataTransfer.files;
+                if (!files.length)  return;
+                this.proofOfPayment = URL.createObjectURL(files[0]);
+            }
         },
         computed: {
             totalPrice() {
@@ -106,21 +114,7 @@
                 } while (date.getDay() == 1);    // check if day is Monday
 
                 return date;
-            },
-            /*scrollStyle() {
-                return {
-                    'margin-top': this.mounted ? this.scrollMargin : 0 + 'px'
-                }
-            },
-            scrollMargin() {
-                var totalHeight = 0;
-                const pad = 13;
-
-                for (var step = 1; step <= this.currentStep; step ++)
-                    totalHeight += this.getHeight(step);
-
-                return totalHeight + (this.currentStep - 1) * pad;
-            }*/
+            }
         }
     }
 </script>
@@ -139,7 +133,7 @@
                 <div class="flex-col" id="inclusions-card">
                     <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for select inclusions -->
 
-                    <div class="flex-row">
+                    <div class="flex-row" style="align-items: flex-start;">
                         <!-- selected service -->
                         <div class="flex-col small-gap" style="width: 200px;">
                             <img id="service-img" src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" /> <!-- Placeholder. TODO: Replace with service image -->
@@ -255,10 +249,42 @@
         </MilestoneCard>
 
 
-        <!-- Step 4: Payment Confirmation -->
+        <!-- Step 4: Payment Information -->
         <MilestoneCard :step=4 :currentStep="currentStep">
             <template #heading>
-                Payment Confirmation
+                Payment Information
+            </template>
+            <template #content>
+                <div class="flex-col" id="info-card">
+                    
+                    <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for enter information -->
+                
+                    <!-- Mode of Payment Options -->
+                    <div class="flex-row">
+                        <div class="mop-card flex-row">
+                            <img src="https://cdn1.codashop.com/S/content/common/images/mno/DRAGONPAY_GCash_CHNL_LOGO.png" alt="GCash" />
+                            <div>
+                                <p>Nicole Patricia F. Suriaga</p>
+                                <p>09773843092</p>
+                            </div>
+                        </div>
+                        <div class="mop-card flex-row">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Asia_United_Bank_logo.svg/2560px-Asia_United_Bank_logo.svg.png" alt="Asia United Bank" />
+                            <div>
+                                <p>Nicole Patricia F. Suriaga</p>
+                                <p>525-11-0000693</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="file" accept="image/png, image/jpg, image/jpeg" name="editImg" id="editImg" @change="onFileChange" />
+
+                    <div class="flex-row">
+                        <button class="small grey" v-show="(currentStep == 4)" @click="prevStep">Back</button>
+                        <button class="small dark next" v-show="(currentStep == 4)  && completedStep(4)" @click="nextStep">Next</button>
+                    </div>
+
+                </div>
             </template>
         </MilestoneCard>
     </div>
@@ -283,11 +309,15 @@
 
     .small-gap { gap: 10px; }
 
-    input[type=text], input[type=email], input[type=tel] {
+    input[type=text], input[type=email], input[type=tel], input[type=file] {
         border-radius: 0;
         border: none;
         border-bottom: 1.2pt solid grey;
         background: none;
+    }
+
+    input[type=file] {
+        border: 1.2px dashed #ccc;
     }
     
         input:placeholder-shown { font-style: italic; }
@@ -309,7 +339,7 @@
 
         max-width: 800px;
         margin-inline: auto;
-        padding: 50px 0;
+        padding: 80px 0;
 
         transition: margin-top 0.7s;
     }
@@ -358,4 +388,16 @@
     #info-card input {
         flex: 3;
     }
+
+    /* SUBSECTION || Payment information */
+    .mop-card {
+        box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+        .mop-card img {
+            width: 100px;
+        }
 </style>
