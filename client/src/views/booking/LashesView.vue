@@ -5,6 +5,7 @@
     import BookingServiceCard from '@/components/Booking/ServiceCard.vue';
     
     import bookingMixin from '@/mixins/bookingMixin';
+    import cartMixin from '@/mixins/cartMixin';
 
     export default {
         name: 'LashesView',
@@ -15,10 +16,15 @@
             CenterLayout,
             BookingServiceCard
         },
-        mixins: [bookingMixin],
+        mixins: [cartMixin, bookingMixin],
         data() {
             return {
                 category: 'Lashes'
+            }
+        },
+        methods: {
+            nextStep() {
+                this.$router.push('/book/checkout/#')
             }
         }
     }
@@ -53,12 +59,7 @@
         </div>
     </div>
 
-    <button
-        id="schedule-btn"
-        @click="this.$router.push('/book/schedule')"
-        v-show="this.cart.service"
-        v-if="this.cart.service" 
-    >
+    <button id="schedule-btn" @click="nextStep" v-show="this.cart.service">
         Pick a Schedule &#8594;
     </button>
 
