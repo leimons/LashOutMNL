@@ -35,10 +35,8 @@ const sv_controller = {
 		var s_price = req.body.Price;
 		var s_onsale = req.body.OnSale;
 		var s_saleprice = req.body.SalePrice;
-		console.log(req);
-		console.log("service-admin" + s_id+s_name+ s_category+ s_subcategory+ s_duration+ s_price+ s_description+ s_onsale+ s_saleprice);
-        console.log("updating: "+s_name);
-        Product.updateOne({_id: s_id},[{$set:{Service:s_name, Category:s_category,Subcategory:s_subcategory,Description:s_description,Duration:s_duration,Price:s_price,OnSale: s_onsale,SalePrice:s_saleprice}}]);
+        	console.log("updating: "+s_name);
+       		db.updateOne(Product,{_id: s_id},{Service:s_name, Category:s_category,Subcategory:s_subcategory,Description:s_description,Duration:s_duration,Price:s_price,OnSale: s_onsale,SalePrice:s_saleprice}, function(){});
 		console.log(s_name + " updated");
 	}
 
