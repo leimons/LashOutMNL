@@ -15,7 +15,7 @@
                 btnRef: null
             }
         },
-        created() {
+        mounted() {
             this.btnRef = this.$refs.selectBtn;
         },
         methods: {

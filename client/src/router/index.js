@@ -82,6 +82,11 @@ const routes = [
     name: 'scheduleView',
     component: () => import('@/views/booking/ScheduleView.vue')
   },
+  {
+    path: '/book/checkout',
+    name: 'checkoutView',
+    component: () => import('@/views/booking/CheckoutView.vue')
+  },
 
   // ERROR PAGE
   {
