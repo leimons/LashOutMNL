@@ -84,6 +84,7 @@
                 var files = e.target.files || e.dataTransfer.files;
                 if (!files.length)  return;
                 this.proofOfPayment = URL.createObjectURL(files[0]);
+                console.log(this.proofOfPayment)
             },
             createAppointment(){
                 var inclusions = []
