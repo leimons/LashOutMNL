@@ -16,7 +16,7 @@
             CenterLayout,
             BookingServiceCard
         },
-        mixins: [cartMixin, bookingMixin],
+        mixins: [bookingMixin, cartMixin],
         data() {
             return {
                 category: 'Nails'
