@@ -2,6 +2,7 @@ const db = require("../database/models/db");
 const Products = require("../database/models/Products");
 const Appointments = require("../database/models/Appointments");
 const Inclusions = require("../database/models/Inclusions");
+const Password = require("../database/models/Password");
 const dv = require("dayjs/locale/dv");
 
 let refnum = '0';
