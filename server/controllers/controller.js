@@ -136,13 +136,18 @@ const controller = {
         })
         res.send (appointment)
     },
-    login: function(req,res){
-		db.findOne(Password, {Password: req.Password}, function(result){
-			console.log(result);
-			if (result.Password == req.Password)
-				res.send(200);
-			else
-				res.send(104);
+   login: function(req,res){
+		var projection = "Password"
+		var key = req.body.pass;
+		console.log(key);
+		var resultpass
+		resultpass = db.findOne(Password, {Password: key}, projection, function(result){
+			resultpass = result.Password;
+			if (resultpass === key){
+				console.log("equal");
+				res.sendStatus(201);
+			}else
+				res.sendStatus(104);
 		});
 	},
     getAllAppointments: function(req,res){
