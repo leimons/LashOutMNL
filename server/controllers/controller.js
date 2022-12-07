@@ -51,49 +51,19 @@ const controller = {
     },
 
     addAppointment: function (req,res){
-        var product = req.body.product
-        var AmountDue = req.body.AmountDue
-        var val = Math.floor(1000 + Math.random() * 9000);
-        db.findMany(Appointments, {refnum: val} , 'refnum',function(result){
-            /*while (result != undefined){
-                val = Math.floor(1000 + Math.random() * 9000);
-             } */
-        });
-        refnum = val;
-        AmountDue = AmountDue.substring(1);
-        AmountDue = parseFloat(AmountDue);
-        console.log (typeof(AmountDue))
-        db.insertOne(Appointments, {Product: product, refNum: refnum, AmountDue: AmountDue},function(){     
-        });
-        res.status(201).send();
-    },
-
-    addInclusions: function(req,res){
-        var Inclusions = req.body.Inclusions //UID of Inclusion
-        var InclusionCost = 0
-        Inclusions.forEach((i)=>{
-            db.findOne (Inclusions, {UID: i}, "Price", function(result){
-                InclusionCost = InclusionCost + result
-            })
-        })
-        db.updateOne(Appointments, {refNum: refnum}, {Inclusions: Inclusions, AmountDue: AmountDue+InclusionCost}, function(){
+        var appointment = {
+            ClientName: req.body.name,
+            ClientEmail: req.body.email,
+            ClientContact: req.body.contact,
+            Service: req.body.service,
+            Inclusions: req.body.inclusions,
+            AmountDue: req.body.AmountDue,
+            Schedule: req.body.schedule
+        }
+        db.insertOne(Appointments,appointment, function(){
+            console.log("Appointment Added")
         })
         res.status(201).send();
-    },
-
-    addChosenDate: function(req,res){
-        var Date = req.body.chosenDate
-        db.updateOne(Appointments, {refNum: refnum}, {Date: Date}, function(){
-            console.log("Added Appointment Date to DB")
-            res.status(201).send();
-        })
-    },
-
-    addClientDetails: function(req,res){
-        /* query client details */
-        /* create object of details fit for db */
-        db.updateOne(Appointments, refnum , /*object: object, */ function(){
-        });
     },
 
     getInclusionsPage: function(req,res){

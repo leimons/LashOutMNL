@@ -4,6 +4,7 @@
 
     import cartMixin from '@/mixins/cartMixin';
     import axios from 'axios';
+    import dbFunctions from '@/dbFunctions.js';
 
     const SECTION_ID = ["#inclusions-card", "#schedules-card", "#info-card"];
 
@@ -17,7 +18,7 @@
                 currentStep: 1,
                 mounted: false,
                 scrollMargin: 0,
-
+                TotalPrice: Number,
                 Inclusions: [],
 
                 date: new Date(),  // selected date (consider only day, month, time)
@@ -83,6 +84,22 @@
                 var files = e.target.files || e.dataTransfer.files;
                 if (!files.length)  return;
                 this.proofOfPayment = URL.createObjectURL(files[0]);
+            },
+            createAppointment(){
+                var inclusions = []
+                for (let i = 0; i < this.cart.inclusions.length; i++){
+                    inclusions.push(this.cart.inclusions[i].Name)
+                }
+                var appointment = {
+                    ClientName: this.customer.name,
+                    ClientEmail: this.customer.email,
+                    ClientContact: this.customer.contact,
+                    Product: this.cart.service.Service,
+                    Inclusions: inclusions,
+                    AmountDue: this.totalPrice,
+                    Schedule: this.selectedSchedule
+                }
+                dbFunctions.addAppointment(appointment)
             }
         },
         computed: {
@@ -281,7 +298,7 @@
 
                     <div class="flex-row">
                         <button class="small grey" v-show="(currentStep == 4)" @click="prevStep">Back</button>
-                        <button class="small dark next" v-show="(currentStep == 4)  && completedStep(4)" @click="nextStep">Next</button>
+                        <button class="small dark next" v-show="(currentStep == 4)  && completedStep(4)" @click="createAppointment">Next</button>
                     </div>
 
                 </div>

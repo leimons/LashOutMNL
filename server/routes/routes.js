@@ -16,12 +16,6 @@ app.post(`/addAppointment`, controller.addAppointment);
 
 app.get(`/getInclusions/:category`, controller.getInclusionsPage);
 
-app.post(`/addInclusions`, controller.addInclusions);
-
-app.post(`/addChosenDate`, controller.addChosenDate);
-
-app.post(`/addClientDetails`, controller.addClientDetails);
-
 app.get(`/getOrderSummary`, controller.getOrderSummary);
 
 app.get(`/getAppointment`, controller.getAppointments);

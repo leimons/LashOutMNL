@@ -1,12 +1,17 @@
 import axios from 'axios';
 
 class Appointment {
-    static addAppointment (value, price) {
+    static addAppointment (value) {
         var url = "http://localhost:3000/api/addAppointment"
-        console.log ("The Value is: " + value)
+        console.log (value)
         return axios.post(url, {
-            product: value,
-            AmountDue: price
+            name: value.ClientName,
+            email: value.ClientEmail,
+            contact: value.ClientContact,
+            service: value.Product,
+            inclusions: value.Inclusions,
+            AmountDue: value.AmountDue,
+            schedule: value.Schedule
         });
     }
     static addInclusions (inclusion) {
