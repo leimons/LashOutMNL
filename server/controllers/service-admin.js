@@ -8,9 +8,10 @@ const sv_controller = {
 	modeled after CCAPDEV MCO3
 */
 	sv_add: function(req, res) {
-        console.log("inserting: " + req.body.Service);
-        db.insertOne(Product, req.body, function(){});
+        	console.log("inserting: " + req.body.Service);
+        	db.insertOne(Product, req.body, function(){});
 		console.log(req.body.Service + "added");
+		res.status(201).send();	
     },
 /*delete product
 	given the name, it deletes the product from the database 
@@ -23,6 +24,7 @@ const sv_controller = {
         	console.log("deleting: " + refname);
         	//db.deleteOne(Product,{_id: refID}, function(){});
 		console.log(refname + " deleted");
+		res.status(201).send();
     },
 /*edit product
 */
@@ -39,6 +41,7 @@ const sv_controller = {
         	console.log("updating: "+s_name);
         	db.updateOne(Product,{_id: s_id},{Service:s_name, Category:s_category,Subcategory:s_subcategory,Description:s_description,Duration:s_duration,Price:s_price,OnSale: s_onsale,SalePrice:s_saleprice}, function(){});
 		console.log(s_name + " updated");
+		res.status(201).send();
 	}
 
 } 
