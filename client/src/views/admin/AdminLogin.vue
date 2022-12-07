@@ -17,12 +17,13 @@
         methods: {
             login() {
 				var answer = adminfunctions.login(this.password);
-				if (answer != 200){
-					this.errorMsg = "Wrong Password";
-				}
-				else {
-				this.$router.push('/home');
-				}
+				answer.then((response)=>{
+					console.log(response);
+                    this.$router.push('admin/home'); 
+                })
+                .catch(() => {
+                    this.errorMsg = "Wrong Password";
+                })
             }
         }
     }
