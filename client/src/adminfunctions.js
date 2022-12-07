@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 class Service {
-	static login (password){
+	static login (pass){
 		var url = "http://localhost:3000/api/login"
 		console.log("attempting to login")
-		return axios.post(url,{password});
+		return axios.post(url,{pass});
 	}
 	static editService(s_id,s_name, s_category, s_subcategory, s_duration, s_price, s_description, s_onsale, s_saleprice){
 		var url = "http://localhost:3000/api/editservice"
