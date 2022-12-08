@@ -1,6 +1,7 @@
 <script>
     import FullscreenLayout from '@/layouts/FullscreenLayout.vue';
-    import axios from 'axios';
+    //import axios from 'axios';
+    import adminfunctions from '@/adminfunctions.js';
 
     export default {
         name: 'AdminLogin',
@@ -15,19 +16,14 @@
         },
         methods: {
             login() {
-                const URL = 'https://eog7rm5iwehhpsq.m.pipedream.net'; /* temporary URL. TODO: Replace with URL to API */
-                let params = {
-                    password: this.password
-                };
-
-                axios
-                    .post(URL, params)
-                    .then((response) => {
-                        console.log(response)
-                    })
-                    .catch((e) => {
-                        this.errorMsg = Error(e).message;
-                    });
+				var answer = adminfunctions.login(this.password);
+				answer.then((response)=>{
+					console.log(response);
+                    this.$router.push('admin/home'); 
+                })
+                .catch(() => {
+                    this.errorMsg = "Wrong Password";
+                })
             }
         }
     }

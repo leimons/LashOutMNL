@@ -2,6 +2,7 @@ const db = require("../database/models/db");
 const Products = require("../database/models/Products");
 const Appointments = require("../database/models/Appointments");
 const Inclusions = require("../database/models/Inclusions");
+const Password = require("../database/models/Password");
 const dv = require("dayjs/locale/dv");
 
 let refnum = '0';
@@ -81,6 +82,14 @@ const controller = {
         res.status(201).send();
     },
 
+    addChosenDate: function(req,res){
+        var Date = req.body.chosenDate
+        db.updateOne(Appointments, {refNum: refnum}, {Date: Date}, function(){
+            console.log("Added Appointment Date to DB")
+            res.status(201).send();
+        })
+    },
+
     addClientDetails: function(req,res){
         /* query client details */
         /* create object of details fit for db */
@@ -89,22 +98,16 @@ const controller = {
     },
 
     getInclusionsPage: function(req,res){
-        db.findOne(Appointments, {refNum: refnum}, "Product", function(result){
-            var productName = result.Product
-            console.log("The Product is: " + productName);
-            db.findOne(Products, {Service: productName}, "Category", function(result){
-                var productCategory = result.Category
-                var inclusions = []
-                db.findMany(Inclusions,{Category: productCategory}, "Category Name Price", function(result){
-                    var data = result;
-                    data.forEach((i)=>{
-                        inclusions.push({Category: i.Category, Name: i.Name, Price: i.Price})
-                    })
-                    console.log(inclusions)
-                    res.status(201).send(inclusions) 
-                }) 
-            })       
-        })   
+        var category = req.params.category
+        var inclusions = []
+        db.findMany(Inclusions,{Category: category}, "Category Name Price", function(result){
+            var data = result;
+            data.forEach((i)=>{
+                inclusions.push({Category: i.Category, Name: i.Name, Price: i.Price})
+                })
+            console.log(inclusions)
+            res.status(201).send(inclusions) 
+        })      
     },
 
     getOrderSummary: function(req, res){
@@ -134,7 +137,20 @@ const controller = {
         })
         res.send (appointment)
     },
-
+   login: function(req,res){
+		var projection = "Password"
+		var key = req.body.pass;
+		console.log(key);
+		var resultpass
+		resultpass = db.findOne(Password, {Password: key}, projection, function(result){
+			resultpass = result.Password;
+			if (resultpass === key){
+				console.log("equal");
+				res.sendStatus(201);
+			}else
+				res.sendStatus(104);
+		});
+	},
     getAllAppointments: function(req,res){
         var projection = "ClientName ClientInfo refNum PaymentStatus Product Inclusions AmountDue"
         var appointment

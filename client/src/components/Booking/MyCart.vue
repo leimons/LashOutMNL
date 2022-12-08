@@ -1,6 +1,7 @@
 <script>
     //import dbFunctions from '@/dbFunctions.js';
     import sessionCart from '@/utils/sessionCart';
+    import { formatPrice } from '@/utils/numbers';
 
     export default {
         
@@ -13,17 +14,13 @@
             }
         },
         methods: {
-            formatPrice(num) {
-                return Number(num).toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'PHP',
-                })
-            },
+            formatPrice,
             hideCart() {
                 this.$emit("hideCart");
             },  
             nextStep() {
                 console.log(sessionCart.getItems())
+                this.$router.push('/book/schedule')
                 //chooseService(this.services, totalPrice)
             },        
             /*chooseService (value, price){

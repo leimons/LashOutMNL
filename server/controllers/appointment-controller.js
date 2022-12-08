@@ -1,4 +1,4 @@
-const db = require('../models/db.js');
+const db = require("../database/models/db");
 const Appointment = require('../models/Appointments.js');
 
 const ap_controller = {

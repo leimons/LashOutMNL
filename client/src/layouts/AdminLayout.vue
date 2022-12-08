@@ -6,14 +6,42 @@
 
 <template>
     <nav>
+
+        <!----===== Iconscout CSS ===== -->
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
         <img src="@/assets/images/logo.png" height="50" />
 
-        <a>Appointments</a>     <!-- TODO: Add link to appointments page -->
-        <a href="/admin/services">Services</a>
-        <a>Calendar</a>         <!-- TODO: Add link to bookings page -->
-        <a>Promos</a>           <!-- TODO: Add link to promos page -->
+        <a href="/admin/home" > <i class="uil uil-apps"> </i> 
+            Appointments 
+        </a>     
 
-        <button class="small bg-primary200">Log out</button>
+        <a href="/admin/services"> <i class="uil uil-server-alt"></i>
+            Services
+        </a>
+
+        <!-- TODO: Admin Calendar not yet connected -->
+        <a href="/admin/calendar"> <i class="uil uil-schedule"></i>
+            Calendar
+        </a>
+        
+        
+        <div class="settings-mode"> 
+            <!-- TODO: Add link to account settings page / No Account Setting Page yet-->
+            <li> <a href="#">
+                <i class="uil uil-user"></i>
+                Account
+            </a> </li>
+            
+            <li><a></a></li>
+
+
+            <!-- TODO: Test if Log out works-->
+             <a href="#"> <li>
+                <i class="uil uil-signout"></i>
+                Logout
+            </li> </a> 
+        </div>
     </nav>
 
     <div id="admin-content">
@@ -40,23 +68,37 @@
     }
 
         nav > img {
+            margin-top: 20px;
             margin-bottom: 40px;
         }
 
         nav > a {
             padding: 12px 5px;
             cursor: pointer;
+            font-weight: bold;
         }
 
         nav > button {
             margin-top: auto;
             opacity: 0.8;
         }
+    
+        .settings-mode{
+            list-style: none;
+            position: relative;
+            margin-top: 360px;
+            padding: 5px;
+            padding-top: 10px;
+            font-weight: bold;
+        }
+        
+        .settings-mode li {
+            margin-bottom: 15px;
+        }
 
     #admin-content {
         width: calc(100% - 200px);
 
-        overflow: scroll;
         margin-left: 200px;
     }
 </style>

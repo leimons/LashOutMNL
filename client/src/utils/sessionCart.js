@@ -1,29 +1,36 @@
+const defaultCart = {
+    service: null,
+    category: null,
+    inclusions: []
+}
+
 const sessionCart = {
 
-    init: function() {
-        sessionStorage.setItem('cart', JSON.stringify([]));
+    init: function(category) {
+        sessionStorage.setItem('cart', JSON.stringify({...defaultCart, category}));
     },
 
-    getItems: function() {
-        return JSON.parse(sessionStorage.cart);
+    getItem: function() {
+        return JSON.parse(sessionStorage.cart).service;
     },
 
-    addItem: function(item) {
-        let cart = this.getItems();
-        let newCart = [...cart, item];
-
+    setItem: function(item) {
+        let newCart = {...defaultCart, service: item}
         sessionStorage.setItem('cart', JSON.stringify(newCart));
     },
 
-    removeItem: function(item) {
-        let cart = this.getItems();
-        let newCart = cart.filter(v => v._id != item._id);
+    removeItem: function() {
+        let currentCart = JSON.parse(sessionStorage.cart);
+        sessionStorage.setItem('cart', JSON.stringify({...currentCart, service: null}));
+    },
 
-        sessionStorage.setItem('cart', JSON.stringify(newCart));
+    setInclusions: function(inclusions) {
+        let currentCart = JSON.parse(sessionStorage.cart);
+        sessionStorage.setItem('cart', JSON.stringify({...currentCart, inclusions}));
     },
 
     clear: () => {
-        sessionStorage.setItem('cart', JSON.stringify([]));
+        sessionStorage.setItem('cart', JSON.stringify(defaultCart));
     }
 }
 

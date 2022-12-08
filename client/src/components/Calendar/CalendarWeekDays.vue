@@ -31,7 +31,9 @@ export default {
 }
 
 .weekdays > * {
-  text-align:center;
+  text-align: center;
   padding-right: 5px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 </style>

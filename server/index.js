@@ -5,7 +5,8 @@ const cors = require('cors');
 
 const db = require(`./database/models/db`);
 const mongoose = require ('mongoose');
-mongoose.connect('mongodb://127.0.0.1/LashOutMNL',
+const uri = 'mongodb+srv://LashOutMNL:wDM3UxgWkRj5qgaK@lashoutmnl.fq52ce8.mongodb.net/?retryWrites=true&w=majority'
+mongoose.connect(uri,
 {useNewURLParser: true, useUnifiedTopology: true});
 
 const app = express();
