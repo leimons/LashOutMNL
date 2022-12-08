@@ -20,7 +20,7 @@ app.get(`/services`, controller.getServices);
 
 app.post(`/addAppointment`, controller.addAppointment);
 
-app.put(`/uploadPayment`, paymentUpload.single('file'), controller.uploadPayment);
+app.post(`/uploadPayment`, paymentUpload.single('file'), controller.uploadPayment);
 
 app.get(`/getInclusions/:category`, controller.getInclusionsPage);
 

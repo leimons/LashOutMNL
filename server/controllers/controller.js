@@ -9,7 +9,7 @@ var fs = require ('fs');
 var path = require ('path');
 const app = require("../routes/routes");
 
-let refnumber = '0';
+let refnum = '0';
 
 const controller = {
 
@@ -55,59 +55,29 @@ const controller = {
         }
     },
 
-    addAppointment: function (req,res){      
-        db.findMany(Appointments, {}, 'refNum', function(result){
-            var present = []
-            var random
-            var data = result
-            data.forEach((i)=>{
-                present.push(i.refNum)
-            })
-            var Done = false
-            while (!Done){
-                random = Math.floor(Math.random() * (9999 - 1000) + 1000)
-                if (!present.includes(random)){
-                    console.log(random)
-                    Done = true
-                }
-            }
-            refnumber = random
-            var appointment = {
-                refNum: random,
-                ClientName: req.body.name,
-                ClientEmail: req.body.email,
-                ClientContact: req.body.contact,
-                Service: req.body.service,
-                Inclusions: req.body.inclusions,
-                AmountDue: req.body.AmountDue,
-                Schedule: req.body.schedule,
-                PaymentProof: {
-                    data: '',
-                    contentType: 'image/png'
-                }
-            }
-            db.insertOne(Appointments,appointment, function(){
-                console.log("appointment Added" + appointment.refNum)
-            })
-            res.status(200).send();
-        })   
-        
+    addAppointment: function (req,res){
+    
+        var appointment = {
+            ClientName: req.body.name,
+            ClientEmail: req.body.email,
+            ClientContact: req.body.contact,
+            Service: req.body.service,
+            Inclusions: req.body.inclusions,
+            AmountDue: req.body.AmountDue,
+            Schedule: req.body.schedule
+        }
+        db.insertOne(Appointments,appointment, function(docsInserted){
+            
+            console.log("the is")
+            console.log(appointment)
+        })
+        res.status(201).send();
     },
 
     uploadPayment: function (req,res){
-        console.log("doing this")
-        console.log("refnumber is" + refnumber)
         var data= fs.readFileSync(path.join("./client/public/paymentImages/" + req.file.filename))
-        console.log("refNumber is: " + refnumber)
-        PaymentProof = {
-            data: data,
-            contentType: 'image/png'
-        }
-    
-        db.updateOne(Appointments, {refNum: refnumber}, {PaymentProof: PaymentProof}, function(){
-            console.log('updated'+ refnumber)
-        })
-        res.status(201).send();
+
+        res.json({file: req.file})
     },
 
     getInclusionsPage: function(req,res){
