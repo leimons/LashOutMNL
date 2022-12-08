@@ -4,6 +4,10 @@ const Appointments = require("../database/models/Appointments");
 const Inclusions = require("../database/models/Inclusions");
 const dv = require("dayjs/locale/dv");
 
+var fs = require ('fs');
+var path = require ('path');
+const app = require("../routes/routes");
+
 let refnum = '0';
 
 const controller = {
@@ -51,6 +55,7 @@ const controller = {
     },
 
     addAppointment: function (req,res){
+    
         var appointment = {
             ClientName: req.body.name,
             ClientEmail: req.body.email,
@@ -60,10 +65,18 @@ const controller = {
             AmountDue: req.body.AmountDue,
             Schedule: req.body.schedule
         }
-        db.insertOne(Appointments,appointment, function(){
-            console.log("Appointment Added")
+        db.insertOne(Appointments,appointment, function(docsInserted){
+            
+            console.log("the is")
+            console.log(appointment)
         })
         res.status(201).send();
+    },
+
+    uploadPayment: function (req,res){
+        var data= fs.readFileSync(path.join("./client/public/paymentImages/" + req.file.filename))
+
+        res.json({file: req.file})
     },
 
     getInclusionsPage: function(req,res){
@@ -106,6 +119,7 @@ const controller = {
         })
         res.send (appointment)
     },
+
     login: function(req,res){
 		db.findOne(Password, {Password: req.Password}, function(result){
 			console.log(result);

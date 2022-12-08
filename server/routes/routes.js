@@ -4,15 +4,22 @@ const bcontroller = require(`../controllers/beautician-controller.js`);
 const scontroller = require(`../controllers/service-admin.js`);
 const icontroller = require(`../controllers/inclusion-controller.js`);
 const app = express();
+const multer = require('multer')
 
+const paymentUpload = multer({
+    dest: './client/public/paymentImages'
+})
 /*
     URL Path: `/api/services`
     Returns list of services as JSON
 */
+
 app.get(`/services/:category`, controller.getServices);
 app.get(`/services`, controller.getServices);
 
 app.post(`/addAppointment`, controller.addAppointment);
+
+app.post(`/uploadPayment`, paymentUpload.single('file'), controller.uploadPayment);
 
 app.get(`/getInclusions/:category`, controller.getInclusionsPage);
 

@@ -80,11 +80,13 @@
                     default:    return ;
                 }
             },
-            onFileChange(e) {
-                var files = e.target.files || e.dataTransfer.files;
+            onFileChange() {
+                this.proofOfPayment = this.$refs.paymentFile.files[0]
+            //    console.log(this.proofOfPayment)
+            /*    var files = e.target.files || e.dataTransfer.files;
                 if (!files.length)  return;
                 this.proofOfPayment = URL.createObjectURL(files[0]);
-                console.log(this.proofOfPayment)
+                console.log(this.proofOfPayment) */
             },
             createAppointment(){
                 var inclusions = []
@@ -98,9 +100,10 @@
                     Product: this.cart.service.Service,
                     Inclusions: inclusions,
                     AmountDue: this.totalPrice,
-                    Schedule: this.selectedSchedule
+                    Schedule: this.selectedSchedule,
                 }
-                dbFunctions.addAppointment(appointment)
+                dbFunctions.addAppointment(appointment, this.proofOfPayment)
+                dbFunctions.uploadPayment(this.proofOfPayment)
             }
         },
         computed: {
@@ -294,13 +297,14 @@
                             </div>
                         </div>
                     </div>
+                    <form @submit.prevent="createAppointment" enctype="multipart/form-data">                   
+                        <input type="file" ref="paymentFile" accept="image/png, image/jpg, image/jpeg" name="editImg" id="editImg" @change="onFileChange" />
 
-                    <input type="file" accept="image/png, image/jpg, image/jpeg" name="editImg" id="editImg" @change="onFileChange" />
-
-                    <div class="flex-row">
-                        <button class="small grey" v-show="(currentStep == 4)" @click="prevStep">Back</button>
-                        <button class="small dark next" v-show="(currentStep == 4)  && completedStep(4)" @click="createAppointment">Next</button>
-                    </div>
+                        <div class="flex-row">
+                            <button class="small grey" v-show="(currentStep == 4)" @click="prevStep">Back</button>
+                            <button class="small dark next" v-show="(currentStep == 4)  && completedStep(4)">Next</button>
+                        </div>
+                    </form>
 
                 </div>
             </template>

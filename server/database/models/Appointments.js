@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const AppointmentsSchema = new mongoose.Schema({
-    SessionID: Number,
     refNum: Number,
     ClientName: String,
     ClientEmail: String,
