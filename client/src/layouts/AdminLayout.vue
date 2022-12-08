@@ -20,14 +20,14 @@
             Services
         </a>
 
-        <!-- TODO: Add link to bookings page -->
+        <!-- TODO: Admin Calendar not yet connected -->
         <a href="/admin/calendar"> <i class="uil uil-schedule"></i>
             Calendar
         </a>
         
         
         <div class="settings-mode"> 
-            <!-- TODO: Add link to account settings page -->
+            <!-- TODO: Add link to account settings page / No Account Setting Page yet-->
             <li> <a href="#">
                 <i class="uil uil-user"></i>
                 Account

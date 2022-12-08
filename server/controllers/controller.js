@@ -2,6 +2,7 @@ const db = require("../database/models/db");
 const Products = require("../database/models/Products");
 const Appointments = require("../database/models/Appointments");
 const Inclusions = require("../database/models/Inclusions");
+const Password = require("../database/models/Password");
 const dv = require("dayjs/locale/dv");
 
 var fs = require ('fs');
@@ -157,6 +158,20 @@ const controller = {
 				res.send(200);
 			else
 				res.send(104);
+        
+   login: function(req,res){
+		var projection = "Password"
+		var key = req.body.pass;
+		var resultpass
+		resultpass = db.findOne(Password, {Password: key}, projection, function(result){
+			if (result != null) {
+				resultpass = result.Password;
+				if (resultpass === key){
+					console.log("equal");
+					res.sendStatus(201);
+				}
+			}
+			else res.sendStatus(403);
 		});
 	},
     getAllAppointments: function(req,res){
