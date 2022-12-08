@@ -128,6 +128,8 @@ const controller = {
 				res.send(200);
 			else
 				res.send(104);
+        })
+    },
         
    login: function(req,res){
 		var projection = "Password"
