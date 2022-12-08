@@ -2,6 +2,7 @@ const express = require (`express`);
 const controller = require(`../controllers/controller.js`);
 const bcontroller = require(`../controllers/beautician-controller.js`);
 const scontroller = require(`../controllers/service-admin.js`);
+const pcontroller = require(`../controllers/promo-controller.js`);
 const icontroller = require(`../controllers/inclusion-controller.js`);
 const app = express();
 
@@ -41,5 +42,10 @@ app.put(`/editbeautician`, bcontroller.bea_schedule_change);
 app.post(`/addinclusion`, icontroller.i_add);
 app.post(`/deleteinclusion`, icontroller.i_delete);
 app.put(`/editinclusion`, icontroller.i_edit);
+
+
+app.post(`/addpromo`, pcontroller.p_add);
+app.post(`/deletepromo`, scontroller.p_delete);
+app.put(`/editpromo`, scontroller.p_edit);
 
 module.exports = app;
