@@ -45,7 +45,7 @@ app.put(`/editinclusion`, icontroller.i_edit);
 
 
 app.post(`/addpromo`, pcontroller.p_add);
-app.post(`/deletepromo`, scontroller.p_delete);
-app.put(`/editpromo`, scontroller.p_edit);
+app.post(`/deletepromo`, pcontroller.p_delete);
+app.put(`/editpromo`, pcontroller.p_edit);
 
 module.exports = app;
