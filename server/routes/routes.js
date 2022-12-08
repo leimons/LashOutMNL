@@ -5,23 +5,24 @@ const scontroller = require(`../controllers/service-admin.js`);
 const pcontroller = require(`../controllers/promo-controller.js`);
 const icontroller = require(`../controllers/inclusion-controller.js`);
 const app = express();
+const multer = require('multer')
 
+const paymentUpload = multer({
+    dest: './client/public/paymentImages'
+})
 /*
     URL Path: `/api/services`
     Returns list of services as JSON
 */
+
 app.get(`/services/:category`, controller.getServices);
 app.get(`/services`, controller.getServices);
 
 app.post(`/addAppointment`, controller.addAppointment);
 
+app.put(`/uploadPayment`, paymentUpload.single('file'), controller.uploadPayment);
+
 app.get(`/getInclusions/:category`, controller.getInclusionsPage);
-
-app.post(`/addInclusions`, controller.addInclusions);
-
-app.post(`/addChosenDate`, controller.addChosenDate);
-
-app.post(`/addClientDetails`, controller.addClientDetails);
 
 app.get(`/getOrderSummary`, controller.getOrderSummary);
 
