@@ -43,6 +43,7 @@
                 .catch((e) => {
                     console.log(e)
                 })
+                
         },
         methods: {
             prevStep() {
@@ -102,9 +103,11 @@
                     AmountDue: this.totalPrice,
                     Schedule: this.selectedSchedule,
                 }
-                dbFunctions.addAppointment(appointment, this.proofOfPayment)
-                dbFunctions.uploadPayment(this.proofOfPayment)
-            }
+                dbFunctions.addAllAppointment(appointment, this.proofOfPayment)
+                //dbFunctions.addAppointment(appointment, this.proofOfPayment) 
+                //dbFunctions.uploadPayment(this.proofOfPayment)
+            },
+        
         },
         computed: {
             totalPrice() {
