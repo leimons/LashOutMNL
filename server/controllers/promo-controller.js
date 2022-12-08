@@ -38,4 +38,4 @@ const p_controller = {
 
 } 
 
-module.exports = sv_controller;
+module.exports = promo_controller;
