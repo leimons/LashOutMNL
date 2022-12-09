@@ -4,6 +4,7 @@ const bcontroller = require(`../controllers/beautician-controller.js`);
 const scontroller = require(`../controllers/service-admin.js`);
 const pcontroller = require(`../controllers/promo-controller.js`);
 const icontroller = require(`../controllers/inclusion-controller.js`);
+const passcontroller = require(`../controllers/password-controller.js`);
 const app = express();
 const multer = require('multer')
 
@@ -48,5 +49,7 @@ app.put(`/editinclusion`, icontroller.i_edit);
 app.post(`/addpromo`, pcontroller.p_add);
 app.post(`/deletepromo`, pcontroller.p_delete);
 app.put(`/editpromo`, pcontroller.p_edit);
+
+app.put(`/editpassword`, passcontroller.pass_edit);
 
 module.exports = app;
