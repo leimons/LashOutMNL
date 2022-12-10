@@ -162,7 +162,7 @@
 
                             <div>
                                 <b>{{ cart.service.Service }}</b>
-                                <p>{{ formatPrice(cart.service.Price) }}</p>
+                                <p>{{ formatPrice(cart.service.OnSale ? cart.service.SalePrice : cart.service.Price) }}</p>
                             </div>
                         </div>
 
