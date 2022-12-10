@@ -89,10 +89,8 @@
                 console.log(this.proofOfPayment) */
             },
             createAppointment(){
-                var inclusions = []
-                for (let i = 0; i < this.cart.inclusions.length; i++){
-                    inclusions.push(this.cart.inclusions[i].Name)
-                }
+                var inclusions = this.cart.inclusions.map(inclusion => inclusion.Name)
+
                 var appointment = {
                     ClientName: this.customer.name,
                     ClientEmail: this.customer.email,
@@ -109,7 +107,7 @@
         },
         computed: {
             totalPrice() {
-                let servicePrice = this.cart.service.Price;
+                let servicePrice = this.cart.service.OnSale ? this.cart.service.SalePrice : this.cart.service.Price;
                 let inclusionsPrice = this.cart.inclusions.reduce((partialSum, a) => partialSum + a.Price, 0) || 0;
                 return servicePrice + inclusionsPrice;
             },
