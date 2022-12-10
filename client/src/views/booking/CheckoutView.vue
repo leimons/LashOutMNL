@@ -18,7 +18,6 @@
                 currentStep: 1,
                 mounted: false,
                 scrollMargin: 0,
-                TotalPrice: Number,
                 Inclusions: [],
 
                 date: new Date(),  // selected date (consider only day, month, time)
@@ -28,7 +27,8 @@
                     email: '',
                     contact: ''
                 },
-                proofOfPayment: null
+                proofOfPayment: null,
+                hasSetAppointment: false
             }
         },
         mounted() {
@@ -89,20 +89,22 @@
                 console.log(this.proofOfPayment) */
             },
             createAppointment(){
-                var inclusions = this.cart.inclusions.map(inclusion => inclusion.Name)
+                if ( !this.hasSetAppointment ) {
+                    var appointment = {
+                        ClientName: this.customer.name,
+                        ClientEmail: this.customer.email,
+                        ClientContact: this.customer.contact,
+                        Product: this.cart.service.Service,
+                        Inclusions: this.cart.inclusions.map(inclusion => inclusion.Name),
+                        AmountDue: this.totalPrice,
+                        Schedule: this.selectedSchedule,
+                    }
+                    dbFunctions.addAllAppointment(appointment, this.proofOfPayment)
+                    //dbFunctions.addAppointment(appointment, this.proofOfPayment)
+                    //dbFunctions.uploadPayment(this.proofOfPayment)
 
-                var appointment = {
-                    ClientName: this.customer.name,
-                    ClientEmail: this.customer.email,
-                    ClientContact: this.customer.contact,
-                    Product: this.cart.service.Service,
-                    Inclusions: inclusions,
-                    AmountDue: this.totalPrice,
-                    Schedule: this.selectedSchedule,
+                    this.hasSetAppointment = true;
                 }
-                dbFunctions.addAllAppointment(appointment, this.proofOfPayment)
-                //dbFunctions.addAppointment(appointment, this.proofOfPayment)
-                //dbFunctions.uploadPayment(this.proofOfPayment)
             }
         },
         computed: {
@@ -301,7 +303,7 @@
 
                         <div class="flex-row">
                             <button class="small grey" v-show="(currentStep == 4)" @click="prevStep">Back</button>
-                            <button class="small dark next" v-show="(currentStep == 4)  && completedStep(4)">Next</button>
+                            <button class="small dark next" v-show="(currentStep == 4) && completedStep(4)" :disabled="hasSetAppointment">Next</button>
                         </div>
                     </form>
 
