@@ -63,7 +63,7 @@
                         return true;    // No requirements
                     case 2: // Select schedule
                         return !(
-                            this.selectedSchedule.toDateString() == new Date().toDateString()    // No same day booking
+                            ((this.selectedSchedule.getTime() - new Date().getTime()) / 36e5) < 2 // Minimum lead time is 2 hours
                             || this.selectedSchedule.getDay() == 1   // Closed on Mondays
                             || this.time == ''   // Must have selected time
                         );
@@ -121,7 +121,19 @@
             availableTimes() {
                 // Returns the available times during the selected date.
                 // TODO: Get available times from API. Will return mock data for now
-                return ["8:00 AM", "10:00 AM", "1:00 PM", "3:00 PM", "5:00 PM", "7:00 PM"];
+                var availableTimesAPI = ["8:00 AM", "10:00 AM", "1:00 PM", "3:00 PM", "5:00 PM", "7:00 PM"];
+
+                if ( this.selectedSchedule.toDateString() == new Date().toDateString() ) {
+                    // If same day, booking must be at least 2 hours after the appointment is made
+                    var now = new Date();
+                    var today = now.toISOString().split('T')[0];
+
+                    return availableTimesAPI.filter(time_ => {
+                        let sched = new Date(`${today} ${time_} GMT+0800`);
+                        return ((sched.getTime() - now.getTime()) / 36e5) >= 2
+                    }) 
+                } else
+                    return availableTimesAPI
             },
             selectedSchedule() {
                 // Returns a date object with the selected date and time
@@ -131,9 +143,9 @@
             earliestBookingDate() {
                 var date = new Date();
 
-                do {
-                    date.setDate(date.getDate() + 1); // add a day
-                } while (date.getDay() == 1);    // check if day is Monday
+                while (date.getDay() == 1) { // Closed on Mondays. TODO: Check if slots for the day is full
+                    date.setDate(date.getDate() + 1);
+                }
 
                 return date;
             }
