@@ -22,7 +22,7 @@ const sv_controller = {
 		var refID = req.body._id;
 		console.log(refID+ " " + refname);
         	console.log("deleting: " + refname);
-        	//db.deleteOne(Product,{_id: refID}, function(){});
+        	db.deleteOne(Product,{_id: refID}, function(){});
 		console.log(refname + " deleted");
 		res.status(201).send();
     },

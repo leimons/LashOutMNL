@@ -2,6 +2,7 @@
     import AdminLayout from '@/layouts/AdminLayout.vue';
 
     import axios from 'axios';
+    import adminfunctions from '@/adminfunctions.js';
 
     export default {
         name: 'AdminServices',
@@ -38,6 +39,18 @@
             services() {
                 return [...this.categories['Lashes'], ...this.categories['Nails'], ...this.categories['Brows']];
             }
+        },
+        methods: {
+            deleteService(service) {
+                if ( confirm(`Are you sure you want to delete "${service.Service}"?`) ) {
+                    adminfunctions.deleteService(service._id, service.Service);
+
+                    // Remove deleted service from view
+                    this.categories[service.Category] = this.categories[service.Category].filter(
+                        service_ => service_._id != service._id
+                    );
+                }
+            }
         }
     }
 </script>
@@ -48,18 +61,28 @@
             <h1>Services</h1><br />
 
             <div class="grid-container">
-                <a class="service-container" :href="`/admin/services/${service._id}`" v-for="service in this.services" :key="service._id">
-                    <img src="https://via.placeholder.com/280x176/cccccc/fdf8f4?text=LashOut" /> <!-- Placeholder. TODO: Replace with service image -->
-                    
-                    <h3>{{ service.Service }}</h3>
-                    <div>
-                        <span class="bg-primary200">{{ service.Category }}</span>
-                        <span class="bg-secondary200">{{ service.Subcategory }}</span>
-                    </div>
+                <div class="service-container" v-for="service in this.services" :key="service._id">
+                    <button class="uil uil-trash-alt" @click="deleteService(service)"></button>
+                    <a :href="`/admin/services/${service._id}`">
+                        <img src="https://via.placeholder.com/280x176/cccccc/fdf8f4?text=LashOut" /> <!-- Placeholder. TODO: Replace with service image -->
+                        
+                        <h3>{{ service.Service }}</h3>
+                        <div>
+                            <span class="bg-primary200">{{ service.Category }}</span>
+                            <span class="bg-secondary200">{{ service.Subcategory }}</span>
+                        </div>
+                    </a>
+                </div>
+                <a class="service-container" id="add-service-btn">
+                    <i class="uil uil-plus"></i>
                 </a>
             </div>
         </div>
     </AdminLayout>
+
+    <div id="confirmation-popup">
+
+    </div>
 </template>
 
 <style>
@@ -82,6 +105,7 @@
     }
 
     .service-container {
+        position: relative;
         display: flex;
         flex-direction: column;
 
@@ -101,7 +125,35 @@
             margin-right: 4px;
         }
 
-        .service-container h3, .service-container > div {
+        .service-container h3, .service-container > a > div {
             padding: 12px;
+        }
+
+    .service-container button.uil {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        width: min-content;
+        padding: 6px;
+
+        font-size: x-large;
+        color: grey;
+        border: none;
+        z-index: 4;
+    }
+
+    #add-service-btn {
+        border: none;
+        background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='grey' stroke-width='4' stroke-dasharray='15' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+
+        font-size: 80pt;
+        font-weight: 300;
+        opacity: 0.75;
+    }
+
+        #add-service-btn > i {
+            margin-inline: auto;
+            line-height: 280px;
+            opacity: 0.5;
         }
 </style>
