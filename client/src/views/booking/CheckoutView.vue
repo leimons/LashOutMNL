@@ -107,7 +107,7 @@
         <PaymentSubview id="payment-card" :step=4 :currentStep="currentStep" @complete-step="updatePayment" @back="prevStep" />
 
         <!-- Temporary only -->
-        <MilestoneCard v-show="step == 5">
+        <MilestoneCard v-show="currentStep == 5">
             <template #content>
                 <button class="small dark" :disabled="isLoading" @click="createAppointment">Book Appointment</button>
             </template>

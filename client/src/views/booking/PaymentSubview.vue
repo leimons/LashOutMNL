@@ -13,7 +13,7 @@
         data() {
             return {
                 proofOfPayment: null,
-                hasSetAppointment: false
+                error: ''
             }
         },
         computed: {
@@ -25,6 +25,18 @@
             onFileChange() {
                 this.proofOfPayment = this.$refs.paymentFile.files[0];
             },
+            validate() {
+                if ( this.proofOfPayment == null )
+                    this.error = "Please upload proof of payment"
+                else
+                    this.error = '';
+
+                return this.error == '';
+            },
+            completeStep() {
+                if ( this.validate() )
+                    this.$emit('completeStep', this.proofOfPayment);
+            }
         }
     }
 </script>
@@ -59,9 +71,13 @@
                                    
                 <input type="file" ref="paymentFile" accept="image/png, image/jpg, image/jpeg" name="editImg" id="editImg" @change="onFileChange" />
 
+                <p class="alert-box bg-primary200" v-show="error">
+                    <b>Error:</b> {{ error }}
+                </p>
+
                 <div class="flex-row">
                     <button class="small grey" v-show="isActiveStep" @click="this.$emit('back')">Back</button>
-                    <button class="small dark next" v-show="isActiveStep" :disabled="hasSetAppointment">Next</button>
+                    <button class="small dark next" v-show="isActiveStep" @click="completeStep">Next</button>
                 </div>
                 
             </form>
@@ -71,7 +87,6 @@
 
 <style>
     .mop-card {
-        box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
         border: 1px solid #ccc;
         border-radius: 10px;
         padding: 20px;
