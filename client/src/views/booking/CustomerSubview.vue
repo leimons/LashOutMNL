@@ -25,7 +25,7 @@
 </script>
 
 <template>
-    <MilestoneCard :step=3 :currentStep="currentStep">
+    <MilestoneCard :step=step :currentStep="currentStep">
         <template #heading>
             Personal Information
         </template>
