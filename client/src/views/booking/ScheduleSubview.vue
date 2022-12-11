@@ -73,7 +73,6 @@
                 else
                     this.error = '';
 
-                console.log(this.error == '')
                 return this.error == '';
             },
             completeStep() {
