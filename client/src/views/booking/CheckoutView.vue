@@ -133,6 +133,8 @@
     }
 
     .small-gap { gap: 10px; }
+    
+    .alert-box { padding: 20px; }
 
     input[type=text], input[type=email], input[type=tel] {
         border-radius: 0;

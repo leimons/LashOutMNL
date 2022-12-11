@@ -14,7 +14,8 @@
         data() {
             return {
                 date: new Date(),
-                time: '',  
+                time: '', 
+                error: ''
             }
         },
         mounted() {
@@ -62,8 +63,22 @@
             
                 return availableTimesAPI
             },
+            validate() {
+                if ( ((this.selectedSchedule.getTime() - new Date().getTime()) / 36e5) < 2 )
+                    this.error = "Booking must be made at least two hours before the appointment schedule. Please choose a different schedule."
+                else if ( this.selectedSchedule.getDay() == 1 )
+                    this.error = "Sorry, we're closed on this day. Please choose a different date."
+                else if ( this.time == '' )
+                    this.error = "Please choose a time for your appointment."
+                else
+                    this.error = '';
+
+                console.log(this.error == '')
+                return this.error == '';
+            },
             completeStep() {
-                this.$emit('completeStep', this.selectedSchedule);
+                if ( this.validate() )
+                    this.$emit('completeStep', this.selectedSchedule);
             }
         }
     }
@@ -103,9 +118,13 @@
                     </div>
                 </div>
 
-                <p id="alert-appointment" v-show="time">
+                <p class="alert-box bg-secondary100" v-show="time">
                     <b>Your appointment is on:</b><br />
                     {{ selectedSchedule }}
+                </p>
+
+                <p class="alert-box bg-primary200" v-show="error && !time">
+                    <b>Error:</b> {{ error }}
                 </p>
 
                 <div class="flex-row">
@@ -116,10 +135,3 @@
         </template>
     </MilestoneCard>
 </template>
-
-<style>
-    #alert-appointment {
-        padding: 20px;
-        background-color: var(--secondary100);
-    }
-</style>
