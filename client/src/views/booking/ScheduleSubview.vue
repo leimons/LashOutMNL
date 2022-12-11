@@ -71,7 +71,7 @@
             Select Schedule
         </template>
         <template #content>
-            <div class="flex-col" id="schedules-card">
+            <div class="flex-col" :id="id">
                 <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for select schedule -->
             
                 <div class="flex-row">
