@@ -12,9 +12,12 @@
         },
         data() {
             return {
-                name: '',
-                email: '',
-                contact: ''
+                customer: {
+                    name: '',
+                    email: '',
+                    contact: ''
+                },
+                error: ''
             }
         },
         computed: {
@@ -23,8 +26,27 @@
             }
         },
         methods: {
+            validate() {
+                if ( this.customer.name.length < 5 )
+                    this.error = 'Name field must be have at least 5 characters'
+                else if ( !/^[a-zA-Z\s]+$/.test(this.customer.name) )
+                    this.error = 'Name field must only contain alphabets'
+
+                else if ( !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(this.customer.email) )
+                    this.error = 'Email must be a valid email'
+
+                else if ( !/^(09|639)/.test(this.customer.contact) )
+                    this.error = 'Contact number must begin with 09 or 639'
+                else if ( !/^\d+$/.test(this.customer.contact) )
+                    this.error = 'Invalid contact number'
+                else
+                    this.error = ''
+
+                return this.error == ''
+            },
             completeStep() {
-                this.$emit('completeStep', this.$data);
+                if ( this.validate() )
+                    this.$emit('completeStep', this.customer);
             }
         }
     }
@@ -44,17 +66,22 @@
                 <div style="width: 100%;">
                     <div class="flex-row">
                         <label for="name">Name</label>
-                        <input type="text" id="name" v-model="name" required />
+                        <input type="text" id="name" v-model="customer.name" required />
                     </div>
                     <div class="flex-row">
                         <label for="email">Email</label>
-                        <input type="email" id="email" v-model="email" required />
+                        <input type="email" id="email" v-model="customer.email" required />
                     </div>
                     <div class="flex-row">
                         <label for="phone">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" v-model="contact" required />
+                        <input type="tel" id="phone" name="phone" v-model="customer.contact" required />
                     </div>
                 </div>
+
+                
+                <p class="alert-box bg-primary200" v-show="error">
+                    <b>Error:</b> {{ error }}
+                </p>
 
                 <div class="flex-row">
                     <button class="small grey" v-show="isActiveStep" @click="this.$emit('back')">Back</button>
