@@ -59,3 +59,16 @@
         </template>
     </MilestoneCard>
 </template>
+
+<style scoped>
+    label {
+        display: inline-block;
+        width: 100px;
+        text-align: right;
+        padding-right: 15px;
+    }
+
+    input {
+        flex: 3;
+    }
+</style>

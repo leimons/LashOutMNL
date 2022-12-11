@@ -74,7 +74,7 @@
             <div class="flex-col" :id="id">
                 <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for select schedule -->
             
-                <div class="flex-row">
+                <div class="flex-row" style="align-items: baseline;">
                     <div class="flex-col">
                         <h3>Select Date:</h3>
                         <DatePicker 
@@ -112,3 +112,10 @@
         </template>
     </MilestoneCard>
 </template>
+
+<style>
+    #alert-appointment {
+        padding: 20px;
+        background-color: var(--secondary100);
+    }
+</style>

@@ -82,3 +82,22 @@
         </template>
     </MilestoneCard>
 </template>
+
+<style>
+    #service-img {
+        width: calc(350px * 0.9);
+        width: calc(220px * 0.9);
+    }
+
+    .selection {
+        box-shadow: rgba(99, 99, 99, 0.05) 0px 2px 8px 0px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        padding: 8px 12px;
+    }
+
+    #inclusions-card p, #inclusions-card h3 {
+        font-family: 'Lora';
+        font-weight: normal;
+    }
+</style>

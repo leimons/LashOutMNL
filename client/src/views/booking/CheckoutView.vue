@@ -1,25 +1,21 @@
-<script>
-    import MilestoneCard from '@/components/Booking/MilestoneCard.vue';
-    
+<script>    
     import InclusionSubview from '@/views/booking/InclusionSubview.vue';
     import ScheduleSubview from '@/views/booking/ScheduleSubview.vue';
     import CustomerSubview from '@/views/booking//CustomerSubview.vue';
+    import PaymentSubview from '@/views/booking/PaymentSubview.vue';
     import dbFunctions from '@/dbFunctions.js';
 
-    const SECTION_ID = ["#inclusions-card", "#schedules-card", "#info-card"];
+    const SECTION_ID = ["#inclusions-card", "#schedules-card", "#info-card", "#payment-card"];
 
     export default {
         name: 'CheckoutView',
         title: 'Checkout | LashOut MNL',
-        components: { MilestoneCard, InclusionSubview, ScheduleSubview, CustomerSubview },
+        components: { InclusionSubview, ScheduleSubview, CustomerSubview, PaymentSubview },
         data() {
             return {
                 currentStep: 1,
                 scrollMargin: 0,
-                isLoading: true,
-   
-                proofOfPayment: null,
-                hasSetAppointment: false
+                isLoading: true
             }
         },
         mounted() {
@@ -61,14 +57,6 @@
                     default:    return ;
                 }
             },
-            onFileChange() {
-                this.proofOfPayment = this.$refs.paymentFile.files[0]
-            //    console.log(this.proofOfPayment)
-            /*    var files = e.target.files || e.dataTransfer.files;
-                if (!files.length)  return;
-                this.proofOfPayment = URL.createObjectURL(files[0]);
-                console.log(this.proofOfPayment) */
-            },
             createAppointment(){
                 if ( !this.hasSetAppointment ) {
                     var appointment = {
@@ -107,44 +95,8 @@
         <CustomerSubview id="info-card" :step=3 :currentStep="currentStep" />
 
         <!-- Step 4: Payment Information -->
-        <MilestoneCard :step=4 :currentStep="currentStep">
-            <template #heading>
-                Payment Information
-            </template>
-            <template #content>
-                <div class="flex-col" id="info-card">
-                    
-                    <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for enter information -->
-                
-                    <!-- Mode of Payment Options -->
-                    <div class="flex-row">
-                        <div class="mop-card flex-row">
-                            <img src="https://cdn1.codashop.com/S/content/common/images/mno/DRAGONPAY_GCash_CHNL_LOGO.png" alt="GCash" />
-                            <div>
-                                <p>Nicole Patricia F. Suriaga</p>
-                                <p>09773843092</p>
-                            </div>
-                        </div>
-                        <div class="mop-card flex-row">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Asia_United_Bank_logo.svg/2560px-Asia_United_Bank_logo.svg.png" alt="Asia United Bank" />
-                            <div>
-                                <p>Nicole Patricia F. Suriaga</p>
-                                <p>525-11-0000693</p>
-                            </div>
-                        </div>
-                    </div>
-                    <form @submit.prevent="createAppointment" enctype="multipart/form-data">                   
-                        <input type="file" ref="paymentFile" accept="image/png, image/jpg, image/jpeg" name="editImg" id="editImg" @change="onFileChange" />
-
-                        <div class="flex-row">
-                            <button class="small grey" v-show="(currentStep == 4)" @click="prevStep">Back</button>
-                            <button class="small dark next" v-show="(currentStep == 4) && completedStep(4)" :disabled="hasSetAppointment">Next</button>
-                        </div>
-                    </form>
-
-                </div>
-            </template>
-        </MilestoneCard>
+        <PaymentSubview id="payment-card" :step=4 :currentStep="currentStep" />
+        
     </div>
 </template>
 
@@ -174,12 +126,6 @@
         background: none;
     }
 
-    input[type=file] {
-        border: 1.2px dashed #ccc;
-    }
-    
-        input:placeholder-shown { font-style: italic; }
-
     label { flex: 1; }
 
     #logo {
@@ -206,56 +152,4 @@
         width: min-content;
         margin-left: auto;
     }
-
-    /* SUBSECTION || Inclusion selection */
-    #service-img {
-        width: calc(350px * 0.9);
-        width: calc(220px * 0.9);
-    }
-
-    .selection {
-        box-shadow: rgba(99, 99, 99, 0.05) 0px 2px 8px 0px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        padding: 8px 12px;
-    }
-
-    #inclusions-card p, #inclusions-card h3 {
-        font-family: 'Lora';
-        font-weight: normal;
-    }
-
-    /* SUBSECTION || Schedule selection */
-    #schedules-card > div {
-        align-items: baseline;
-    }
-
-    #alert-appointment {
-        padding: 20px;
-        background-color: var(--secondary100);
-    }
-
-    /* SUBSECTION || Customer information */
-    #info-card label {
-        display: inline-block;
-        width: 100px;
-        text-align: right;
-        padding-right: 15px;
-    }
-
-    #info-card input {
-        flex: 3;
-    }
-
-    /* SUBSECTION || Payment information */
-    .mop-card {
-        box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
-    }
-
-        .mop-card img {
-            width: 100px;
-        }
 </style>
