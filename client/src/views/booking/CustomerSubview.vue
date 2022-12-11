@@ -4,6 +4,7 @@
     export default {
         name: 'CustomerSubview',
         components: { MilestoneCard },
+        emits: ['complete-step', 'back'],
         props: {
             step: Number,
             currentStep: Number,
@@ -19,6 +20,11 @@
         computed: {
             isActiveStep() {
                 return this.step == this.currentStep
+            }
+        },
+        methods: {
+            completeStep() {
+                this.$emit('completeStep', this.$data);
             }
         }
     }
@@ -51,8 +57,8 @@
                 </div>
 
                 <div class="flex-row">
-                    <button class="small grey" v-show="isActiveStep" @click="prevStep">Back</button>
-                    <button class="small dark next" v-show="(currentStep == 3)  && completedStep(3)" @click="nextStep">Next</button>
+                    <button class="small grey" v-show="isActiveStep" @click="this.$emit('back')">Back</button>
+                    <button class="small dark next" v-show="isActiveStep" @click="completeStep">Next</button>
                 </div>
 
             </div>

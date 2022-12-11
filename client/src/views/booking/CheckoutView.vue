@@ -3,6 +3,8 @@
     import ScheduleSubview from '@/views/booking/ScheduleSubview.vue';
     import CustomerSubview from '@/views/booking//CustomerSubview.vue';
     import PaymentSubview from '@/views/booking/PaymentSubview.vue';
+    import MilestoneCard from '@/components/Booking/MilestoneCard.vue';
+
     import dbFunctions from '@/dbFunctions.js';
 
     const SECTION_ID = ["#inclusions-card", "#schedules-card", "#info-card", "#payment-card"];
@@ -10,12 +12,14 @@
     export default {
         name: 'CheckoutView',
         title: 'Checkout | LashOut MNL',
-        components: { InclusionSubview, ScheduleSubview, CustomerSubview, PaymentSubview },
+        components: { MilestoneCard, InclusionSubview, ScheduleSubview, CustomerSubview, PaymentSubview },
         data() {
             return {
                 currentStep: 1,
                 scrollMargin: 0,
-                isLoading: true
+                isLoading: true,
+
+                bookingDetails: {}
             }
         },
         mounted() {
@@ -58,24 +62,29 @@
                 }
             },
             createAppointment(){
-                if ( !this.hasSetAppointment ) {
-                    var appointment = {
-                        ClientName: this.customer.name,
-                        ClientEmail: this.customer.email,
-                        ClientContact: this.customer.contact,
-                        Product: this.cart.service.Service,
-                        Inclusions: this.cart.inclusions.map(inclusion => inclusion.Name),
-                        AmountDue: this.totalPrice,
-                        Schedule: this.selectedSchedule,
-                    }
-                    dbFunctions.addAllAppointment(appointment, this.proofOfPayment)
-                    //dbFunctions.addAppointment(appointment, this.proofOfPayment)
-                    //dbFunctions.uploadPayment(this.proofOfPayment)
+                var { proofOfPayment, ...appointment } = this.bookingDetails;
+                dbFunctions.addAllAppointment(appointment, proofOfPayment);
 
-                    this.hasSetAppointment = true;
-                }
+                this.isLoading = true;
+                // TODO: Redirect to confirmation page
             },
-            
+            updateInclusions(service, inclusions, AmountDue) {
+                this.bookingDetails = { ...this.bookingDetails, service, inclusions, AmountDue };
+                this.nextStep();
+            },
+            updateSchedule(schedule) {
+                this.bookingDetails = { ...this.bookingDetails, schedule };
+                this.nextStep();
+            },
+            updateCustomer(customerInfo) {
+                var { name, email, contact } = customerInfo;
+                this.bookingDetails = { ...this.bookingDetails, name, email, contact };
+                this.nextStep();
+            },
+            updatePayment(proofOfPayment) {
+                this.bookingDetails = { ...this.bookingDetails, proofOfPayment };
+                this.nextStep();
+            }
         },
     }
 </script>
@@ -86,17 +95,23 @@
     <div id="cards-container" v-if="!isLoading" ref="container" @wheel.prevent @touchmove.prevent @scroll.prevent :style="{ 'margin-top': this.scrollMargin + 'px' }">
 
         <!-- Step 1: Select inclusions -->
-        <InclusionSubview id="inclusions-card" :step=1 :currentStep="currentStep" />
+        <InclusionSubview id="inclusions-card" :step=1 :currentStep="currentStep" @complete-step="updateInclusions" />
 
         <!-- Step 2: Select schedule -->
-        <ScheduleSubview id="schedules-card" :step=2 :currentStep="currentStep" />
+        <ScheduleSubview id="schedules-card" :step=2 :currentStep="currentStep" @complete-step="updateSchedule" @back="prevStep" />
 
         <!-- Step 3: Enter information -->
-        <CustomerSubview id="info-card" :step=3 :currentStep="currentStep" />
+        <CustomerSubview id="info-card" :step=3 :currentStep="currentStep" @complete-step="updateCustomer" @back="prevStep" />
 
         <!-- Step 4: Payment Information -->
-        <PaymentSubview id="payment-card" :step=4 :currentStep="currentStep" />
-        
+        <PaymentSubview id="payment-card" :step=4 :currentStep="currentStep" @complete-step="updatePayment" @back="prevStep" />
+
+        <!-- Temporary only -->
+        <MilestoneCard v-show="step == 5">
+            <template #content>
+                <button class="small dark" :disabled="isLoading" @click="createAppointment">Book Appointment</button>
+            </template>
+        </MilestoneCard>
     </div>
 </template>
 
@@ -119,7 +134,7 @@
 
     .small-gap { gap: 10px; }
 
-    input[type=text], input[type=email], input[type=tel], input[type=file] {
+    input[type=text], input[type=email], input[type=tel] {
         border-radius: 0;
         border: none;
         border-bottom: 1.2pt solid grey;

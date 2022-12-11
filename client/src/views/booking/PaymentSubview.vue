@@ -4,6 +4,7 @@
     export default {
         name: 'PaymentSubview',
         components: { MilestoneCard },
+        emits: ['back'],
         props: {
             step: Number,
             currentStep: Number,
@@ -22,12 +23,7 @@
         },
         methods: {
             onFileChange() {
-                this.proofOfPayment = this.$refs.paymentFile.files[0]
-            //    console.log(this.proofOfPayment)
-            /*    var files = e.target.files || e.dataTransfer.files;
-                if (!files.length)  return;
-                this.proofOfPayment = URL.createObjectURL(files[0]);
-                console.log(this.proofOfPayment) */
+                this.proofOfPayment = this.$refs.paymentFile.files[0];
             },
         }
     }
@@ -39,7 +35,7 @@
             Payment Information
         </template>
         <template #content>
-            <div class="flex-col" :id="id">
+            <form @submit.prevent="createAppointment" enctype="multipart/form-data" class="flex-col" :id="id">
                 
                 <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for enter information -->
             
@@ -60,16 +56,15 @@
                         </div>
                     </div>
                 </div>
-                <form @submit.prevent="createAppointment" enctype="multipart/form-data">                   
-                    <input type="file" ref="paymentFile" accept="image/png, image/jpg, image/jpeg" name="editImg" id="editImg" @change="onFileChange" />
+                                   
+                <input type="file" ref="paymentFile" accept="image/png, image/jpg, image/jpeg" name="editImg" id="editImg" @change="onFileChange" />
 
-                    <div class="flex-row">
-                        <button class="small grey" v-show="isActiveStep" @click="prevStep">Back</button>
-                        <button class="small dark next" v-show="(currentStep == 4) && completedStep(4)" :disabled="hasSetAppointment">Next</button>
-                    </div>
-                </form>
-
-            </div>
+                <div class="flex-row">
+                    <button class="small grey" v-show="isActiveStep" @click="this.$emit('back')">Back</button>
+                    <button class="small dark next" v-show="isActiveStep" :disabled="hasSetAppointment">Next</button>
+                </div>
+                
+            </form>
         </template>
     </MilestoneCard>
 </template>
@@ -88,5 +83,7 @@
 
     input[type=file] {
         border: 1.2px dashed #ccc;
+        border-radius: 0;
+        background: none;
     }
 </style>

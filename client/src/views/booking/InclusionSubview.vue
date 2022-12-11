@@ -8,6 +8,7 @@
         name: 'InclusionSubview',
         components: { MilestoneCard },
         mixins: [cartMixin],
+        emits: ['complete-step'],
         props: {
             step: Number,
             currentStep: Number,
@@ -31,6 +32,13 @@
         computed: {
             isActiveStep() {
                 return this.step == this.currentStep
+            }
+        },
+        methods: {
+            completeStep() {
+                let serviceName = this.cart.service;
+                let inclusionNames = this.cart.inclusions.map(inclusion => inclusion.Name);
+                this.$emit('completeStep', serviceName, inclusionNames, this.totalPrice);
             }
         }
     }
@@ -72,7 +80,7 @@
                 </div>
 
                 <div class="flex-row" style="flex-direction: row-reverse;">
-                    <button class="small dark" v-show="isActiveStep" @click="nextStep">Next</button>
+                    <button class="small dark" v-show="isActiveStep" @click="completeStep">Next</button>
                     <h3 class="text-secondary900">
                         <b>Total:</b> {{ formatPrice(totalPrice) }}
                     </h3>

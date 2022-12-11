@@ -61,9 +61,9 @@
 
 <template>
     <div :class="classes" @click.stop="this.disabled">
-        <div class="card-heading">
-            <span>{{ step }}</span>
-            <h2><slot name="heading">Heading</slot></h2>
+        <div class="card-heading" v-if="step || $slots.heading">
+            <span v-if="step">{{ step }}</span>
+            <h2><slot name="heading"></slot></h2>
         </div>
         
         <div class="card-content" ref="content">

@@ -5,6 +5,7 @@
     export default {
         name: 'ScheduleSubview',
         components: { MilestoneCard, DatePicker },
+        emits: ['complete-step', 'back'],
         props: {
             step: Number,
             currentStep: Number,
@@ -60,6 +61,9 @@
                 }
             
                 return availableTimesAPI
+            },
+            completeStep() {
+                this.$emit('completeStep', this.selectedSchedule);
             }
         }
     }
@@ -105,8 +109,8 @@
                 </p>
 
                 <div class="flex-row">
-                    <button class="small grey" v-show="isActiveStep" @click="prevStep">Back</button>
-                    <button class="small dark next" v-show="(currentStep == 2) && completedStep(2)" @click="nextStep">Next</button>
+                    <button class="small grey" v-show="isActiveStep" @click="this.$emit('back')">Back</button>
+                    <button class="small dark next" v-show="isActiveStep" @click="completeStep">Next</button>
                 </div>
             </div>
         </template>
