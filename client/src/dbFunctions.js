@@ -9,15 +9,6 @@ class Appointment {
     static addAppointment (query) {
         var url = "http://localhost:3000/api/addAppointment"
         return axios.post(url, query);
-        /*return axios.post(url, {
-            name: value.ClientName,
-            email: value.ClientEmail,
-            contact: value.ClientContact,
-            service: value.Product,
-            inclusions: value.Inclusions,
-            AmountDue: value.AmountDue,
-            schedule: value.Schedule,
-        })*/
     }
     static uploadPayment (value){
         var url = "http://localhost:3000/api/uploadPayment"
