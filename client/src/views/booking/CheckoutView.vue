@@ -2,8 +2,7 @@
     import MilestoneCard from '@/components/Booking/MilestoneCard.vue';
     import { DatePicker } from "v-calendar";
 
-    import cartMixin from '@/mixins/cartMixin';
-    import axios from 'axios';
+    import InclusionSubview from '@/views/booking/InclusionSubview.vue';
     import dbFunctions from '@/dbFunctions.js';
 
     const SECTION_ID = ["#inclusions-card", "#schedules-card", "#info-card"];
@@ -11,17 +10,14 @@
     export default {
         name: 'CheckoutView',
         title: 'Checkout | LashOut MNL',
-        components: { MilestoneCard, DatePicker },
-        mixins: [cartMixin],
+        components: { MilestoneCard, DatePicker, InclusionSubview },
         data() {
             return {
                 currentStep: 1,
-                mounted: false,
                 scrollMargin: 0,
-                Inclusions: [],
 
-                date: new Date(),  // selected date (consider only day, month, time)
-                time: '',          // selected time
+                date: null,
+                time: '',         
                 customer: {
                     name: '',
                     email: '',
@@ -32,17 +28,7 @@
             }
         },
         mounted() {
-            this.mounted = true;
             this.date = this.earliestBookingDate;
-
-            axios
-                .get(`/api/getInclusions/`+ this.cart.service.Category)
-                .then((response)=>{
-                    this.Inclusions = response.data
-                })
-                .catch((e) => {
-                    console.log(e)
-                })
         },
         methods: {
             prevStep() {
@@ -126,11 +112,6 @@
             }
         },
         computed: {
-            totalPrice() {
-                let servicePrice = this.cart.service.OnSale ? this.cart.service.SalePrice : this.cart.service.Price;
-                let inclusionsPrice = this.cart.inclusions.reduce((partialSum, a) => partialSum + a.Price, 0) || 0;
-                return servicePrice + inclusionsPrice;
-            },
             day() {
                 // Returns the selected date formatted (ex. 'Dec 1, 2022')
                 const options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -156,47 +137,10 @@
 <template>
     <a href="/" id="logo"><img src="@/assets/images/logo.png" height="70" /></a>
 
-    <div id="cards-container" v-if="mounted" ref="container" @wheel.prevent @touchmove.prevent @scroll.prevent :style="{ 'margin-top': this.scrollMargin + 'px' }">
+    <div id="cards-container" v-if="this.date" ref="container" @wheel.prevent @touchmove.prevent @scroll.prevent :style="{ 'margin-top': this.scrollMargin + 'px' }">
 
         <!-- Step 1: Select inclusions -->
-        <MilestoneCard :step=1 :currentStep="currentStep">
-            <template #heading>
-                Select Inclusions
-            </template>
-            <template #content>
-                <div class="flex-col" id="inclusions-card">
-                    <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for select inclusions -->
-
-                    <div class="flex-row" style="align-items: flex-start;">
-                        <!-- selected service -->
-                        <div class="flex-col small-gap" style="width: 200px;">
-                            <img id="service-img" src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" /> <!-- Placeholder. TODO: Replace with service image -->
-
-                            <div>
-                                <b>{{ cart.service.Service }}</b>
-                                <p>{{ formatPrice(cart.service.OnSale ? cart.service.SalePrice : cart.service.Price) }}</p>
-                            </div>
-                        </div>
-
-                        <!-- inclusions -->
-                        <div class="flex-col small-gap" style="flex: 1;">
-                            <div class="flex-row selection" v-for="(inclusion, index) in Inclusions" :key="inclusion._id">
-                                <input type="checkbox" :value="inclusion" v-model="this.cart.inclusions" :id="index"/>
-                                <label :for= "index">{{ inclusion.Name }}</label>
-                                <p>{{ formatPrice(inclusion.Price) }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex-row" style="flex-direction: row-reverse;">
-                        <button class="small dark" v-show="(currentStep == 1)" @click="nextStep">Next</button>
-                        <h3 class="text-secondary900">
-                            <b>Total:</b> {{ formatPrice(totalPrice) }}
-                        </h3>
-                    </div>
-                </div>
-            </template>
-        </MilestoneCard>
+        <InclusionSubview id="inclusions-card" :step=1 :currentStep="currentStep" />
 
 
         <!-- Step 2: Select schedule -->
