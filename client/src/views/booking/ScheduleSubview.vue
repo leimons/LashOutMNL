@@ -105,7 +105,7 @@
                 </p>
 
                 <div class="flex-row">
-                    <button class="small grey" v-show="(currentStep == 2)" @click="prevStep">Back</button>
+                    <button class="small grey" v-show="isActiveStep" @click="prevStep">Back</button>
                     <button class="small dark next" v-show="(currentStep == 2) && completedStep(2)" @click="nextStep">Next</button>
                 </div>
             </div>
