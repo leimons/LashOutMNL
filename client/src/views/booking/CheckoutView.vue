@@ -105,6 +105,24 @@
 
                     this.hasSetAppointment = true;
                 }
+            },
+            getAvailableTime(dateKey) {
+                // Returns the available times during the selected date.
+                // TODO: Get available times from API. Will return mock data for now
+                var availableTimesAPI = ["8:00 AM", "10:00 AM", "1:00 PM", "3:00 PM", "5:00 PM", "7:00 PM"];
+
+                if ( dateKey.toDateString() == new Date().toDateString() ) {
+                    // If same day, booking must be at least 2 hours after the appointment is made
+                    var now = new Date();
+                    var today = now.toISOString().split('T')[0];
+
+                    return availableTimesAPI.filter(time_ => {
+                        let sched = new Date(`${today} ${time_} GMT+0800`);
+                        return ((sched.getTime() - now.getTime()) / 36e5) >= 2
+                    })
+                }
+            
+                return availableTimesAPI
             }
         },
         computed: {
@@ -118,23 +136,6 @@
                 const options = { year: 'numeric', month: 'short', day: 'numeric' };
                 return this.date.toLocaleDateString('en-US', options);
             },
-            availableTimes() {
-                // Returns the available times during the selected date.
-                // TODO: Get available times from API. Will return mock data for now
-                var availableTimesAPI = ["8:00 AM", "10:00 AM", "1:00 PM", "3:00 PM", "5:00 PM", "7:00 PM"];
-
-                if ( this.selectedSchedule.toDateString() == new Date().toDateString() ) {
-                    // If same day, booking must be at least 2 hours after the appointment is made
-                    var now = new Date();
-                    var today = now.toISOString().split('T')[0];
-
-                    return availableTimesAPI.filter(time_ => {
-                        let sched = new Date(`${today} ${time_} GMT+0800`);
-                        return ((sched.getTime() - now.getTime()) / 36e5) >= 2
-                    }) 
-                } else
-                    return availableTimesAPI
-            },
             selectedSchedule() {
                 // Returns a date object with the selected date and time
                 let selected = this.day + ' ' + this.time + " GMT+0800";
@@ -142,8 +143,7 @@
             },
             earliestBookingDate() {
                 var date = new Date();
-
-                while (date.getDay() == 1) { // Closed on Mondays. TODO: Check if slots for the day is full
+                while (date.getDay() == 1 || this.getAvailableTime(date).length == 0) { // Closed on Mondays
                     date.setDate(date.getDate() + 1);
                 }
 
@@ -225,7 +225,7 @@
                             </div>
                     
                             <div class="flex-col small-gap">
-                                <div class="selection" v-for="tm in availableTimes" :key="tm">
+                                <div class="selection" v-for="tm in getAvailableTime(this.date)" :key="tm">
                                     <input type="radio" :id="tm" :value="tm" v-model="time" required />&nbsp;
                                     <label :for="tm">{{ tm }}</label>
                                 </div>
