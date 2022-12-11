@@ -38,29 +38,6 @@
 
                 this.currentStep++;
             },
-            completedStep() {
-                switch (this.currentStep) {
-                    case 1: // Select inclusions
-                        return true;    // No requirements
-                    case 2: // Select schedule
-                        return !(
-                            ((this.selectedSchedule.getTime() - new Date().getTime()) / 36e5) < 2 // Minimum lead time is 2 hours
-                            || this.selectedSchedule.getDay() == 1   // Closed on Mondays
-                            || this.time == ''   // Must have selected time
-                        );
-                    case 3: // Customer information
-                        return !(
-                            !this.customer.name ||
-                            !this.customer.email ||
-                            !this.customer.contact
-                        );
-                    case 4: // Payment confirmation
-                        return !(
-                            this.proofOfPayment == null
-                        )
-                    default:    return ;
-                }
-            },
             createAppointment(){
                 var { proofOfPayment, ...appointment } = this.bookingDetails;
                 dbFunctions.addAllAppointment(appointment, proofOfPayment);
