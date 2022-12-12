@@ -4,22 +4,24 @@
     import CustomerSubview from '@/views/booking/CustomerSubview.vue';
     import PaymentSubview from '@/views/booking/PaymentSubview.vue';
     import BeauticianSubview from '@/views/booking/BeauticianSubview.vue';
+    import TotalSubview from '@/views/booking/TotalSubview.vue';
     import MilestoneCard from '@/components/Booking/MilestoneCard.vue';
 
     import dbFunctions from '@/dbFunctions.js';
 
-    const SECTION_ID = ["#inclusions-card", "#schedules-card", "#beauticians-card", "#info-card", "#payment-card"];
+    const SECTION_ID = ["#inclusions-card", "#schedules-card", "#beauticians-card", "#info-card", "#subtotal-card", "#payment-card"];
 
     export default {
         name: 'CheckoutView',
         title: 'Checkout | LashOut MNL',
-        components: { MilestoneCard, InclusionSubview, ScheduleSubview, CustomerSubview, PaymentSubview, BeauticianSubview },
+        components: { MilestoneCard, InclusionSubview, ScheduleSubview, CustomerSubview, PaymentSubview, BeauticianSubview, TotalSubview },
         data() {
             return {
                 currentStep: 1,
                 scrollMargin: 0,
                 isLoading: true,
 
+                cart: {},
                 bookingDetails: {}
             }
         },
@@ -47,7 +49,12 @@
                 // TODO: Redirect to confirmation page
             },
             updateInclusions(service, inclusions, AmountDue) {
-                this.bookingDetails = { ...this.bookingDetails, service, inclusions, AmountDue };
+                this.cart = { service, inclusions, AmountDue };
+                this.bookingDetails = { ...this.bookingDetails, 
+                    service: service.Service, 
+                    inclusions: inclusions.map(inc => inc.Name), 
+                    AmountDue
+                };
                 this.nextStep();
             },
             updateSchedule(schedule) {
@@ -88,11 +95,14 @@
         <!-- Step 4: Enter information -->
         <CustomerSubview id="info-card" :step=4 :currentStep="currentStep" @complete-step="updateCustomer" @back="prevStep" />
 
-        <!-- Step 5: Payment Information -->
-        <PaymentSubview id="payment-card" :step=5 :currentStep="currentStep" @complete-step="updatePayment" @back="prevStep" />
+        <!-- Step 5: View selected items  -->
+        <TotalSubview id="subtotal-card" :step=5 :cart="cart" :currentStep="currentStep" @complete-step="nextStep" @back="prevStep" />
+
+        <!-- Step 6: Payment Information -->
+        <PaymentSubview id="payment-card" :step=6 :currentStep="currentStep" @complete-step="updatePayment" @back="prevStep" />
 
         <!-- Temporary only -->
-        <div v-show="currentStep == 6">
+        <div v-show="currentStep == 7">
         <MilestoneCard>
             <template #content>
                 <button class="small dark" :disabled="isLoading" @click="createAppointment">Book Appointment</button>
