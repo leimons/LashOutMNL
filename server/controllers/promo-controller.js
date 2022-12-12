@@ -8,9 +8,10 @@ const p_controller = {
 	modeled after CCAPDEV MCO3
 */
 	p_add: function(req, res) {
-        console.log("inserting: " + req.body.Name);
-        db.insertOne(Promos, req.body, function(){});
+        	console.log("inserting: " + req.body.Name);
+        	db.insertOne(Promos, req.body, function(){});
 		console.log(req.body.Name + "added");
+		res.status(201).send();
     },
 /*delete promos
 	given the name, it deletes the product from the database 
@@ -20,9 +21,10 @@ const p_controller = {
 		var refname = req.body.Name;
 		var refID = req.body._id;
 		console.log(refID + " " + refname);
-        console.log("deleting: " + refname);
-        //db.deleteOne(Promos,{_id: refID}, function(){});
+        	console.log("deleting: " + refname);
+        	db.deleteOne(Promos,{_id: refID}, function(){});
 		console.log(refname + " deleted");
+		res.status(201).send();
     },
 /*edit promos
 */
@@ -34,6 +36,7 @@ const p_controller = {
         	console.log("updating: "+p_name);
         	db.updateOne(Promos,{_id: p_id},{Name:p_name, Category:s_category,Percent:p_percent}, function(){});
 		console.log(p_name + " updated");
+		res.status(201).send();
 	}
 
 } 
