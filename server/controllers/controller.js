@@ -2,6 +2,7 @@ const db = require("../database/models/db");
 const Products = require("../database/models/Products");
 const Appointments = require("../database/models/Appointments");
 const Inclusions = require("../database/models/Inclusions");
+const Beauticians = require("../database/models/Beauticians");
 const Password = require("../database/models/Password");
 const dv = require("dayjs/locale/dv");
 
@@ -55,7 +56,8 @@ const controller = {
         }
     },
 
-    addAppointment: function (req,res){      
+    addAppointment: function (req,res){
+        console.log(req.body)   
         db.findMany(Appointments, {}, 'refNum', function(result){
             var present = []
             var random
@@ -80,6 +82,7 @@ const controller = {
                 Service: req.body.service,
                 Inclusions: req.body.inclusions,
                 AmountDue: req.body.AmountDue,
+                Beautician: req.body.beautician,
                 Schedule: req.body.schedule,
                 PaymentProof: {
                     data: '',
@@ -121,6 +124,20 @@ const controller = {
             console.log(inclusions)
             res.status(201).send(inclusions) 
         })      
+    },
+
+    getBeautician: function(req,res){
+        var Service = req.params.Service
+        var Beautician = []
+        db.findMany(Beauticians,{},"Name Services", function(result){
+            var data = result
+            data.forEach((i)=>{
+                if (i.Services.includes(Service)){
+                    Beautician.push(i.Name)
+                }
+            })
+            res.status(201).send(Beautician)
+        })
     },
 
     getOrderSummary: function(req, res){

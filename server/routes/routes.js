@@ -25,6 +25,8 @@ app.put(`/uploadPayment`, paymentUpload.single('file'), controller.uploadPayment
 
 app.get(`/getInclusions/:category`, controller.getInclusionsPage);
 
+app.get('/getBeauticians/:Service', controller.getBeautician);
+
 app.get(`/getOrderSummary`, controller.getOrderSummary);
 
 app.get(`/getAppointment`, controller.getAppointments);

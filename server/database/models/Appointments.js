@@ -8,6 +8,7 @@ const AppointmentsSchema = new mongoose.Schema({
     Service: String,
     Inclusions: [String],
     AmountDue: Number,
+    Beautician: String,
     Schedule: String,
     PaymentProof:{
         data: Buffer,
