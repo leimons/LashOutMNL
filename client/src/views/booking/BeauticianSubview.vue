@@ -1,9 +1,12 @@
 <script>
     import MilestoneCard from '@/components/Booking/MilestoneCard.vue';
+    import axios from 'axios'
+    import cartMixin from '@/mixins/cartMixin';
 
     export default {
         name: 'BeauticianSubview',
         components: { MilestoneCard },
+        mixins: [cartMixin],
         emits: ['back', 'completeStep'],
         props: {
             step: Number,
@@ -19,13 +22,21 @@
                 error: ''
             }
         },
-        watch: {
-            schedule: function (/* chosenSchedule */) {
-                this.getAvailableBeauticians(/* chosenSchedule */)
+       /* watch: {
+            schedule: function (/* chosenSchedule *//*) {
+                this.getAvailableBeauticians(/* chosenSchedule *//*)
             }
-        },
+        }, */
         mounted() {
-            this.getAvailableBeauticians(/* schedule */);
+            axios
+                .get(`/api/getBeauticians/`+ this.cart.service.Service)
+                .then((response)=> {
+                    this.Beauticians = response.data
+                })
+                .catch((e) => {
+                    console.log(e)
+                })
+            //this.getAvailableBeauticians(/* schedule */);
         },
         computed: {
             isActiveStep() {
@@ -33,10 +44,10 @@
             }
         },
         methods: {
-            getAvailableBeauticians(/* schedule */) {
+            /*getAvailableBeauticians(/* schedule *//*) {
                 // TODO: Get available beauticians from db given the chosen schedule for the appointment. Will return mock data for now
                 this.Beauticians = ['Beautician 1', 'Beautician 2', 'Beautician 3'];
-            },
+            }, */
             validate() {
                 if ( this.beautician == '' )
                     this.error = "Please select a beautician"
