@@ -5,7 +5,7 @@
     export default {
         name: 'ScheduleSubview',
         components: { MilestoneCard, DatePicker },
-        emits: ['complete-step', 'back'],
+        emits: ['completeStep', 'back'],
         props: {
             step: Number,
             currentStep: Number,

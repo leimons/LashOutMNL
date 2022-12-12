@@ -59,7 +59,7 @@
             Select Beautician
         </template>
         <template #content>
-            <form @submit.prevent="createAppointment" enctype="multipart/form-data" class="flex-col" :id="id">
+            <div class="flex-col" :id="id">
                 
                 <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for enter information -->
             
@@ -80,7 +80,7 @@
                     <button class="small dark next" v-show="isActiveStep" @click="completeStep">Next</button>
                 </div>
                 
-            </form>
+            </div>
         </template>
     </MilestoneCard>
 </template>

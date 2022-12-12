@@ -8,7 +8,7 @@
         name: 'InclusionSubview',
         components: { MilestoneCard },
         mixins: [cartMixin],
-        emits: ['complete-step'],
+        emits: ['completeStep'],
         props: {
             step: Number,
             currentStep: Number,
@@ -36,9 +36,7 @@
         },
         methods: {
             completeStep() {
-                let serviceName = this.cart.service;
-                let inclusionNames = this.cart.inclusions.map(inclusion => inclusion.Name);
-                this.$emit('completeStep', serviceName, inclusionNames, this.totalPrice);
+                this.$emit('completeStep', this.cart.service, this.cart.inclusions, this.totalPrice);
             }
         }
     }
