@@ -55,8 +55,8 @@ export default {
     computed: {
         totalPrice() {
             if (this.cart.service) {
-                let servicePrice = this.cart.service.OnSale ? this.cart.service.SalePrice : this.cart.service.Price;
-                let inclusionsPrice = this.cart.inclusions.reduce((partialSum, a) => partialSum + a.Price, 0) || 0;
+                let servicePrice = parseFloat( this.cart.service.OnSale ? this.cart.service.SalePrice : this.cart.service.Price );
+                let inclusionsPrice = this.cart.inclusions.reduce((partialSum, a) => partialSum + parseFloat(a.Price), 0) || 0;
                 return servicePrice + inclusionsPrice;
             }
             return 0;
