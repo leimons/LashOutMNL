@@ -24,7 +24,7 @@
                 alert('test')
             },
             disableComponents(bool) {
-                const tags = ["input", "button", "textarea", "select"];
+                const tags = ["input", "button", "textarea", "select", "label"];
                 tags.forEach(tagName => {
                     var nodes = this.$refs['content'].getElementsByTagName(tagName);
                     for (let i = 0; i < nodes.length; i++) {
@@ -61,9 +61,9 @@
 
 <template>
     <div :class="classes" @click.stop="this.disabled">
-        <div class="card-heading">
-            <span>{{ step }}</span>
-            <h2><slot name="heading">Heading</slot></h2>
+        <div class="card-heading" v-if="step || $slots.heading">
+            <span v-if="step">{{ step }}</span>
+            <h2><slot name="heading"></slot></h2>
         </div>
         
         <div class="card-content" ref="content">

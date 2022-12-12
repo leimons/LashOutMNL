@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
 
 const AppointmentsSchema = new mongoose.Schema({
-    SessionID: Number,
     refNum: Number,
     ClientName: String,
-    ClientInfo: String,
-    PaymentStatus: Boolean,
-    Product: [String],
+    ClientEmail: String,
+    CleintContact: String,
+    Service: String,
     Inclusions: [String],
     AmountDue: Number,
-    Date: String
+    Beautician: String,
+    Schedule: String,
+    PaymentProof:{
+        data: Buffer,
+        contentType: String
+    }
 });
 
 const Appointments = mongoose.model ('Appointments' , AppointmentsSchema);

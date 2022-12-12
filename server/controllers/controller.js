@@ -2,10 +2,15 @@ const db = require("../database/models/db");
 const Products = require("../database/models/Products");
 const Appointments = require("../database/models/Appointments");
 const Inclusions = require("../database/models/Inclusions");
+const Beauticians = require("../database/models/Beauticians");
 const Password = require("../database/models/Password");
 const dv = require("dayjs/locale/dv");
 
-let refnum = '0';
+var fs = require ('fs');
+var path = require ('path');
+const app = require("../routes/routes");
+
+let refnumber = '0';
 
 const controller = {
 
@@ -52,49 +57,60 @@ const controller = {
     },
 
     addAppointment: function (req,res){
-        var product = req.body.product
-        var AmountDue = req.body.AmountDue
-        var val = Math.floor(1000 + Math.random() * 9000);
-        db.findMany(Appointments, {refnum: val} , 'refnum',function(result){
-            /*while (result != undefined){
-                val = Math.floor(1000 + Math.random() * 9000);
-             } */
-        });
-        refnum = val;
-        AmountDue = AmountDue.substring(1);
-        AmountDue = parseFloat(AmountDue);
-        console.log (typeof(AmountDue))
-        db.insertOne(Appointments, {Product: product, refNum: refnum, AmountDue: AmountDue},function(){     
-        });
-        res.status(201).send();
-    },
-
-    addInclusions: function(req,res){
-        var Inclusions = req.body.Inclusions //UID of Inclusion
-        var InclusionCost = 0
-        Inclusions.forEach((i)=>{
-            db.findOne (Inclusions, {UID: i}, "Price", function(result){
-                InclusionCost = InclusionCost + result
+        console.log(req.body)   
+        db.findMany(Appointments, {}, 'refNum', function(result){
+            var present = []
+            var random
+            var data = result
+            data.forEach((i)=>{
+                present.push(i.refNum)
             })
-        })
-        db.updateOne(Appointments, {refNum: refnum}, {Inclusions: Inclusions, AmountDue: AmountDue+InclusionCost}, function(){
+            var Done = false
+            while (!Done){
+                random = Math.floor(Math.random() * (9999 - 1000) + 1000)
+                if (!present.includes(random)){
+                    console.log(random)
+                    Done = true
+                }
+            }
+            refnumber = random
+            var appointment = {
+                refNum: random,
+                ClientName: req.body.name,
+                ClientEmail: req.body.email,
+                ClientContact: req.body.contact,
+                Service: req.body.service,
+                Inclusions: req.body.inclusions,
+                AmountDue: req.body.AmountDue,
+                Beautician: req.body.beautician,
+                Schedule: req.body.schedule,
+                PaymentProof: {
+                    data: '',
+                    contentType: 'image/png'
+                }
+            }
+            db.insertOne(Appointments,appointment, function(){
+                console.log("appointment Added" + appointment.refNum)
+            })
+            res.status(200).send();
+        })   
+        
+    },
+
+    uploadPayment: function (req,res){
+        console.log("doing this")
+        console.log("refnumber is" + refnumber)
+        var data= fs.readFileSync(path.join("./client/public/paymentImages/" + req.file.filename))
+        console.log("refNumber is: " + refnumber)
+        PaymentProof = {
+            data: data,
+            contentType: 'image/png'
+        }
+    
+        db.updateOne(Appointments, {refNum: refnumber}, {PaymentProof: PaymentProof}, function(){
+            console.log('updated'+ refnumber)
         })
         res.status(201).send();
-    },
-
-    addChosenDate: function(req,res){
-        var Date = req.body.chosenDate
-        db.updateOne(Appointments, {refNum: refnum}, {Date: Date}, function(){
-            console.log("Added Appointment Date to DB")
-            res.status(201).send();
-        })
-    },
-
-    addClientDetails: function(req,res){
-        /* query client details */
-        /* create object of details fit for db */
-        db.updateOne(Appointments, refnum , /*object: object, */ function(){
-        });
     },
 
     getInclusionsPage: function(req,res){
@@ -108,6 +124,20 @@ const controller = {
             console.log(inclusions)
             res.status(201).send(inclusions) 
         })      
+    },
+
+    getBeautician: function(req,res){
+        var Service = req.params.Service
+        var Beautician = []
+        db.findMany(Beauticians,{},"Name Services", function(result){
+            var data = result
+            data.forEach((i)=>{
+                if (i.Services.includes(Service)){
+                    Beautician.push(i.Name)
+                }
+            })
+            res.status(201).send(Beautician)
+        })
     },
 
     getOrderSummary: function(req, res){
@@ -137,18 +167,30 @@ const controller = {
         })
         res.send (appointment)
     },
+
+    login: function(req,res){
+		db.findOne(Password, {Password: req.Password}, function(result){
+			console.log(result);
+			if (result.Password == req.Password)
+				res.send(200);
+			else
+				res.send(104);
+        })
+    },
+        
    login: function(req,res){
 		var projection = "Password"
 		var key = req.body.pass;
-		console.log(key);
 		var resultpass
 		resultpass = db.findOne(Password, {Password: key}, projection, function(result){
-			resultpass = result.Password;
-			if (resultpass === key){
-				console.log("equal");
-				res.sendStatus(201);
-			}else
-				res.sendStatus(104);
+			if (result != null) {
+				resultpass = result.Password;
+				if (resultpass === key){
+					console.log("equal");
+					res.sendStatus(201);
+				}
+			}
+			else res.sendStatus(403);
 		});
 	},
     getAllAppointments: function(req,res){

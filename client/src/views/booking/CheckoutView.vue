@@ -1,47 +1,32 @@
-<script>
+<script>    
+    import InclusionSubview from '@/views/booking/InclusionSubview.vue';
+    import ScheduleSubview from '@/views/booking/ScheduleSubview.vue';
+    import CustomerSubview from '@/views/booking/CustomerSubview.vue';
+    import PaymentSubview from '@/views/booking/PaymentSubview.vue';
+    import BeauticianSubview from '@/views/booking/BeauticianSubview.vue';
+    import TotalSubview from '@/views/booking/TotalSubview.vue';
     import MilestoneCard from '@/components/Booking/MilestoneCard.vue';
-    import { DatePicker } from "v-calendar";
 
-    import cartMixin from '@/mixins/cartMixin';
-    import axios from 'axios';
+    import dbFunctions from '@/dbFunctions.js';
 
-    const SECTION_ID = ["#inclusions-card", "#schedules-card", "#info-card"];
+    const SECTION_ID = ["#inclusions-card", "#schedules-card", "#beauticians-card", "#info-card", "#subtotal-card", "#payment-card"];
 
     export default {
         name: 'CheckoutView',
         title: 'Checkout | LashOut MNL',
-        components: { MilestoneCard, DatePicker },
-        mixins: [cartMixin],
+        components: { MilestoneCard, InclusionSubview, ScheduleSubview, CustomerSubview, PaymentSubview, BeauticianSubview, TotalSubview },
         data() {
             return {
                 currentStep: 1,
-                mounted: false,
                 scrollMargin: 0,
+                isLoading: true,
 
-                Inclusions: [],
-
-                date: new Date(),  // selected date (consider only day, month, time)
-                time: '',          // selected time
-                customer: {
-                    name: '',
-                    email: '',
-                    contact: ''
-                },
-                proofOfPayment: null
+                cart: {},
+                bookingDetails: {}
             }
         },
         mounted() {
-            this.mounted = true;
-            this.date = this.earliestBookingDate;
-
-            axios
-                .get(`/api/getInclusions/`+ this.cart.service.Category)
-                .then((response)=>{
-                    this.Inclusions = response.data
-                })
-                .catch((e) => {
-                    console.log(e)
-                })
+            this.isLoading = false;
         },
         methods: {
             prevStep() {
@@ -56,237 +41,74 @@
 
                 this.currentStep++;
             },
-            completedStep() {
-                switch (this.currentStep) {
-                    case 1: // Select inclusions
-                        return true;    // No requirements
-                    case 2: // Select schedule
-                        return !(
-                            this.selectedSchedule.toDateString() == new Date().toDateString()    // No same day booking
-                            || this.selectedSchedule.getDay() == 1   // Closed on Mondays
-                            || this.time == ''   // Must have selected time
-                        );
-                    case 3: // Customer information
-                        return !(
-                            !this.customer.name ||
-                            !this.customer.email ||
-                            !this.customer.contact
-                        );
-                    case 4: // Payment confirmation
-                        return !(
-                            this.proofOfPayment == null
-                        )
-                    default:    return ;
-                }
+            createAppointment(){
+                var { proofOfPayment, ...appointment } = this.bookingDetails;
+                dbFunctions.addAllAppointment(appointment, proofOfPayment);
+
+                this.isLoading = true;
+                // TODO: Redirect to confirmation page
             },
-            onFileChange(e) {
-                var files = e.target.files || e.dataTransfer.files;
-                if (!files.length)  return;
-                this.proofOfPayment = URL.createObjectURL(files[0]);
+            updateInclusions(service, inclusions, AmountDue) {
+                this.cart = { service, inclusions, AmountDue };
+                this.bookingDetails = { ...this.bookingDetails, 
+                    service: service.Service, 
+                    inclusions: inclusions.map(inc => inc.Name), 
+                    AmountDue
+                };
+                this.nextStep();
+            },
+            updateSchedule(schedule) {
+                this.bookingDetails = { ...this.bookingDetails, schedule };
+                this.nextStep();
+            },
+            updateBeautician(beautician) {
+                this.bookingDetails = { ...this.bookingDetails, beautician };
+                this.nextStep();
+            },
+            updateCustomer(customerInfo) {
+                var { name, email, contact } = customerInfo;
+                this.bookingDetails = { ...this.bookingDetails, name, email, contact };
+                this.nextStep();
+            },
+            updatePayment(proofOfPayment) {
+                this.bookingDetails = { ...this.bookingDetails, proofOfPayment };
+                this.nextStep();
             }
         },
-        computed: {
-            totalPrice() {
-                let servicePrice = this.cart.service.Price;
-                let inclusionsPrice = this.cart.inclusions.reduce((partialSum, a) => partialSum + a.Price, 0) || 0;
-                return servicePrice + inclusionsPrice;
-            },
-            day() {
-                // Returns the selected date formatted (ex. 'Dec 1, 2022')
-                const options = { year: 'numeric', month: 'short', day: 'numeric' };
-                return this.date.toLocaleDateString('en-US', options);
-            },
-            availableTimes() {
-                // Returns the available times during the selected date.
-                // TODO: Get available times from API. Will return mock data for now
-                return ["8:00 AM", "10:00 AM", "1:00 PM", "3:00 PM", "5:00 PM", "7:00 PM"];
-            },
-            selectedSchedule() {
-                // Returns a date object with the selected date and time
-                let selected = this.day + ' ' + this.time + " GMT+0800";
-                return new Date(selected);
-            },
-            earliestBookingDate() {
-                var date = new Date();
-
-                do {
-                    date.setDate(date.getDate() + 1); // add a day
-                } while (date.getDay() == 1);    // check if day is Monday
-
-                return date;
-            }
-        }
     }
 </script>
 
 <template>
     <a href="/" id="logo"><img src="@/assets/images/logo.png" height="70" /></a>
 
-    <div id="cards-container" v-if="mounted" ref="container" @wheel.prevent @touchmove.prevent @scroll.prevent :style="{ 'margin-top': this.scrollMargin + 'px' }">
+    <div id="cards-container" v-if="!isLoading" ref="container" @wheel.prevent @touchmove.prevent @scroll.prevent :style="{ 'margin-top': this.scrollMargin + 'px' }">
 
         <!-- Step 1: Select inclusions -->
-        <MilestoneCard :step=1 :currentStep="currentStep">
-            <template #heading>
-                Select Inclusions
-            </template>
-            <template #content>
-                <div class="flex-col" id="inclusions-card">
-                    <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for select inclusions -->
-
-                    <div class="flex-row" style="align-items: flex-start;">
-                        <!-- selected service -->
-                        <div class="flex-col small-gap" style="width: 200px;">
-                            <img id="service-img" src="https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" /> <!-- Placeholder. TODO: Replace with service image -->
-
-                            <div>
-                                <b>{{ cart.service.Service }}</b>
-                                <p>{{ formatPrice(cart.service.Price) }}</p>
-                            </div>
-                        </div>
-
-                        <!-- inclusions -->
-                        <div class="flex-col small-gap" style="flex: 1;">
-                            <div class="flex-row selection" v-for="(inclusion, index) in Inclusions" :key="inclusion._id">
-                                <input type="checkbox" :value="inclusion" v-model="this.cart.inclusions" :id="index"/>
-                                <label :for= "index">{{ inclusion.Name }}</label>
-                                <p>{{ formatPrice(inclusion.Price) }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex-row" style="flex-direction: row-reverse;">
-                        <button class="small dark" v-show="(currentStep == 1)" @click="nextStep">Next</button>
-                        <h3 class="text-secondary900">
-                            <b>Total:</b> {{ formatPrice(totalPrice) }}
-                        </h3>
-                    </div>
-                </div>
-            </template>
-        </MilestoneCard>
-
+        <InclusionSubview id="inclusions-card" :step=1 :currentStep="currentStep" @complete-step="updateInclusions" />
 
         <!-- Step 2: Select schedule -->
-        <MilestoneCard :step=2 :currentStep="currentStep">
-            <template #heading>
-                Select Schedule
-            </template>
+        <ScheduleSubview id="schedules-card" :step=2 :currentStep="currentStep" @complete-step="updateSchedule" @back="prevStep" />
+
+        <!-- Step 3: Select beautician -->
+        <BeauticianSubview id="beauticians-card" :step=3 :currentStep="currentStep" :schedule="bookingDetails.schedule" @complete-step="updateBeautician" @back="prevStep" />
+
+        <!-- Step 4: Enter information -->
+        <CustomerSubview id="info-card" :step=4 :currentStep="currentStep" @complete-step="updateCustomer" @back="prevStep" />
+
+        <!-- Step 5: View selected items  -->
+        <TotalSubview id="subtotal-card" :step=5 :cart="cart" :currentStep="currentStep" @complete-step="nextStep" @back="prevStep" />
+
+        <!-- Step 6: Payment Information -->
+        <PaymentSubview id="payment-card" :step=6 :currentStep="currentStep" @complete-step="updatePayment" @back="prevStep" />
+
+        <!-- Temporary only -->
+        <div v-show="currentStep == 7">
+        <MilestoneCard>
             <template #content>
-                <div class="flex-col" id="schedules-card">
-                    <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for select schedule -->
-                
-                    <div class="flex-row">
-                        <div class="flex-col">
-                            <h3>Select Date:</h3>
-                            <DatePicker 
-                                v-model="date" mode="date" color="orange"
-                                :min-date='earliestBookingDate'
-                                :disabled-dates='{ weekdays: [2] /* closed on Mondays */ }'
-                            />
-                        </div>
-
-                        <div class="flex-col" style="flex: 1;">
-                            <div class="flex-row small-gap">
-                                <h3>Select Time on:</h3>
-                                <i>{{ day }}</i>
-                            </div>
-                    
-                            <div class="flex-col small-gap">
-                                <div class="selection" v-for="tm in availableTimes" :key="tm">
-                                    <input type="radio" :id="tm" :value="tm" v-model="time" required />&nbsp;
-                                    <label :for="tm">{{ tm }}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p id="alert-appointment" v-show="time">
-                        <b>Your appointment is on:</b><br />
-                        {{ selectedSchedule }}
-                    </p>
-
-                    <div class="flex-row">
-                        <button class="small grey" v-show="(currentStep == 2)" @click="prevStep">Back</button>
-                        <button class="small dark next" v-show="(currentStep == 2) && completedStep(2)" @click="nextStep">Next</button>
-                    </div>
-                </div>
+                <button class="small dark" :disabled="isLoading" @click="createAppointment">Book Appointment</button>
             </template>
         </MilestoneCard>
-
-
-        <!-- Step 3: Enter information -->
-        <MilestoneCard :step=3 :currentStep="currentStep">
-            <template #heading>
-                Personal Information
-            </template>
-            <template #content>
-                <div class="flex-col" id="info-card">
-                    
-                    <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for enter information -->
-                
-                    <!-- Customer Information -->
-                    <div style="width: 100%;">
-                        <div class="flex-row">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" v-model="customer.name" required />
-                        </div>
-                        <div class="flex-row">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" v-model="customer.email" required />
-                        </div>
-                        <div class="flex-row">
-                            <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" v-model="customer.contact" required />
-                        </div>
-                    </div>
-
-                    <div class="flex-row">
-                        <button class="small grey" v-show="(currentStep == 3)" @click="prevStep">Back</button>
-                        <button class="small dark next" v-show="(currentStep == 3)  && completedStep(3)" @click="nextStep">Next</button>
-                    </div>
-
-                </div>
-            </template>
-        </MilestoneCard>
-
-
-        <!-- Step 4: Payment Information -->
-        <MilestoneCard :step=4 :currentStep="currentStep">
-            <template #heading>
-                Payment Information
-            </template>
-            <template #content>
-                <div class="flex-col" id="info-card">
-                    
-                    <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for enter information -->
-                
-                    <!-- Mode of Payment Options -->
-                    <div class="flex-row">
-                        <div class="mop-card flex-row">
-                            <img src="https://cdn1.codashop.com/S/content/common/images/mno/DRAGONPAY_GCash_CHNL_LOGO.png" alt="GCash" />
-                            <div>
-                                <p>Nicole Patricia F. Suriaga</p>
-                                <p>09773843092</p>
-                            </div>
-                        </div>
-                        <div class="mop-card flex-row">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Asia_United_Bank_logo.svg/2560px-Asia_United_Bank_logo.svg.png" alt="Asia United Bank" />
-                            <div>
-                                <p>Nicole Patricia F. Suriaga</p>
-                                <p>525-11-0000693</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <input type="file" accept="image/png, image/jpg, image/jpeg" name="editImg" id="editImg" @change="onFileChange" />
-
-                    <div class="flex-row">
-                        <button class="small grey" v-show="(currentStep == 4)" @click="prevStep">Back</button>
-                        <button class="small dark next" v-show="(currentStep == 4)  && completedStep(4)" @click="nextStep">Next</button>
-                    </div>
-
-                </div>
-            </template>
-        </MilestoneCard>
+        </div>
     </div>
 </template>
 
@@ -308,19 +130,15 @@
     }
 
     .small-gap { gap: 10px; }
+    
+    .alert-box { padding: 20px; }
 
-    input[type=text], input[type=email], input[type=tel], input[type=file] {
+    input[type=text], input[type=email], input[type=tel] {
         border-radius: 0;
         border: none;
         border-bottom: 1.2pt solid grey;
         background: none;
     }
-
-    input[type=file] {
-        border: 1.2px dashed #ccc;
-    }
-    
-        input:placeholder-shown { font-style: italic; }
 
     label { flex: 1; }
 
@@ -348,56 +166,4 @@
         width: min-content;
         margin-left: auto;
     }
-
-    /* SUBSECTION || Inclusion selection */
-    #service-img {
-        width: calc(350px * 0.9);
-        width: calc(220px * 0.9);
-    }
-
-    .selection {
-        box-shadow: rgba(99, 99, 99, 0.05) 0px 2px 8px 0px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        padding: 8px 12px;
-    }
-
-    #inclusions-card p, #inclusions-card h3 {
-        font-family: 'Lora';
-        font-weight: normal;
-    }
-
-    /* SUBSECTION || Schedule selection */
-    #schedules-card > div {
-        align-items: baseline;
-    }
-
-    #alert-appointment {
-        padding: 20px;
-        background-color: var(--secondary100);
-    }
-
-    /* SUBSECTION || Customer information */
-    #info-card label {
-        display: inline-block;
-        width: 100px;
-        text-align: right;
-        padding-right: 15px;
-    }
-
-    #info-card input {
-        flex: 3;
-    }
-
-    /* SUBSECTION || Payment information */
-    .mop-card {
-        box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
-    }
-
-        .mop-card img {
-            width: 100px;
-        }
 </style>
