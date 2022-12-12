@@ -2,6 +2,7 @@ const db = require("../database/models/db");
 const Products = require("../database/models/Products");
 const Appointments = require("../database/models/Appointments");
 const Inclusions = require("../database/models/Inclusions");
+const Beauticians = require("../database/models/Beauticians");
 const Password = require("../database/models/Password");
 const dv = require("dayjs/locale/dv");
 
@@ -121,6 +122,20 @@ const controller = {
             console.log(inclusions)
             res.status(201).send(inclusions) 
         })      
+    },
+
+    getBeautician: function(req,res){
+        var Service = req.params.Service
+        var Beautician = []
+        db.findMany(Beauticians,{},"Name Services", function(result){
+            var data = result
+            data.forEach((i)=>{
+                if (i.Services.includes(Service)){
+                    Beautician.push({Name: i.Name})
+                }
+            })
+            res.status(201).send(Beautician)
+        })
     },
 
     getOrderSummary: function(req, res){
