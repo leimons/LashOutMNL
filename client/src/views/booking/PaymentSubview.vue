@@ -4,7 +4,7 @@
     export default {
         name: 'PaymentSubview',
         components: { MilestoneCard },
-        emits: ['back'],
+        emits: ['back', 'completeStep'],
         props: {
             step: Number,
             currentStep: Number,

@@ -71,11 +71,11 @@
 
                     <!-- inclusions -->
                     <div class="flex-col small-gap" style="flex: 1;">
-                        <div class="flex-row selection" v-for="(inclusion, index) in Inclusions" :key="inclusion._id">
+                        <label class="flex-row selection" :for= "index" v-for="(inclusion, index) in Inclusions" :key="inclusion._id">
                             <input type="checkbox" :value="inclusion" v-model="this.cart.inclusions" :id="index"/>
                             <label :for= "index">{{ inclusion.Name }}</label>
                             <p>{{ formatPrice(inclusion.Price) }}</p>
-                        </div>
+                        </label>
                     </div>
                 </div>
 

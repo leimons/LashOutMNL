@@ -109,10 +109,10 @@
                         </div>
                 
                         <div class="flex-col small-gap">
-                            <div class="selection" v-for="tm in getAvailableTime(this.date)" :key="tm">
+                            <label class="selection" :for="tm" v-for="tm in getAvailableTime(this.date)" :key="tm">
                                 <input type="radio" :id="tm" :value="tm" v-model="time" required />&nbsp;
-                                <label :for="tm">{{ tm }}</label>
-                            </div>
+                                {{ tm }}
+                            </label>
                         </div>
                     </div>
                 </div>

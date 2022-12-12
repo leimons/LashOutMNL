@@ -24,7 +24,7 @@
                 alert('test')
             },
             disableComponents(bool) {
-                const tags = ["input", "button", "textarea", "select"];
+                const tags = ["input", "button", "textarea", "select", "label"];
                 tags.forEach(tagName => {
                     var nodes = this.$refs['content'].getElementsByTagName(tagName);
                     for (let i = 0; i < nodes.length; i++) {
