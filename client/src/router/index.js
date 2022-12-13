@@ -33,6 +33,11 @@ const routes = [
     name: 'adminServiceEdit',
     component: () => import('@/views/admin/AdminServiceEdit.vue')
   },
+  {
+    path: '/admin/calendar',
+    name: 'adminCalendar',
+    component: () => import('@/views/admin/AdminCalendar.vue')
+  },
 
   // SERVICE PAGES
   {

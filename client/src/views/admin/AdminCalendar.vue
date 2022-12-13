@@ -9,8 +9,31 @@
         AdminLayout,
         CalendarCard,
         CalendarMonth
+        },
+
+        methods: {
+            currentDate() {
+            const  months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+            const current = new Date();      
+            const date = `${months[current.getMonth()]} ${current.getDate()}, ${current.getFullYear()}`;
+            return date;
+            },
+
+            currentDay(){
+            const  weekdays = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
+            const current = new Date().getDay();      
+            const day = `${weekdays[current]}`;
+            return day;
+            }
+
         }
+
     }
+
+
+    
+
+
 </script>
 
 <template>
@@ -32,8 +55,8 @@
                 <div class="schedules">
 
                     <div class="current-date">
-                        <div class="sched-day"> Day </div>
-                        <div class="sched-date"> 12th december 2022</div>
+                        <div class="sched-day"> {{ currentDay() }} </div>
+                        <div class="sched-date"> {{ currentDate() }} </div>
                     </div>
 
 

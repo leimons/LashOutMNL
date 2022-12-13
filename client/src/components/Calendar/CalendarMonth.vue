@@ -140,12 +140,14 @@
           :selected-date="selectedDate"
           class="calendar-month-header-selected-month"
         />
-  
+
         <CalendarDateSelector
           :current-date="today"
           :selected-date="selectedDate"
           @dateSelected="selectDate"
         />
+  
+        
       </div>
   
       <CalendarWeekdays/>
