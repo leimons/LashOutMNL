@@ -3,9 +3,9 @@ const Beautician = require('../database/models/Beauticians.js');
 
 const bea_controller = {
 	bea_add: function(req, res) {
-        console.log("inserting: " + req.query.Name);
+        console.log("inserting: " + req.body.Name);
         db.insertOne(Beautician, req.body, function(){}); 
-	console.log(req.query.Name + "added");
+	console.log(req.body.Name + "added");
 	res.status(201).send();
     	},
 	
