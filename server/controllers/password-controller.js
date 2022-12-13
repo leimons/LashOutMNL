@@ -9,7 +9,7 @@ const pass_controller = {
 
 	pass_add: function(req, res) {
         console.log("inserting: " + req.body.Password);
-        db.insertOne(Pa, req.body, function(){});
+        db.insertOne(Password, req.body, function(){});
 		console.log(req.body.Password + "added");
     },
 */
@@ -31,7 +31,7 @@ const pass_controller = {
 		var p_id = req.body._id;
 		var p_name = req.body.Password;
         	console.log("updating Password");
-        	db.updateOne(Promos,{_id: p_id},{Password:p_name}, function(){});
+        	db.updateOne(Password,{_id: p_id},{Password:p_name}, function(){});
 		console.log("Password Updated");
 		res.status(201).send();
 	}
