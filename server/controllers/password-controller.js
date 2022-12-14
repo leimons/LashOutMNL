@@ -28,14 +28,22 @@ const pass_controller = {
 /*edit promos
 */
 	pass_edit: function(req, res) {
-		var p_id = req.body._id;
-		var p_name = req.body.Password;
-        	console.log("updating Password");
-        	db.updateOne(Password,{_id: p_id},{Password:p_name}, function(){});
-		console.log("Password Updated");
-		res.status(201).send();
-	}
-
-} 
+		var new_pass = req.body.Password;
+		var p_name = req.body.OldPass;
+		db.findOne(Password, {}, "Password", function(result){
+            console.log("updating Password");
+			if (p_name == result.Password){
+			db.updateOne(Password,{_id: result._id},{Password:new_pass}, function(){});
+			console.log("Password Updated");
+			res.status(201).send();
+			}
+			else{
+				res.sendStatus(403);
+				console.log("Wrong Old Password");
+			}
+		 })
+		}
+		
+	} 
 
 module.exports = pass_controller;
