@@ -18,7 +18,7 @@ const bea_controller = {
 		res.status(201).send();
     	},
 	
-	bea_schedule_change: function(req, res) {
+	bea_edit: function(req, res) {
 	var ref = req.body._id;
 	var b_name = req.body.name;
         console.log("updating: "+b_name);
