@@ -38,8 +38,20 @@ const sv_controller = {
 		var s_price = req.body.Price;
 		var s_onsale = req.body.OnSale;
 		var s_saleprice = req.body.SalePrice;
-        	console.log("updating: "+s_name);
-        	db.updateOne(Product,{_id: s_id},{Service:s_name, Category:s_category,Subcategory:s_subcategory,Description:s_description,Duration:s_duration,Price:s_price,OnSale: s_onsale,SalePrice:s_saleprice}, function(){});
+        console.log("updating: "+s_name);
+		db.updateOne(Product,{_id: s_id},{Service:s_name, Category:s_category,Subcategory:s_subcategory,Description:s_description,Duration:s_duration,OnSale: s_onsale}, function(){});
+		if(s_price > 0 && s_price > s_saleprice && s_saleprice > 0){
+		db.updateOne(Product,{_id: s_id},{Price:s_price,SalePrice:s_saleprice}, function(){});
+		}
+		else{
+			if (s_price < s_saleprice){
+			console.log("saleprice cannot be higher than base price");}
+			if (s_price < 0){
+			console.log("price cannot be lower than 0");}
+			if (s_saleprice < 0){
+			console.log("saleprice cannot be lower than 0");}
+		}
+		
 		console.log(s_name + " updated");
 		res.status(201).send();
 	}
