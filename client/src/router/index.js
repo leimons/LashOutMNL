@@ -38,7 +38,11 @@ const routes = [
     name: 'adminCalendar',
     component: () => import('@/views/admin/AdminCalendar.vue')
   },
-
+  {
+    path: '/admin/profile',
+    name: 'adminSettings',
+    component: () => import('@/views/admin/AdminSettings.vue')
+  },
   // SERVICE PAGES
   {
     path: '/services',
