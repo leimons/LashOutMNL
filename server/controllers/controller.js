@@ -189,7 +189,14 @@ const controller = {
             });
 	},
 
-    getAuthentication: function(req,res){  
+    getAuthentication: function(req,res){
+        /* 
+        if (req.session.user == "admin"){
+            res.status(200).send(true)
+        }
+        else{
+            res.sendStatus(403)
+        } */
         res.status(200).send(loggedIn)
     },
 
