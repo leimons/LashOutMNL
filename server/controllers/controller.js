@@ -198,22 +198,18 @@ const controller = {
 	},
     getAllAppointments: function(req,res){
         var projection = "refNum ClientName ClientEmail ClientContact Service Inclusions AmountDue Beautician Schedule PaymentProof"
-        var appointment
-        db.findMany(Appointments,{}, projection, function(result){
-            appointment = {
-				refNum: result.refNum,
-                ClientName: result.ClientName,
-                ClientEmail: result.ClientEmail,
-		ClientContact: result.ClientContact,
-                Service: result.Service,
-                Inclusions: result.Inclusions,
-                AmountDue: result.AmountDue,
-		Beautician: result.Beautician,
-		Schedule: result.Schedule, 
-		PaymentProof: result.PaymentProof
-            }
+        var appointment = []
+        db.findMany(Appointments,{}, projection, function(result){ 
+            data = result
+            data.forEach((i)=>{
+                appointment.push({refNum: i.refNum , ClientName: i.ClientName, ClientEmail: i.ClientEmail,
+                Service: i.Service, Inclusions: i.Inclusions, AmountDue: i.AmountDue, Schedule: i.Schedule, PaymentProof: i.PaymentProof})
+            })
+            console.log(appointment)
+            res.status(201).send(appointment)
         })
-        res.send (appointment)
+
+        
     },
 }
 
