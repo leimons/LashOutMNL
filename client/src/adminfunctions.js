@@ -25,6 +25,13 @@ class Service {
 		var url = "http://localhost:3000/api/deleteservice";
 		return axios.post(url,{_id: s_id, Service: s_name});
 	}
+	static editPass(oldpass, ps_pass){
+		var url = "http://localhost:3000/api/editpassword"
+		return axios.put(url,{
+			OldPass: oldpass,
+			Password: ps_pass,
+		});
+	}
 	/*
     static addService (s_name, s_category, s_subcategorty, s_duration, s_price, s_description, s_onsale, s_saleprice) {
         var url = "http://localhost:3000/api/addservice"
@@ -105,13 +112,6 @@ class Service {
 			Percent: p_percent
 		});
 		console.log(i_name + "has been edited")
-	}
-	static editPass(ps_id,ps_pass){
-		var url = "http://localhost:3000/api/editpassword"
-		return axios.put(url,{
-			_id: ps_id,
-			Pass: ps_pass,
-		});
 	}
 	*/
 	
