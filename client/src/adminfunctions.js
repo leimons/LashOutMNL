@@ -39,24 +39,11 @@ class Service {
 			SalePrice: s_sale
         });
     }
-	static addBeautician (na, mna, mnt, tua, tut, wea, wet, tha, tht, fra, frt, saa, sat, sua, sut) (
+	static addBeautician (b_name, b_services) (
 		var url = "http://localhost:3000/api/addbeautician"
 		return axios.post(url, {
-            Name: na,
-			MondayAvailability: mna,
-			MondayTime: mnt,
-			TuesdayAvailability: tua,
-			TuesdayTime: tut, 
-			WednesdayAvailability: wea,
-			WednesdayTime: wet,
-			ThursdayAvailability: tha, 
-			ThursdayTime: tht,
-			FridayAvailability: fra,
-			FridayTime: frt,
-			SaturdayAvailability: saa,
-			SaturdayTime: sat,
-			SundayAvailability: sua,
-			SundayTime: sut
+            		Name: b_name,
+			Services: b_services
         });	
 	}
 	static deleteBeautician (b_id, b_name){
@@ -64,27 +51,13 @@ class Service {
 		return axios.post(url,{b_name});
 		console.log(b_id + " "+ b_name + "has been deleted");
 	}
-	static editBeautician (b_id, na, mna, mnt, tua, tut, wea, wet, tha, tht, fra, frt, saa, sat, sua, sut){
+	static editBeautician (b_id, b_name, b_services){
 		var url = "http://localhost:3000/api/deletebeautician"
 		console.log(b_name + "will be edited")
 		return axios.post(url,{
 			_id: b_id,
-			Name: na,
-			MondayAvailability: mna,
-			MondayTime: mnt,
-			TuesdayAvailability: tua,
-			TuesdayTime: tut, 
-			WednesdayAvailability: wea,
-			WednesdayTime: wet,
-			ThursdayAvailability: tha, 
-			ThursdayTime: tht,
-			FridayAvailability: fra,
-			FridayTime: frt,
-			SaturdayAvailability: saa,
-			SaturdayTime: sat,
-			SundayAvailability: sua,
-			SundayTime: sut
-			
+			Name: b_name,
+			Services: b_services
 		});
 	}
 	static addInclusion (i_cat, i_name, i_price) (
