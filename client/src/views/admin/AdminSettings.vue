@@ -1,12 +1,28 @@
 <script>
     import AdminLayout from '@/layouts/AdminLayout.vue';
-
+	import adminfunctions from '@/adminfunctions.js';
     export default {
         name: 'AdminDashboard',
             components: {
         AdminLayout
-        }
+        },
+		methods: {
+		editpass(){
+			var opass = this.password;
+			var npass = this.npassword;
+			if (npass != ""){
+			var answer = adminfunctions.editPass(opass, npass);
+			answer.then((response)=>{
+					console.log(response);
+                })
+                .catch(() => {
+                })
+			}
+
+		}
+	}
     }
+	
 </script>
 
 
@@ -37,20 +53,19 @@
                     </div>
 
                     <div class="label">
-                        <h4>Password</h4>
+                        <h4>Old Password</h4>
                     </div>
                     <div class="input-box">
-                        <input type="text" class="form-control" placeholder="Password">
+                        <input type="text" class="form-control" v-model="password" placeholder="Old Password">
                     </div>
 
                     <div class="label">
-                        <h4>Confirm Password</h4>
+                        <h4>New Password</h4>
                     </div>
                     <div class="input-box">
-                        <input type="text" class="form-control" placeholder="Confirm Password" >
+                        <input type="text" class="form-control" v-model="npassword" placeholder="New Password" >
                     </div>
-
-                    <button> Save Changes </button>
+                    <button @click="editpass()"> Save Changes </button>
                     
 				</div> 
             </div>
