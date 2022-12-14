@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import axios from 'axios'
+
 
 const routes = [
   {
@@ -105,6 +107,20 @@ const router = createRouter({
   history: createWebHistory(),
   hashbang: false,
   routes
+})
+
+router.beforeEach((to) => {
+  var authorized = false
+  axios
+    .get(`/api/getAuthentication`)
+    .then((response) =>{
+      console.log("the response is:")
+      console.log(response.data)
+      authorized = response.data.authorized  
+    })
+  if (!authorized && to.name == 'adminDashboard'){
+    return {name: 'admin'}
+  } 
 })
 
 export default router

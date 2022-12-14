@@ -4,6 +4,7 @@ class Appointment {
     static async addAllAppointment(value, image){
         await this.addAppointment(value)
         this.uploadPayment(image)
+        
           
     }
     static addAppointment (query) {

@@ -167,21 +167,6 @@ const controller = {
         })
         res.send (appointment)
     },
-
-    login: function(req,res){
-            db.findOne(Password, {Password: req.Password}, function(result){
-                console.log(result);
-                if (result.Password == req.Password){
-                    req.session.user = "admin"
-                    console.log("sessionID")
-                    console.log(req.session.id)
-                    res.send(200);
-                }
-                else
-                    res.send(104);
-            })
-		
-    },
         
    login: function(req,res){
 		var projection = "Password"
@@ -193,7 +178,7 @@ const controller = {
                     if (resultpass === key){
                         req.session.user = 'admin'
                         console.log("sessionID")
-                        console.log(req.session.id)
+                        console.log(req.session.user)
                         console.log("equal");
                         res.sendStatus(201);
                     }
@@ -201,6 +186,15 @@ const controller = {
                 else res.sendStatus(403);
             });
 	},
+
+    getAuthentication: function(req,res){
+        var authorized = false
+        console.log(req.session.user)
+        if (req.session.user == 'admin'){
+            authorized = true
+        }
+        res.status(200).send(authorized)
+    },
 
     getAllAppointments: function(req,res){
         var projection = "ClientName ClientInfo refNum PaymentStatus Product Inclusions AmountDue"

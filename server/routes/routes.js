@@ -33,6 +33,7 @@ app.get(`/getAppointment`, controller.getAppointments);
 
 app.get(`/getAllAppointments`, controller.getAllAppointments);
 
+app.get('/getAuthentication', controller.getAuthentication)
 app.post(`/login`, controller.login);
 
 app.post(`/addservice`, scontroller.sv_add);
