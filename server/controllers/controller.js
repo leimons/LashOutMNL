@@ -57,7 +57,7 @@ const controller = {
     },
 
     addAppointment: function (req,res){
-        console.log(req.body)   
+        var Added  
         db.findMany(Appointments, {}, 'refNum', function(result){
             var present = []
             var random
@@ -89,10 +89,16 @@ const controller = {
                     contentType: 'image/png'
                 }
             }
-            db.insertOne(Appointments,appointment, function(){
-                console.log("appointment Added" + appointment.refNum)
+            db.insertOne(Appointments,appointment, function(error, result){
+                if (result){
+                    console.log("appointment Added" + appointment.refNum)
+                    Added = true
+                }
+                else if (error){
+                    Added = false
+                }
             })
-            res.status(200).send();
+            res.status(200).send(Added);
         })   
         
     },
