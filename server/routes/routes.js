@@ -41,7 +41,7 @@ app.put(`/editservice`, scontroller.sv_edit);
 
 app.post(`/addbeautician`, bcontroller.bea_add);
 app.post(`/deletebeautician`, bcontroller.bea_delete);
-app.put(`/editbeautician`, bcontroller.bea_schedule_change);
+app.put(`/editbeautician`, bcontroller.bea_edit);
 
 app.post(`/addinclusion`, icontroller.i_add);
 app.post(`/deleteinclusion`, icontroller.i_delete);
