@@ -169,30 +169,39 @@ const controller = {
     },
 
     login: function(req,res){
-		db.findOne(Password, {Password: req.Password}, function(result){
-			console.log(result);
-			if (result.Password == req.Password)
-				res.send(200);
-			else
-				res.send(104);
-        })
+            db.findOne(Password, {Password: req.Password}, function(result){
+                console.log(result);
+                if (result.Password == req.Password){
+                    req.session.user = "admin"
+                    console.log("sessionID")
+                    console.log(req.session.id)
+                    res.send(200);
+                }
+                else
+                    res.send(104);
+            })
+		
     },
         
    login: function(req,res){
 		var projection = "Password"
-		var key = req.body.pass;
-		var resultpass
-		resultpass = db.findOne(Password, {Password: key}, projection, function(result){
-			if (result != null) {
-				resultpass = result.Password;
-				if (resultpass === key){
-					console.log("equal");
-					res.sendStatus(201);
-				}
-			}
-			else res.sendStatus(403);
-		});
+            var key = req.body.pass;
+            var resultpass
+            resultpass = db.findOne(Password, {Password: key}, projection, function(result){
+                if (result != null) {
+                    resultpass = result.Password;
+                    if (resultpass === key){
+                        req.session.user = 'admin'
+                        console.log("sessionID")
+                        console.log(req.session.id)
+                        console.log("equal");
+                        res.sendStatus(201);
+                    }
+                }
+                else res.sendStatus(403);
+            });
 	},
+
     getAllAppointments: function(req,res){
         var projection = "ClientName ClientInfo refNum PaymentStatus Product Inclusions AmountDue"
         var appointment
