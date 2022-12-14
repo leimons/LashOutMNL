@@ -59,6 +59,7 @@ const controller = {
     addAppointment: function (req,res){
         
         db.findMany(Appointments, {}, 'refNum', function(result){
+            var Added
             var present = []
             var random
             var data = result
@@ -91,7 +92,8 @@ const controller = {
             }
             db.insertOne(Appointments,appointment, (err) =>{
                 console.log("appointment Added")
-                res.status(200).send(true);
+                Added = true
+                res.status(200).send(Added);
             })
         })     
     },
