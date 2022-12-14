@@ -197,15 +197,20 @@ const controller = {
 		});
 	},
     getAllAppointments: function(req,res){
-        var projection = "ClientName ClientInfo refNum PaymentStatus Product Inclusions AmountDue"
+        var projection = "refNum ClientName ClientEmail ClientContact Service Inclusions AmountDue Beautician Schedule PaymentProof"
         var appointment
         db.findMany(Appointments,{}, projection, function(result){
             appointment = {
+				refNum: result.refNum,
                 ClientName: result.ClientName,
-                ClientInfo: result.ClientInfo,
-                Product: result.Product,
+                ClientEmail: result.ClientEmail,
+		ClientContact: result.ClientContact,
+                Service: result.Service,
                 Inclusions: result.Inclusions,
-                AmountDue: result.AmountDue
+                AmountDue: result.AmountDue,
+		Beautician: result.Beautician,
+		Schedule: result.Schedule, 
+		PaymentProof: result.PaymentProof
             }
         })
         res.send (appointment)
