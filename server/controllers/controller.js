@@ -99,6 +99,7 @@ const controller = {
     },
 
     uploadPayment: function (req,res){
+        var Added
         console.log("doing this")
         console.log("refnumber is" + refnumber)
         var data= fs.readFileSync(path.join("./client/public/paymentImages/" + req.file.filename))
@@ -108,10 +109,11 @@ const controller = {
             contentType: 'image/png'
         }
     
-        db.updateOne(Appointments, {refNum: refnumber}, {PaymentProof: PaymentProof}, function(){
+        db.updateOne(Appointments, {refNum: refnumber}, {PaymentProof: PaymentProof}, (err) =>{
             console.log('updated'+ refnumber)
+            Added = true
+            res.status(201).send(Added);
         })
-        res.status(201).send();
     },
 
     getInclusionsPage: function(req,res){
