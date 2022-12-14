@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios'
 
+var authorized = false
 
 const routes = [
   {
@@ -18,27 +19,42 @@ const routes = [
   {
     path: '/admin/home',
     name: 'adminDashboard',
-    component: () => import('@/views/admin/AdminDashboard.vue')
+    component: () => import('@/views/admin/AdminDashboard.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/admin/services',
     name: 'adminServices',
-    component: () => import('@/views/admin/AdminServices.vue')
+    component: () => import('@/views/admin/AdminServices.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/admin/services/:id',
     name: 'adminService',
-    component: () => import('@/views/admin/AdminService.vue')
+    component: () => import('@/views/admin/AdminService.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/admin/services/:id/edit',
     name: 'adminServiceEdit',
-    component: () => import('@/views/admin/AdminServiceEdit.vue')
+    component: () => import('@/views/admin/AdminServiceEdit.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/admin/calendar',
     name: 'adminCalendar',
-    component: () => import('@/views/admin/AdminCalendar.vue')
+    component: () => import('@/views/admin/AdminCalendar.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
 
   // SERVICE PAGES
@@ -109,18 +125,24 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to) => {
-  var authorized = false
-  axios
-    .get(`/api/getAuthentication`)
-    .then((response) =>{
-      console.log("the response is:")
-      console.log(response.data)
-      authorized = response.data.authorized  
+router.beforeEach(async (to, from , next) => {
+  authorized = false
+  if (to.matched.some(record => record.meta.requiresAuth)){
+    await axios.get(`http://localhost:3000/api/getAuthentication`)
+    .then(function(response){
+    authorized = response.data
     })
-  if (!authorized && to.name == 'adminDashboard'){
-    return {name: 'admin'}
-  } 
+    console.log(authorized)
+    if(!authorized){
+      next({name: 'admin'})
+    }
+    else{
+      next()
+    }
+  }
+  else{
+    next()
+  }
 })
 
 export default router

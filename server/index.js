@@ -11,6 +11,7 @@ const uri = 'mongodb+srv://LashOutMNL:wDM3UxgWkRj5qgaK@lashoutmnl.fq52ce8.mongod
 mongoose.connect(uri,
 {useNewURLParser: true, useUnifiedTopology: true});
 
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 

@@ -11,6 +11,7 @@ var path = require ('path');
 const app = require("../routes/routes");
 
 let refnumber = '0';
+var loggedIn = false
 
 const controller = {
 
@@ -176,6 +177,7 @@ const controller = {
                 if (result != null) {
                     resultpass = result.Password;
                     if (resultpass === key){
+                        loggedIn = true
                         req.session.user = 'admin'
                         console.log("sessionID")
                         console.log(req.session.user)
@@ -187,13 +189,8 @@ const controller = {
             });
 	},
 
-    getAuthentication: function(req,res){
-        var authorized = false
-        console.log(req.session.user)
-        if (req.session.user == 'admin'){
-            authorized = true
-        }
-        res.status(200).send(authorized)
+    getAuthentication: function(req,res){  
+        res.status(200).send(loggedIn)
     },
 
     getAllAppointments: function(req,res){
