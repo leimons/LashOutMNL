@@ -4,7 +4,7 @@ const AppointmentsSchema = new mongoose.Schema({
     refNum: Number,
     ClientName: String,
     ClientEmail: String,
-    CleintContact: String,
+    ClientContact: String,
     Service: String,
     Inclusions: [String],
     AmountDue: Number,
