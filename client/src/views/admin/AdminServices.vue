@@ -58,7 +58,11 @@
 <template>
     <AdminLayout>
         <div id="container">
-            <h1>Services</h1><br />
+            <h1>Services 
+                <button class="adding-btn"> <a href="/admin/add-service" > Add Service </a> </button> <!-- TEMP ONLY!! WILL CREATE A STICKY CALL TO ACTION BUTTON -->
+            </h1> 
+            
+            <br />
 
             <div class="grid-container">
                 <div class="service-container" v-for="service in this.services" :key="service._id">
@@ -156,4 +160,22 @@
             line-height: 280px;
             opacity: 0.5;
         }
+    
+    .adding-btn{
+        position: absolute;
+        width: 160px;
+        height: 24px;
+        margin-top: 10px;
+        margin-left: 900px;
+        background: #F5CEC7;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        border: none;
+        font-size: 12px;
+        padding: 3px 24px;
+
+    }
+    .adding-btn:hover {
+        cursor: pointer;
+        background: #f5b3c7;
+    }
 </style>

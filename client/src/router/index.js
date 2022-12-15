@@ -34,6 +34,11 @@ const routes = [
     component: () => import('@/views/admin/AdminServiceEdit.vue')
   },
   {
+    path: '/admin/add-service',
+    name: 'adminAddService',
+    component: () => import('@/views/admin/AdminAddService.vue')
+  },
+  {
     path: '/admin/calendar',
     name: 'adminCalendar',
     component: () => import('@/views/admin/AdminCalendar.vue')
