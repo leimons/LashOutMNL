@@ -77,7 +77,7 @@
 
                 <div class="flex-row">
                     <button class="small grey" v-show="isActiveStep" @click="this.$emit('back')">Back</button>
-                    <button class="small dark next" v-show="isActiveStep" @click="completeStep">Next</button>
+                    <button class="small dark next" v-show="isActiveStep" @click="completeStep" style="width: 135px;">Book Now</button>
                 </div>
                 
             </form>

@@ -5,7 +5,6 @@
     import PaymentSubview from '@/views/booking/PaymentSubview.vue';
     import BeauticianSubview from '@/views/booking/BeauticianSubview.vue';
     import TotalSubview from '@/views/booking/TotalSubview.vue';
-    import MilestoneCard from '@/components/Booking/MilestoneCard.vue';
     import PopupCard from '@/components/Booking/PopupCard.vue';
 
     import dbFunctions from '@/dbFunctions.js';
@@ -15,7 +14,7 @@
     export default {
         name: 'CheckoutView',
         title: 'Checkout | LashOut MNL',
-        components: { MilestoneCard, InclusionSubview, ScheduleSubview, CustomerSubview, PaymentSubview, BeauticianSubview, TotalSubview, PopupCard },
+        components: { InclusionSubview, ScheduleSubview, CustomerSubview, PaymentSubview, BeauticianSubview, TotalSubview, PopupCard },
         data() {
             return {
                 currentStep: 1,
@@ -23,6 +22,7 @@
                 isLoading: true,
 
                 showProtocols: false,
+                success: false,  // true if appointment was successfully added to db
 
                 cart: {},
                 bookingDetails: {}
@@ -50,10 +50,13 @@
             },
             createAppointment(){
                 var { proofOfPayment, ...appointment } = this.bookingDetails;
-                dbFunctions.addAllAppointment(appointment, proofOfPayment);
-
                 this.isLoading = true;
-                // TODO: Redirect to confirmation page
+
+                dbFunctions.addAllAppointment(appointment, proofOfPayment)
+                    .then(response => {
+                        if ( response.data == true )
+                            this.success = true;
+                    });
             },
             updateInclusions(service, inclusions, AmountDue) {
                 this.cart = { service, inclusions, AmountDue };
@@ -79,11 +82,20 @@
             },
             updatePayment(proofOfPayment) {
                 this.bookingDetails = { ...this.bookingDetails, proofOfPayment };
-                this.nextStep();
+                this.nextStep(false);
+                this.createAppointment();
             },
 
             onProtocolsClose() {
                 this.prevStep(false);
+            },
+            getAppointmentDate() {
+                // to format date on confirmation
+                var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                var timeOptions = { hour12: true, hour: '2-digit', minute:'2-digit' }
+                var sch  = new Date( this.bookingDetails.schedule );
+
+                return `${sch.toLocaleDateString("en-US", dateOptions)}, ${sch.toLocaleTimeString("en-US", timeOptions)} Philippine Standard Time`;
             }
         },
     }
@@ -114,18 +126,13 @@
         <!-- Step 7: Payment Information -->
         <PaymentSubview id="payment-card" :step=7 :currentStep="currentStep" @complete-step="updatePayment" @back="prevStep" />
 
-        <!-- Temporary only -->
-        <div v-show="currentStep == 8">
-        <MilestoneCard>
-            <template #content>
-                <button class="small dark" :disabled="isLoading" @click="createAppointment">Book Appointment</button>
-            </template>
-        </MilestoneCard>
-        </div>
     </div>
 
+    <!-- Protocols and Policies popup -->
     <PopupCard id="popup-protocols" confirmText="I accept" v-if="currentStep == 4" @close="onProtocolsClose" @cancel="onProtocolsClose" @confirm="nextStep">
         <h2>Protocols and Policies</h2>
+        <small class="sans-serif"><i>Please scroll down and read all of the following terms carefully.</i></small>
+
         <b>Allergic Reactions</b>
         <p>Please note that any reactions to eyelash extensions are not foreseeable by Lash Out MNL. Whilst care is taken, no refunds will
         be issued for reactions. We do offer a free removal if any reactions occur. Please contact us immediately if you become aware
@@ -154,6 +161,25 @@
 
         <i>By booking with us, you are accepting the terms and conditions of our policies.</i>
     </PopupCard>
+
+    <!-- Confirmation popup -->
+    <PopupCard id="confirmation-popup" class="center" :cancelText="null" :confirmText="null" @close="() => { this.$router.push('/');  }" v-if="currentStep == 8 && success">
+        <div class="flex-col small-gap center">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvrrU9hRt6mtgUqYoYpm2jv5NUAI5J6OEEJFkhe6rWk_Wo6XzEFSeHmeCcFg1nGAMTIl4&usqp=CAU" width="90" />
+            <h2>Your booking is confirmed.</h2>
+            <p class="sans-serif">Thanks for booking with us. We hope to see you soon!</p>
+        </div>
+
+        <p class="alert-box sans-serif bg-secondary100">
+            <b>Your appointment is on:</b><br />
+            {{ getAppointmentDate() }}
+        </p>
+
+        <small class="sans-serif">
+            Please be reminded of our refund policies. If you do not show up to your appointment and do not call or text at least 3 hours in advance, 
+            your payment will be forfeited.
+        </small>
+    </PopupCard>
 </template>
 
 <style>
@@ -174,6 +200,11 @@
     }
 
     .small-gap { gap: 10px; }
+
+    .center {
+        justify-content: center;
+        align-items: center;
+    }
     
     .alert-box { padding: 20px; }
 
@@ -185,6 +216,14 @@
     }
 
     label { flex: 1; }
+
+    small {
+        color: grey;
+        width: 60%;
+        text-align: justify;
+    }
+
+    .sans-serif { font-family: 'Nunito', sans-serif; }
 
     #logo {
         position: fixed;
@@ -212,11 +251,21 @@
     }
 
     /* SECTION || Protocols */
-    #popup-protocols h2 {
+    #popup-protocols h2, #popup-procotols small {
         margin-inline: auto;
+        text-align: center;
     }
 
     #popup-protocols p {
         margin-bottom: 10px;
+    }
+
+    /* SECTION || Protocols */
+    #confirmation-popup {
+        gap: 30px;
+    }
+    
+    #confirmation-popup > * {
+        margin-inline: auto;
     }
 </style>
