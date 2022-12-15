@@ -3,13 +3,14 @@ import axios from 'axios';
 class Appointment {
     static async addAllAppointment(value, image){
         await this.addAppointment(value)
-        this.uploadPayment(image)
-        
+        return this.uploadPayment(image)
           
     }
-    static addAppointment (query) {
+    static async addAppointment (query) {
         var url = "http://localhost:3000/api/addAppointment"
-        return axios.post(url, query);
+        var result = await axios.post(url, query);
+        console.log(result)
+        return result.data;
     }
     static uploadPayment (value){
         var url = "http://localhost:3000/api/uploadPayment"

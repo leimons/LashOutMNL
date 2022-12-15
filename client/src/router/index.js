@@ -49,6 +49,11 @@ const routes = [
     }
   },
   {
+    path: '/admin/add-service',
+    name: 'adminAddService',
+    component: () => import('@/views/admin/AdminAddService.vue')
+  },
+  {
     path: '/admin/calendar',
     name: 'adminCalendar',
     component: () => import('@/views/admin/AdminCalendar.vue'),
@@ -56,7 +61,11 @@ const routes = [
       requiresAuth: true
     }
   },
-
+  {
+    path: '/admin/profile',
+    name: 'adminSettings',
+    component: () => import('@/views/admin/AdminSettings.vue')
+  },
   // SERVICE PAGES
   {
     path: '/services',

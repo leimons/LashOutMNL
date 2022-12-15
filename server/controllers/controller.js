@@ -58,8 +58,9 @@ const controller = {
     },
 
     addAppointment: function (req,res){
-        console.log(req.body)   
+        
         db.findMany(Appointments, {}, 'refNum', function(result){
+            var Added
             var present = []
             var random
             var data = result
@@ -90,15 +91,16 @@ const controller = {
                     contentType: 'image/png'
                 }
             }
-            db.insertOne(Appointments,appointment, function(){
-                console.log("appointment Added" + appointment.refNum)
+            db.insertOne(Appointments,appointment, (err) =>{
+                console.log("appointment Added")
+                Added = true
+                res.status(200).send(Added);
             })
-            res.status(200).send();
-        })   
-        
+        })     
     },
 
     uploadPayment: function (req,res){
+        var Added
         console.log("doing this")
         console.log("refnumber is" + refnumber)
         var data= fs.readFileSync(path.join("./client/public/paymentImages/" + req.file.filename))
@@ -108,10 +110,11 @@ const controller = {
             contentType: 'image/png'
         }
     
-        db.updateOne(Appointments, {refNum: refnumber}, {PaymentProof: PaymentProof}, function(){
+        db.updateOne(Appointments, {refNum: refnumber}, {PaymentProof: PaymentProof}, (err) =>{
             console.log('updated'+ refnumber)
+            Added = true
+            res.status(201).send(Added);
         })
-        res.status(201).send();
     },
 
     getInclusionsPage: function(req,res){
@@ -201,18 +204,19 @@ const controller = {
     },
 
     getAllAppointments: function(req,res){
-        var projection = "ClientName ClientInfo refNum PaymentStatus Product Inclusions AmountDue"
-        var appointment
-        db.findMany(Appointments,{}, projection, function(result){
-            appointment = {
-                ClientName: result.ClientName,
-                ClientInfo: result.ClientInfo,
-                Product: result.Product,
-                Inclusions: result.Inclusions,
-                AmountDue: result.AmountDue
-            }
+        var projection = "refNum ClientName ClientEmail ClientContact Service Inclusions AmountDue Beautician Schedule PaymentProof"
+        var appointment = []
+        db.findMany(Appointments,{}, projection, function(result){ 
+            data = result
+            data.forEach((i)=>{
+                appointment.push({refNum: i.refNum , ClientName: i.ClientName, ClientEmail: i.ClientEmail,
+                Service: i.Service, Inclusions: i.Inclusions, AmountDue: i.AmountDue, Schedule: i.Schedule, PaymentProof: i.PaymentProof})
+            })
+            console.log(appointment)
+            res.status(201).send(appointment)
         })
-        res.send (appointment)
+
+        
     },
 }
 

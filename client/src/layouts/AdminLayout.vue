@@ -28,7 +28,7 @@
         
         <div class="settings-mode"> 
             <!-- TODO: Add link to account settings page / No Account Setting Page yet-->
-            <li> <a href="#">
+            <li> <a href="/admin/profile">
                 <i class="uil uil-user"></i>
                 Account
             </a> </li>

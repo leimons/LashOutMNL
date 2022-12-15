@@ -14,7 +14,6 @@
         },
         data() {
             return {
-				errorMsg: "",
                 service: {},
                 edit: {},
                 image: "https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" /* TODO: Replace with service image */
@@ -45,25 +44,18 @@
 
                 this.image = URL.createObjectURL(files[0]);
             },
-			sv_edit()
+			sv_add()
 			{
-				var s_id = this.service._id;
 				var s_name = this.edit.Service;
-				var s_category = this.edit.Category;
-				var s_subcategory = this.edit.Subcategory;
+				var s_category = "Nails" //this.edit.Category;
+				var s_subcategory = "Other Nail Services" //this.edit.Subcategory;
 				var s_duration = this.edit.Duration;
 				var s_price = this.edit.Price;
 				var s_description = this.edit.Description;
 				var s_onsale = this.edit.OnSale;
 				var s_saleprice = this.edit.SalePrice;
-				if (s_price > 0 && s_saleprice > 0 && s_price > s_saleprice){
-				adminfunctions.editService(s_id,s_name, s_category, s_subcategory, s_duration, s_price, s_description, s_onsale, s_saleprice);
+				adminfunctions.addService(s_name, s_category, s_subcategory, s_duration, s_price, s_description, s_onsale, s_saleprice);
 				this.$router.push('/admin/services');
-				}
-				else if(s_price < 0 || s_saleprice < 0) {
-				this.errorMsg = "Prices cannot be lower than 0";}
-				else{
-				this.errorMsg = "Price cannot be lower than Sale Price"}
 			}
 			
         },
@@ -93,25 +85,26 @@
                 </div>
 
                 <button class="small grey">
-                    <label for="editImg">Edit Image</label>
+                    <label for="editImg">Add Image</label>
                 </button>
 				<input type="file" accept="image/png, image/jpg, image/jpeg" name="editImg" id="editImg" @change="onFileChange" />
             </div>
 
             <div id="service-info">
                 <div>
-                    <h1><input v-model="edit.Service" /></h1>
-                    <h3>{{ service.Category }} ({{ service.Subcategory }})</h3>
+                    <h1><input v-model="edit.Service" placeholder="Service Name"/></h1>
+                    <h3>  </h3>
+                    <!-- #TO DO: create drop down for service category -->
                 </div>
 
-                <h2>₱<input type="number" step=".01" v-model="service.Price" /></h2>
+                <h2>₱<input type="number" step=".01" v-model="service.Price" placeholder="0000"/></h2>
 
                 <div id="info-grid">
                     <b>Duration</b>
-                    <input v-model="edit.Duration" />
+                    <input v-model="edit.Duration" placeholder="Service Duration" />
 
                     <b>Description</b>
-                    <textarea v-model="edit.Description" style="height: 82px;"></textarea>
+                    <textarea v-model="edit.Description" style="height: 82px;" placeholder="Service Description"></textarea>
 
                     <b>OnSale</b>
                     <p><ToggleSwitch @toggle="toggleSwitch" :on="this.edit.OnSale" /></p>
@@ -120,12 +113,10 @@
                     <p :style="visibility(edit.OnSale)">
                         ₱<input type="number" step=".01" v-model="edit.SalePrice" />
                     </p>
-					<small class="text-primary900" v-if="!errorMsg">&nbsp;</small>
-					<small class="text-primary900" v-if="errorMsg">{{ errorMsg }}</small>
                 </div>
 
                 <div id="actions">
-                    <button class="small dark" @click="sv_edit()">
+                    <button class="small dark" @click="sv_add()">
                         Save
                     </button>
                     <button class="small grey" @click="() => { this.$router.push(`/admin/services/${service._id}`) }">
