@@ -105,7 +105,6 @@
 
         <!-- Step 4: Read protocols and policies -->
         
-        
         <!-- Step 5: Enter information -->
         <CustomerSubview id="info-card" :step=5 :currentStep="currentStep" @complete-step="updateCustomer" @back="prevStep" />
 
@@ -124,7 +123,7 @@
         </MilestoneCard>
         </div>
     </div>
-    {{ showProtocols }}
+
     <PopupCard id="popup-protocols" confirmText="I accept" v-if="currentStep == 4" @close="onProtocolsClose" @cancel="onProtocolsClose" @confirm="nextStep">
         <h2>Protocols and Policies</h2>
         <b>Allergic Reactions</b>
