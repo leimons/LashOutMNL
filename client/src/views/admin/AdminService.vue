@@ -34,12 +34,16 @@
                     currency: 'PHP',
                 })
             },
-			DeleteService() {
+			deleteService() {
 				var s_id = this.service._id;
 				var s_name = this.service.Service;
-				console.log(s_id,s_name);
-				adminfunctions.deleteService(s_id,s_name);
-			}
+                if ( confirm(`Are you sure you want to delete "${s_name}"?`) ) {
+                    adminfunctions.deleteService(s_id,s_name);
+					confirm(`${s_name}" has been deleted"`)
+                    // return to services
+                    this.$router.push('/admin/services');
+                }
+            }
 		}
 	}
 </script>
@@ -79,7 +83,7 @@
                 <button class="small grey" @click="() => { this.$router.push(`/admin/services/${service._id}/edit`) }">
                     Edit Service
                 </button>
-				<button class="small grey" @click="DeleteService()">
+				<button class="small grey" @click="deleteService()">
                     Delete Service
                 </button>
             </div>
