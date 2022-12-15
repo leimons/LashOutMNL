@@ -31,7 +31,7 @@
                 
                 <i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In molestie est at ante luctus fringilla. Morbi venenatis turpis sapien, sit amet euismod metus fringilla ut.</i><!-- TODO: Add description/instructions for enter information -->
             
-                <div id="items-container" class="flex-col">
+                <div id="items-container" class="flex-col" v-if="cart.service">
                     <div class="flex-row"  v-if="cart.service">
                         <b>Item</b>
                         <b>Price</b>
