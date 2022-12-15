@@ -37,8 +37,8 @@
             <slot style="flex: 1;">  &nbsp;  </slot>
 
             <div class="buttons-container">
-                <button class="small dark" v-if="cancel" @click="this.$emit('confirm')">{{ confirmText }}</button>
-                <button class="small grey" v-if="confirm" @click="this.$emit('cancel')">{{ cancelText }}</button>
+                <button class="small dark" v-if="confirm" @click="this.$emit('confirm')">{{ confirmText }}</button>
+                <button class="small grey" v-if="cancel" @click="this.$emit('cancel')">{{ cancelText }}</button>
             </div>
         </div>
     </div>
