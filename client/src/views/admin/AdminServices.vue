@@ -44,7 +44,7 @@
             deleteService(service) {
                 if ( confirm(`Are you sure you want to delete "${service.Service}"?`) ) {
                     adminfunctions.deleteService(service._id, service.Service);
-
+                    confirm(`${service.Service}" has been deleted"`)
                     // Remove deleted service from view
                     this.categories[service.Category] = this.categories[service.Category].filter(
                         service_ => service_._id != service._id
