@@ -31,14 +31,16 @@
 
 <template>
     <div class="popup-modal">
-        <div :class="`modal-content ${this.class}`" :id="id" :style="style">
+        <div class="modal-container">
             <button id="close-btn" @click="this.$emit('close');">&times;</button>
 
-            <slot style="flex: 1;">  &nbsp;  </slot>
-
-            <div class="buttons-container">
-                <button class="small dark" v-if="confirm" @click="this.$emit('confirm')">{{ confirmText }}</button>
-                <button class="small grey" v-if="cancel" @click="this.$emit('cancel')">{{ cancelText }}</button>
+            <div :class="`modal-content ${this.class}`" :id="id" :style="style">
+                <slot>  &nbsp;  </slot>
+            
+                <div class="buttons-container" v-if="confirm || cancel">
+                    <button class="small dark" v-if="confirm" @click="this.$emit('confirm')">{{ confirmText }}</button>
+                    <button class="small grey" v-if="cancel" @click="this.$emit('cancel')">{{ cancelText }}</button>
+                </div>
             </div>
         </div>
     </div>
@@ -63,16 +65,17 @@
         overflow: scroll;
     }
 
-    .modal-content {
+    .modal-container {
         position: relative;
         display: flex;
         flex-direction: column;
         gap: 10px;
         min-height: 120px;
         overflow: scroll;
+        height: 100%;
     }
 
-        .modal-content #close-btn {
+        .modal-container #close-btn {
             position: absolute;
             top: 0;
             right: -12px;
@@ -85,14 +88,22 @@
             text-align: end;
         }
 
-        .modal-content .buttons-container {
+        .modal-container .buttons-container {
             display: flex;
             flex-direction: row-reverse;
             gap: 10px;
             margin-top: auto;
         }
 
-        .modal-content .buttons-container .grey {
+        .modal-container .buttons-container .grey {
             border-color: grey;
         }
+
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        flex: 1;
+        overflow: scroll;
+    }
 </style>
