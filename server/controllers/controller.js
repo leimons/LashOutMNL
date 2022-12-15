@@ -11,6 +11,7 @@ var path = require ('path');
 const app = require("../routes/routes");
 
 let refnumber = '0';
+var loggedIn = false
 
 const controller = {
 
@@ -170,32 +171,38 @@ const controller = {
         })
         res.send (appointment)
     },
-
-    login: function(req,res){
-		db.findOne(Password, {Password: req.Password}, function(result){
-			console.log(result);
-			if (result.Password == req.Password)
-				res.send(200);
-			else
-				res.send(104);
-        })
-    },
         
    login: function(req,res){
 		var projection = "Password"
-		var key = req.body.pass;
-		var resultpass
-		resultpass = db.findOne(Password, {Password: key}, projection, function(result){
-			if (result != null) {
-				resultpass = result.Password;
-				if (resultpass === key){
-					console.log("equal");
-					res.sendStatus(201);
-				}
-			}
-			else res.sendStatus(403);
-		});
+            var key = req.body.pass;
+            var resultpass
+            resultpass = db.findOne(Password, {Password: key}, projection, function(result){
+                if (result != null) {
+                    resultpass = result.Password;
+                    if (resultpass === key){
+                        loggedIn = true
+                        req.session.user = 'admin'
+                        console.log("sessionID")
+                        console.log(req.session.user)
+                        console.log("equal");
+                        res.sendStatus(201);
+                    }
+                }
+                else res.sendStatus(403);
+            });
 	},
+
+    getAuthentication: function(req,res){
+        /* 
+        if (req.session.user == "admin"){
+            res.status(200).send(true)
+        }
+        else{
+            res.sendStatus(403)
+        } */
+        res.status(200).send(loggedIn)
+    },
+
     getAllAppointments: function(req,res){
         var projection = "refNum ClientName ClientEmail ClientContact Service Inclusions AmountDue Beautician Schedule PaymentProof"
         var appointment = []
