@@ -32,20 +32,21 @@ class Service {
 			Password: ps_pass,
 		});
 	}
-	/*
-    static addService (s_name, s_category, s_subcategorty, s_duration, s_price, s_description, s_onsale, s_saleprice) {
+	static addService (s_name, s_category, s_subcategory, s_duration, s_price, s_description, s_onsale, s_saleprice) {
         var url = "http://localhost:3000/api/addservice"
         return axios.post(url, {
             Service: s_name,
 			Category: s_category,
-			Subcategory: s_subcat,
-			Duration: s_dur,
-			Price: s_prc,
-			Description: s_desc,
-			OnSale: s_onS,
-			SalePrice: s_sale
+			Subcategory: s_subcategory,
+			Duration: s_duration,
+			Price: s_price,
+			Description: s_description,
+			OnSale: s_onsale,
+			SalePrice: s_saleprice
         });
     }
+	/*
+    
 	static addBeautician (b_name, b_services) (
 		var url = "http://localhost:3000/api/addbeautician"
 		return axios.post(url, {
