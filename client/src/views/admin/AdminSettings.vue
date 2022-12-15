@@ -6,17 +6,29 @@
             components: {
         AdminLayout
         },
+		data() {
+            return {
+                errorMsg: '',
+		errorMsg2: ''
+            }
+        },
 		methods: {
 		editpass(){
 			var opass = this.password;
 			var npass = this.npassword;
-			if (npass != ""){
+			if (npass != null){
+			this.errorMsg2 = "";
 			var answer = adminfunctions.editPass(opass, npass);
 			answer.then((response)=>{
+					this.errorMsg = "";
 					console.log(response);
                 })
                 .catch(() => {
+					this.errorMsg = "Incorrect Password";
                 })
+			}
+			else{
+			this.errorMsg2 = "Password cannot be blank";
 			}
 
 		}
@@ -57,6 +69,8 @@
                     </div>
                     <div class="input-box">
                         <input type="text" class="form-control" v-model="password" placeholder="Old Password">
+						<small class="text-primary900" v-if="!errorMsg">&nbsp;</small>
+						<small class="text-primary900" v-if="errorMsg">{{ errorMsg }}</small>
                     </div>
 
                     <div class="label">
@@ -64,7 +78,10 @@
                     </div>
                     <div class="input-box">
                         <input type="text" class="form-control" v-model="npassword" placeholder="New Password" >
+						<small class="text-primary900" v-if="!errorMsg2">&nbsp;</small>
+						<small class="text-primary900" v-if="errorMsg2">{{ errorMsg2 }}</small>
                     </div>
+					
                     <button @click="editpass()"> Save Changes </button>
                     
 				</div> 
