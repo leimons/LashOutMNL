@@ -77,7 +77,7 @@
                         </div>
                     </a>
                 </div>
-                <a class="service-container" id="add-service-btn">
+                <a class="service-container" id="add-service-btn" href="/admin/add-service" >
                     <i class="uil uil-plus"></i>
                 </a>
             </div>
