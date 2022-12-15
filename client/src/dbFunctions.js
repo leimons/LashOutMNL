@@ -3,7 +3,7 @@ import axios from 'axios';
 class Appointment {
     static async addAllAppointment(value, image){
         await this.addAppointment(value)
-        this.uploadPayment(image)
+        return this.uploadPayment(image)
           
     }
     static async addAppointment (query) {
