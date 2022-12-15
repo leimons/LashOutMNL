@@ -14,6 +14,7 @@
         },
         data() {
             return {
+				errorMsg: "",
                 service: {},
                 edit: {},
                 image: "https://via.placeholder.com/350x220/cccccc/fdf8f4?text=LashOut" /* TODO: Replace with service image */
@@ -55,8 +56,14 @@
 				var s_description = this.edit.Description;
 				var s_onsale = this.edit.OnSale;
 				var s_saleprice = this.edit.SalePrice;
+				if (s_price > 0 && s_saleprice > 0 && s_price > s_saleprice){
 				adminfunctions.editService(s_id,s_name, s_category, s_subcategory, s_duration, s_price, s_description, s_onsale, s_saleprice);
 				this.$router.push('/admin/services');
+				}
+				else if(s_price < 0 || s_saleprice < 0) {
+				this.errorMsg = "Prices cannot be lower than 0";}
+				else{
+				this.errorMsg = "Price cannot be lower than Sale Price"}
 			}
 			
         },
@@ -113,6 +120,8 @@
                     <p :style="visibility(edit.OnSale)">
                         ₱<input type="number" step=".01" v-model="edit.SalePrice" />
                     </p>
+					<small class="text-primary900" v-if="!errorMsg">&nbsp;</small>
+					<small class="text-primary900" v-if="errorMsg">{{ errorMsg }}</small>
                 </div>
 
                 <div id="actions">
