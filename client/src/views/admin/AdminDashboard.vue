@@ -1,5 +1,6 @@
 <script>
     import AdminLayout from '@/layouts/AdminLayout.vue';
+    import AppointmentCard from '@/components/Admin/AppointmentCard.vue';
 
 
 
@@ -7,6 +8,7 @@
         name: 'AdminDashboard',
             components: {
         AdminLayout,
+        AppointmentCard
 
         }
     }
@@ -43,6 +45,7 @@
 
                 <!-- TO DO: add appointments card -->
                 <div class="appointments">
+                    <AppointmentCard/>
                     <div class="app-container" v-for="appointment in this.appointment" :key="appointment.c_refNum"> 
                             <div class="items">
                                 <span class="details">{{appointment.c_refNum}}</span>
