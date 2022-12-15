@@ -38,13 +38,13 @@
         <div id="card">
             <div>
                 <label for="password">Password:</label>
-                <input type="password" id="password" v-model="password" />
+                <input @keyup.enter="login()" type="password" id="password" v-model="password" />
             </div>
 
             <div>
                 <small class="text-primary900" v-if="!errorMsg">&nbsp;</small>
                 <small class="text-primary900" v-if="errorMsg">{{ errorMsg }}</small>
-                <button class="small hover" @click="login">Login</button>
+                <button class="small hover" @click="login()">Login</button>
             </div>
         </div>
     </FullscreenLayout>
