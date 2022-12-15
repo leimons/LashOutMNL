@@ -9,7 +9,7 @@
 		data() {
             return {
                 errorMsg: '',
-		errorMsg2: ''
+				errorMsg2: ''
             }
         },
 		methods: {
@@ -22,6 +22,7 @@
 			answer.then((response)=>{
 					this.errorMsg = "";
 					console.log(response);
+					confirm(`Password has been updated`);
                 })
                 .catch(() => {
 					this.errorMsg = "Incorrect Password";
