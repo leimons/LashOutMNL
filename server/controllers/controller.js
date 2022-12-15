@@ -11,7 +11,11 @@ var path = require ('path');
 const app = require("../routes/routes");
 
 let refnumber = '0';
-var loggedIn = false
+const Session = {
+    id: "String",
+    user: "String",
+    status: false
+}
 
 const controller = {
 
@@ -182,9 +186,9 @@ const controller = {
                     if (resultpass === key){
                         loggedIn = true
                         req.session.user = 'admin'
-                        console.log("sessionID")
-                        console.log(req.session.user)
-                        console.log("equal");
+                        Session.user = req.session.user
+                        Session.id = req.session.id
+                        Session.status = true
                         res.sendStatus(201);
                     }
                 }
@@ -193,14 +197,13 @@ const controller = {
 	},
 
     getAuthentication: function(req,res){
-        /* 
-        if (req.session.user == "admin"){
+        if (Session.user == "admin" && Session.status){
             res.status(200).send(true)
         }
         else{
-            res.sendStatus(403)
-        } */
-        res.status(200).send(loggedIn)
+            res.send(false)
+        } 
+       // res.status(200).send(loggedIn)
     },
 
     getAllAppointments: function(req,res){
