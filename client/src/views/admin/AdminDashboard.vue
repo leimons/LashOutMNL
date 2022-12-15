@@ -1,14 +1,17 @@
 <script>
-    import AppointmentCard from '@/components/Admin/AppointmentCard.vue';
     import AdminLayout from '@/layouts/AdminLayout.vue';
+
+
 
     export default {
         name: 'AdminDashboard',
             components: {
         AdminLayout,
-        AppointmentCard
+
         }
     }
+
+
 </script>
 
 <template>
@@ -40,7 +43,18 @@
 
                 <!-- TO DO: add appointments card -->
                 <div class="appointments">
-                    <AppointmentCard    />
+                    <div class="app-container" v-for="appointment in this.appointment" :key="appointment.c_refNum"> 
+                            <div class="items">
+                                <span class="details">{{appointment.c_refNum}}</span>
+                                <span class="details">{{appointment.c_name}}</span>
+                                <span class="details">{{appointment.c_contact}}</span>
+                                <span class="details">{{appointment.c_time}}</span>
+                                <span class="details">{{appointment.c_date}}</span>
+                                <span class="details">{{appointment.service}}</span>
+                                <span class="details">{{appointment.status}}</span>
+                            </div>
+                    
+                    </div>
                 </div>
                 
             </div>
@@ -97,5 +111,25 @@
         margin-top:30px;
         display: flex;
         flex-direction: column;
+    }
+    .app-container {
+        position: relative;
+        width: full auto;
+        height: 50px;
+        margin-top: 0px;
+        background-color: #F0EDE4;
+        border: 1px solid black;
+        
+    }
+
+    .items{
+        margin-top: -10px;
+        margin-left: 10px;
+        display: grid;
+        width: full;
+        height: 70px;
+        grid-template-columns: auto auto auto auto auto auto auto;
+        align-items: center;
+        
     }
 </style>

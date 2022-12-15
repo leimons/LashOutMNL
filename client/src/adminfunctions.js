@@ -45,7 +45,25 @@ class Service {
 			SalePrice: s_saleprice
         });
     }
+	
 	/*
+	ADDED THIS BUT NOT SURE IF CORRECT
+	
+	static getAppointment (c_refnum, c_name, c_email, c_contact, c_time, c_date, c_service, c_status) {
+        var url = "http://localhost:3000/api/getappointment"
+        return axios.post(url, {
+            refNum: c_refnum, 
+			ClientName: c_name, 
+			ClientEmail: c_email, 
+			ClientContact: c_contact, 
+			ClientTime: c_time, 
+			ClientDate: c_date, 
+			ClientServices: c_service, 
+			ClientStat: c_status
+        });
+    }
+	
+	
     
 	static addBeautician (b_name, b_services) (
 		var url = "http://localhost:3000/api/addbeautician"
